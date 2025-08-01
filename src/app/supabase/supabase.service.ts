@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { supabase } from './supabase.client';
+import { Room, Drink, Guest, Order } from "../supabase/models";
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  getRooms() {
-    return supabase.from('rooms').select('');
-  }
+  async getRooms(): Promise<Room[]> {
+  const { data, error } = await supabase.from<any, Room>('rooms').select('*');
+  if (error) throw error;
+  return data || [];
+}
 
   getDrinksForRoom(roomId: string) {
     return supabase.from('drinks').select('').eq('room_id', roomId);
