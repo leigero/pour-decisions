@@ -1,23 +1,59 @@
-import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit, signal } from "@angular/core";
-import { SupabaseService } from "../../supabase/supabase.service";
-import { Room } from "../../supabase/models";
+import { Component, OnInit, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { SupabaseService } from '../../supabase/supabase.service';
+import { Room, OrderWithDetails } from '../../supabase/models';
+
+import { RoomSelectorComponent } from './room-selector/room-selector.component';
+import { OrderListComponent } from './order-list/order-list.component';
+import { GuestStatsComponent } from './guest-stats/guest-stats.component';
 
 @Component({
-    selector: "pd-dashboard",
-    standalone: true,
-    templateUrl: "./dashboard.component.html",
-    styleUrls: ["./dashboard.component.scss"],
-    imports: [CommonModule]
+  selector: 'pd-dashboard',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RoomSelectorComponent,
+    OrderListComponent,
+    GuestStatsComponent,
+  ],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
 })
+export class DashboardComponent implements OnInit {
+  readonly rooms = signal<Room[]>([]);
+  readonly orders = signal<OrderWithDetails[]>([]);
+  readonly selectedRoomId = signal<string | null>(null);
 
-export class DashboardComponent implements OnInit{
-    private sbService = inject(SupabaseService);
-    
-    public rooms = signal<Room[] | undefined>(undefined);
-
-    public async ngOnInit(){
-        const roomsResponse = await this.sbService.getRooms();
-        this.rooms.set(roomsResponse);
+  readonly guestStats = computed(() => {
+    const counts = new Map<string, number>();
+    for (const order of this.orders()) {
+      if (order.status === 'complete') {
+        counts.set(order.guest.name, (counts.get(order.guest.name) || 0) + 1);
+      }
     }
+    return Array.from(counts.entries()).map(([name, count]) => ({ name, count }));
+  });
+
+  constructor(private supabase: SupabaseService) {}
+
+async ngOnInit() {
+    const { data, error } = await this.supabase.getRooms();
+    if (error) console.error('Error loading rooms', error);
+    this.rooms.set(data || []);
+  }
+
+  async onSelectRoom(roomId: string) {
+    this.selectedRoomId.set(roomId);
+    const orders = await this.supabase.getOrdersForRoom(roomId);
+    this.orders.set(orders);
+  }
+
+  async markOrderComplete(orderId: string) {
+    // await this.supabase.markOrderComplete(orderId);
+    // const updated = this.orders().map(order =>
+    //   order.id === orderId ? { ...order, status: 'complete' } : order
+    // );
+    // this.orders.set(updated);
+  }
 }

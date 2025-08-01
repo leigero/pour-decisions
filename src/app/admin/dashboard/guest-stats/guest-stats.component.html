@@ -1,0 +1,11 @@
+<table>
+  <thead>
+    <tr><th>Guest</th><th>Total Drinks</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stat of guestStats">
+      <td>{{ stat.name }}</td>
+      <td>{{ stat.count }}</td>
+    </tr>
+  </tbody>
+</table>

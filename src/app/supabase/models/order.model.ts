@@ -1,3 +1,4 @@
+import { Guest, Drink } from './';
 export type OrderStatus = 'queued' | 'in-progress' | 'complete';
 
 export interface Order {
@@ -7,4 +8,9 @@ export interface Order {
   room_id: string;
   status: OrderStatus;
   created_at: string;
+}
+
+export interface OrderWithDetails extends Order {
+  guest: Pick<Guest, 'name'>;
+  drink: Pick<Drink, 'name'>;
 }

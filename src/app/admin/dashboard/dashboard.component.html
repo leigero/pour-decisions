@@ -1,1 +1,18 @@
-<p class="content">{{ rooms() | json}} </p>
+<h1>🍸 Cocktail Dashboard</h1>
+
+<app-room-selector
+  [rooms]="rooms()"
+  [selectedRoomId]="selectedRoomId()"
+  (roomSelected)="onSelectRoom($event)"
+></app-room-selector>
+
+<app-order-list
+  *ngIf="orders().length"
+  [orders]="orders()"
+  (markComplete)="markOrderComplete($event)"
+></app-order-list>
+
+<app-guest-stats
+  *ngIf="guestStats().length"
+  [guestStats]="guestStats()"
+></app-guest-stats>
