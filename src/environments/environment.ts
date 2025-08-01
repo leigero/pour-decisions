@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  supabaseUrl: 'e4510e3f6314b2f051a02b203fbb4dc500ecc06c80452001db42a0e7717e166a',
-  supabaseAnonKey: '65e67229b5fb30f59910caf52981f8d9904e8be441b352b0920647167aa904ef',
+  supabaseUrl: 'https://abjwliydsnuolrypqfbi.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiandsaXlkc251b2xyeXBxZmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwMDk5MTYsImV4cCI6MjA2OTU4NTkxNn0.L9_r5_CNsbBinTINWaspKmQfJj7JEqcYB7UlQPMKaDU',
 };
