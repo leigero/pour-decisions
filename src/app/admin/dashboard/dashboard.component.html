@@ -6,10 +6,6 @@
   (roomSelected)="onSelectRoom($event)"
 ></pd-room-selector>
 
-@if (room()) {
-  <pd-room [room]="room()"></pd-room>
-}
-
 @if (orders().length) {
   <app-order-list
     [orders]="orders()"

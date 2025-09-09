@@ -1,0 +1,30 @@
+<div class="welcome-page-container">
+  <div class="card-container">
+    <!-- Join Room Section -->
+    <div class="join-room-card">
+      <h2 class="section-title">Join a Room</h2>
+      <p class="section-description">
+        Enter a room code to join an existing session.
+      </p>
+
+      <input
+        type="text"
+        placeholder="Enter Room Code"
+        class="room-input"
+        [ngModel]="roomCode()"
+        (ngModelChange)="onRoomCodeUpdate($event)"
+      />
+
+      <button class="join-button" (click)="joinRoom()">Join</button>
+    </div>
+
+    <!-- Create Room Section -->
+    <div class="create-room-card">
+      <h2 class="section-title">Create a Room</h2>
+      <p class="section-description">
+        Start a new session and get a unique room code.
+      </p>
+      <button class="create-button">Create</button>
+    </div>
+  </div>
+</div>

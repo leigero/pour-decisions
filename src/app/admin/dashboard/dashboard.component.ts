@@ -46,9 +46,8 @@ export class DashboardComponent implements OnInit {
   });
 
   async ngOnInit() {
-    const { data, error } = await this.supabase.getRooms();
-    if (error) console.error('Error loading rooms', error);
-    this.rooms.set(data || []);
+    const rooms = await this.supabase.getRooms();
+    this.rooms.set(rooms);
   }
 
   async onSelectRoom(roomId: string) {

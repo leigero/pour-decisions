@@ -12,15 +12,37 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   // ROOMS
-  async getRooms(): Promise<{ data: Room[] | null; error: any }> {
-    return await supabase.from<any, Room>('rooms').select('');
+  async getRooms(): Promise<Room[]>{
+    const {data, error} = await supabase.from('rooms').select();
+    if(error){
+      console.error(error);
+      return null;
+    }
+    return data;
+  }
+  async getRoomById(roomId: string) : Promise<Room> {
+    const {data, error} = await supabase.from('rooms').select().eq('id', roomId);
+    if(error){
+      console.error(error);
+      return null;
+    }
+    if(data.length > 0){
+      return data[0] as Room;
+    }
+    return null;
   }
 
-  async getDrinks(): Promise<{ data: Drink[] | null; error: any }> {
-    return await supabase.from<any, Drink>('drinks').select('');
+  async getDrinks() : Promise<Drink[]> {
+    const { data, error } = await supabase.from('drinks').select();
+    if(error){
+      console.error(error);
+      return null;
+    }
+    return data;
   }
+     
 
-  async addDrink(drinkName: string, ingredients: string[], roomId: string): Promise<Drink> {
+  async addDrink(drinkName: string, ingredients: string[], roomId: string) {
     const { data, error } = await supabase
       .from('drinks')
       .insert({name: drinkName, ingredients: ingredients, room_id: roomId });
@@ -41,7 +63,7 @@ export class SupabaseService {
   async getDrinksForRoom(roomId: string): Promise<Drink[]> {
     const { data, error } = await supabase
       .from('drinks')
-      .select('*')
+      .select()
       .eq('room_id', roomId);
 
     if (error) throw error;
@@ -82,4 +104,12 @@ export class SupabaseService {
   //   if (error) throw error;
   //   return data!;
   // }
+
+  // private handleError<T> (error){
+  //   if(error){
+  //     console.error(error);
+  //     return [];
+  //   }
+  // }
+
 }

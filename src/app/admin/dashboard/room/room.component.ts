@@ -2,6 +2,7 @@ import { Component, inject, input, OnInit, output, signal } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { Room, Drink } from '../../../supabase/models';
 import { SupabaseService } from '../../../supabase/supabase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'pd-room',
@@ -12,15 +13,21 @@ import { SupabaseService } from '../../../supabase/supabase.service';
 })
 export class RoomComponent implements OnInit{
   private supabase = inject(SupabaseService);
-  
-  public readonly room = input.required<Room>();
+  private route = inject(ActivatedRoute);
+  private readonly roomId: string;
+  public readonly room = signal<Room>(undefined);
   public readonly drinks = signal<Drink[]>([]);
+  
+  constructor(){
+    this.roomId = this.route.snapshot.paramMap.get("roomId")
+  }
 
   async ngOnInit() {
-    const { data, error } = await this.supabase.getDrinks();
-    if (error) console.error('Error loading drinks', error);
-    this.drinks.set(data || []);
-    console.log(data);
+    const thisRoom = await this.supabase.getRoomById(this.roomId);
+    this.room.set(thisRoom);
+
+    // const drinks = await this.supabase.getDrinks();
+    // this.drinks.set(drinks);
   }
   
   addDrink(){
@@ -34,7 +41,7 @@ export class RoomComponent implements OnInit{
     
     this.drinks.set([...this.drinks(),newDrink]);
    
-    const drinks = this.supabase.addDrink("Manhattan", ["Rye Whisky", "Sweet Vermouth", "Angastura Bitters"], "3b4e66fb-7d36-4ecf-884e-527fb41bb134");
+    // const drinks = this.supabase.addDrink("Manhattan", ["Rye Whisky", "Sweet Vermouth", "Angastura Bitters"], "3b4e66fb-7d36-4ecf-884e-527fb41bb134");
   }
 
   /*
