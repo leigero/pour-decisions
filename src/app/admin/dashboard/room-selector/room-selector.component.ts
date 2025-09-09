@@ -1,23 +1,23 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Room } from '../../../supabase/models';
 
 @Component({
-  selector: 'app-room-selector',
+  selector: 'pd-room-selector',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './room-selector.component.html',
   styleUrls: ['./room-selector.component.scss']
 })
 export class RoomSelectorComponent {
-  @Input() rooms: Room[] = [];
-  @Input() selectedRoomId: string | null = null;
-  @Output() roomSelected = new EventEmitter<string>();
+  public readonly rooms = input<Room[]>();
+  public readonly selectedRoomId = input<string | null>();
+  public readonly roomSelected = output<string>();
 
   selectRoom(id: string | null) {
-    if(!id){
+    console.log("selectRoom method", id);
+    if(id){
         this.roomSelected.emit(id as string);
     }
-    
   }
 }

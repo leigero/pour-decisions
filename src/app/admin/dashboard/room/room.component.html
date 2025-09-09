@@ -1,0 +1,13 @@
+<div class="room">
+  <h1>Welcome to {{ room()?.name }}</h1>
+  <div class="room-buttons">
+    <button (click)="addDrink()">Add Drink</button>
+  </div>
+  <div class="drinks">
+    @for (drink of drinks(); track $index) {
+      <h5>{{ drink.name }}</h5>
+      <p>{{ drink.description }}</p>
+      <p>{{ drink.ingredients }}</p>
+    }
+  </div>
+</div>

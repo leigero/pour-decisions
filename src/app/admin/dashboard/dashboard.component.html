@@ -1,18 +1,22 @@
 <h1>🍸 Cocktail Dashboard</h1>
 
-<app-room-selector
+<pd-room-selector
   [rooms]="rooms()"
   [selectedRoomId]="selectedRoomId()"
   (roomSelected)="onSelectRoom($event)"
-></app-room-selector>
+></pd-room-selector>
 
-<app-order-list
-  *ngIf="orders().length"
-  [orders]="orders()"
-  (markComplete)="markOrderComplete($event)"
-></app-order-list>
+@if (room()) {
+  <pd-room [room]="room()"></pd-room>
+}
 
-<app-guest-stats
-  *ngIf="guestStats().length"
-  [guestStats]="guestStats()"
-></app-guest-stats>
+@if (orders().length) {
+  <app-order-list
+    [orders]="orders()"
+    (markComplete)="markOrderComplete($event)"
+  ></app-order-list>
+}
+
+@if (guestStats().length) {
+  <app-guest-stats [guestStats]="guestStats()"></app-guest-stats>
+}

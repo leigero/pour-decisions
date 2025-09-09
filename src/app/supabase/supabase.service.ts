@@ -16,6 +16,19 @@ export class SupabaseService {
     return await supabase.from<any, Room>('rooms').select('');
   }
 
+  async getDrinks(): Promise<{ data: Drink[] | null; error: any }> {
+    return await supabase.from<any, Drink>('drinks').select('');
+  }
+
+  async addDrink(drinkName: string, ingredients: string[], roomId: string): Promise<Drink> {
+    const { data, error } = await supabase
+      .from('drinks')
+      .insert({name: drinkName, ingredients: ingredients, room_id: roomId });
+
+    if (error) throw error;
+    return data!;
+  }
+
   // // GUESTS
   // async addGuest(name: string, roomId: string): Promise<{ data: Guest | null; error: any }> {
   //   return await supabase
@@ -46,6 +59,8 @@ export class SupabaseService {
     if (error) throw error;
     return data || [];
   }
+
+
 
   // async addOrder(guestId: string, drinkId: string, roomId: string): Promise<Order> {
   //   const { data, error } = await supabase
