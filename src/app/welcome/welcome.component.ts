@@ -2,7 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SupabaseService } from '../supabase/supabase.service';
+import { SupabaseService } from '../services/supabase/supabase.service';
+
 
 
 @Component({
@@ -15,6 +16,7 @@ import { SupabaseService } from '../supabase/supabase.service';
 export class WelcomeComponent {
     private router = inject(Router);
     private supabase = inject(SupabaseService);
+
 
     readonly roomCode = signal<string>('');
     showCreateRoomModal = signal(false);
@@ -40,16 +42,18 @@ export class WelcomeComponent {
         this.showCreateRoomModal.set(true);
     } 
 
-    protected cancelCreateRoom() {
+    protected resetModal() {
         this.showCreateRoomModal.set(false);
         this.newRoomName.set('');
         this.newRoomDescription.set('');
     }
 
     protected async createRoom() {
-        // call supabase and save room
-        await this.supabase.createRoom(this.newRoomName(), this.newRoomDescription())
-        this.cancelCreateRoom();
+        const room = await this.supabase.createRoom(this.newRoomName(),this.newRoomDescription());
+        if(room){
+            this.resetModal();
+            this.router.navigate(['/dashboard', room.id]);
+        }
     }
 }
 

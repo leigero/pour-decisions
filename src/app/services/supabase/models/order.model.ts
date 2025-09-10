@@ -1,4 +1,5 @@
-import { Guest, Drink } from './';
+import { Drink } from "./drinks.model";
+import { Guest } from "./guest.model";
 export type OrderStatus = 'queued' | 'in-progress' | 'complete';
 
 export interface Order {

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Order } from '../../../supabase/models';
+import { Order } from '../../../services/supabase/models';
 
 @Component({
   selector: 'app-order-list',

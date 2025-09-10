@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { Room, Guest, Drink, Order, OrderWithDetails } from './models';
+import { RoomCodeService } from '../roomCode.service';
 
 const supabaseUrl = environment.supabaseUrl;
 const supabaseAnonKey = environment.supabaseAnonKey;
@@ -11,6 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
+  private roomCodeService = inject(RoomCodeService);
   // ROOMS
   async getRooms(): Promise<Room[]>{
     const {data, error} = await supabase.from('rooms').select();
@@ -26,7 +28,19 @@ export class SupabaseService {
       console.error(error);
       return null;
     }
-    if(data.length > 0){
+    if(data?.length > 0){
+      return data[0] as Room;
+    }
+    return null;
+  }
+
+  async getRoomByCode(roomCode: string) : Promise<Room> {
+    const {data, error} = await supabase.from('rooms').select().eq('code', roomCode);
+    if(error){
+      console.error(error);
+      return null;
+    }
+    if(data?.length > 0){
       return data[0] as Room;
     }
     return null;
@@ -52,12 +66,21 @@ export class SupabaseService {
   }
 
   async createRoom(roomName: string, description: string) {
+    
+    let roomCode = this.roomCodeService.generateRoomcode();
+
+
     const { data, error } = await supabase
       .from('rooms')
-      .insert({name: roomName, description: description, is_active: true });
+      .insert({name: roomName, description: description, is_active: true, code: roomCode})
+      .select();
 
     if (error) throw error;
-    return data!;
+
+    if(data?.length > 0){
+      return data[0] as Room;
+    }
+    return null;
   }
 
   // // GUESTS

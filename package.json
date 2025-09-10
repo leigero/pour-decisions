@@ -26,6 +26,7 @@
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "@netlify/functions": "^4.2.5",
     "@supabase/supabase-js": "^2.53.0",
     "git": "^0.1.5",
     "prettier": "^3.6.2",

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { RoomComponent } from './admin/dashboard/room/room.component';
+import { RoomComponent } from './guest/room/room.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { DashboardComponent } from './host/dashboard/dashboard.component';
 
 export const routes: Routes = [
  
@@ -11,10 +11,9 @@ export const routes: Routes = [
 
   // This is the route for a specific room, which will have a URL like:
   // http://localhost:4200/room/12345
-  // The ':roomId' is a route parameter that can be read from within the RoomComponent.
+  // The ':roomCode' is a route parameter that can be read from within the RoomComponent.
   { path: 'room/:roomCode', component: RoomComponent },
   
-  // A wildcard route that handles any URLs that don't match the ones above.
-  // It's useful for showing a "Page Not Found" component.
-  //{ path: '**', component: PageNotFoundComponent }
+  { path: 'dashboard/:roomId', component: DashboardComponent }
+
 ];
