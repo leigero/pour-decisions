@@ -51,6 +51,15 @@ export class SupabaseService {
     return data!;
   }
 
+  async createRoom(roomName: string, description: string) {
+    const { data, error } = await supabase
+      .from('rooms')
+      .insert({name: roomName, description: description, is_active: true });
+
+    if (error) throw error;
+    return data!;
+  }
+
   // // GUESTS
   // async addGuest(name: string, roomId: string): Promise<{ data: Guest | null; error: any }> {
   //   return await supabase
