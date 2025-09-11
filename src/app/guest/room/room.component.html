@@ -1,14 +1,6 @@
 <div class="room">
   <h1>Welcome to {{ room()?.name }}</h1>
   <p>room code: {{ room()?.code }}</p>
-  <div class="room-buttons">
-    <button (click)="addDrink()">Add Drink</button>
-  </div>
-  <div class="drinks">
-    @for (drink of drinks(); track $index) {
-      <h5>{{ drink.name }}</h5>
-      <p>{{ drink.description }}</p>
-      <p>{{ drink.ingredients }}</p>
-    }
-  </div>
+
+  <div class="drinks">TODO: show this room's drinks.</div>
 </div>

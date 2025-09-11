@@ -1,1 +1,7 @@
 <h1>Welcome to Room: {{ room()?.name }}</h1>
+
+<ul>
+  @for (drink of drinks(); track $index) {
+    <li>{{ drink.name }} - {{ drink.ingredients }}</li>
+  }
+</ul>
