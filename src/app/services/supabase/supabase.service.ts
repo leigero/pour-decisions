@@ -52,7 +52,32 @@ export class SupabaseService {
       console.error(error);
       return null;
     }
-    return data;
+    const drinks = data as Drink[];
+
+
+    const drinksWithUrls:Drink[] = drinks.map(drink => {
+    // Check if image_path exists before trying to get the URL
+
+      if (drink.image_path) {
+        const urlParts = drink.image_path.split('/');
+        const response = supabase
+          .storage
+          .from(urlParts[0])
+          .getPublicUrl(urlParts[1], {transform:{width:300, height: 300}});
+        
+        // The 'data' object contains the public URL
+        return {
+          ...drink,
+          image_url: response.data.publicUrl
+        }
+      } else {
+        // Return the drink as is, without an image URL
+        return drink;
+      }
+    });
+
+
+    return drinksWithUrls;
   }
      
 

@@ -2,3 +2,11 @@
     font-size: 30px;
     color:red;
 }
+.drink-cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 72rem;
+      width: 100%;
+      padding: 2rem;
+    }
