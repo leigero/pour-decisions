@@ -1,0 +1,78 @@
+<div class="page-container">
+  <div class="main-container">
+    <header class="header-section">
+      <h2 class="title">Manage Room Menu</h2>
+      <p class="description">
+        Select the drinks you want to be available in this room.
+      </p>
+    </header>
+    <!-- Loading and error states, you can bind these to your signals -->
+    @if (isLoading()) {
+      <div class="loading-state">
+        <span class="loading-text">Loading drinks...</span>
+      </div>
+    } @else if (hasError()) {
+      <div class="error-message">
+        An error occurred while fetching the drinks.
+      </div>
+    } @else {
+      <div id="menu-grid" class="menu-grid">
+        <!-- Drink cards will be rendered here by JavaScript -->
+        @for (drink of drinks(); track drink.id) {
+          <div class="drink-card" [class.is-selected]="drink.isSelected">
+            <label [for]="drink.id"
+              ><pd-drink
+                [drink]="drink"
+                [isSelected]="drink.isSelected"
+              ></pd-drink
+            ></label>
+            <input
+              type="checkbox"
+              [id]="drink.id"
+              [(ngModel)]="drink.isSelected"
+            />
+          </div>
+
+          <!-- <div
+          class="drink-card"
+          [ngClass]="{ 'is-selected': isSelected(drink.id) }"
+          (click)="toggleSelection(drink.id)"
+        >
+          <div class="checkbox-container">
+            @if (isSelected(drink.id)) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="selected-icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M19.916 4.626a.75.75 0 01.208 1.04l-9.5 13.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 8.875-12.629a.75.75 0 011.04-.208z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            } @else {
+              <div class="unselected-icon"></div>
+            }
+          </div>
+          <h3 class="drink-name">{{ drink.name }}</h3>
+          <span class="drink-type">{{ drink.type }}</span>
+          <p class="drink-description">{{ drink.description }}</p>
+        </div> -->
+        }
+      </div>
+    }
+
+    <footer class="footer-section">
+      <button
+        id="save-button"
+        class="save-button"
+        [disabled]="isSaving()"
+        (click)="saveMenu()"
+      >
+        {{ isSaving() ? "Saving..." : "Save Changes" }}
+      </button>
+    </footer>
+  </div>
+</div>

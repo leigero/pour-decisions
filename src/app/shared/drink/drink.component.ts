@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, Input, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase/supabase.service';
 import { Drink } from '../../services/supabase/models';
@@ -14,9 +14,11 @@ import { Drink } from '../../services/supabase/models';
   styleUrls: ['./drink.component.scss'],
 })
 export class DrinkComponent implements OnInit {
+    public isSelected = input.required<boolean>();
+    public readonly drink = input.required<Drink>();
+  
     private supabase = inject(SupabaseService);
 
-    public readonly drink = input.required<Drink>();
 
     ngOnInit(): void {
 

@@ -6,4 +6,5 @@ export interface Drink {
   image_path?: string;
   image_url?: string;
   room_id: string;
+  type: string;
 }

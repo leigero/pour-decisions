@@ -256,24 +256,14 @@
 
     .drink-card {
       background-color: #374151;
-      border-radius: 1.5rem;
-      border: 1px solid #4b5563;
-      overflow: hidden;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease-in-out;
       height:100%;
-    }
-
-    .drink-card:hover {
-      transform: translateY(-5px);
     }
 
     .drink-image {
       object-fit: cover;
-      border-top-left-radius: 1.5rem;
-      border-top-right-radius: 1.5rem;
     }
     
     .drink-details {

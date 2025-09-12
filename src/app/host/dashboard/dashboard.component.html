@@ -2,6 +2,7 @@
 
 <div class="drink-cards-container">
   @for (drink of drinks(); track $index) {
-    <pd-drink [drink]="drink"></pd-drink>
+    <pd-drink [drink]="drink" [isSelected]="false"></pd-drink>
   }
+  <button (click)="openMenu()">Go to menu</button>
 </div>

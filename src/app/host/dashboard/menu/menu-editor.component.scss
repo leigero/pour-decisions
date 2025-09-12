@@ -1,0 +1,245 @@
+:host {
+      --primary-color: #60a5fa;
+      --secondary-color: #93c5fd;
+      --accent-color: #4ade80;
+      --background-color: #111827;
+      --card-background-color: #374151;
+      --text-color: #e5e7eb;
+      --subtle-text-color: #9ca3af;
+      --button-hover-color: #15803d;
+    }
+    
+    .page-container {
+      font-family: sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+    
+    .main-container {
+      max-width: 56rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background-color: var(--card-background-color);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid #4b5563;
+    }
+
+    .header-section {
+      text-align: center;
+    }
+    
+    .title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .description {
+      font-size: 1.125rem;
+      color: var(--subtle-text-color);
+    }
+
+    .loading-state {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 20rem;
+    }
+
+    .loading-text {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #6b7280;
+    }
+
+    .error-message {
+      text-align: center;
+      color: #f87171;
+      font-weight: 500;
+    }
+    
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .menu-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .checkbox-container {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: white;
+    }
+
+    .selected-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+      color: var(--accent-color);
+      background-color: #0d0d0d;
+      border-radius: 9999px;
+      border: 1px solid var(--accent-color);
+      padding: 0.25rem;
+    }
+
+    .unselected-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+      background-color: #0d0d0d;
+      border-radius: 9999px;
+      border: 2px solid #4b5563;
+    }
+    
+    .drink-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--secondary-color);
+    }
+    
+    .drink-type {
+      display: inline-block;
+      background-color: #4b5563;
+      color: #d1d5db;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 0.75rem;
+    }
+    
+    .drink-description {
+      color: var(--subtle-text-color);
+      font-size: 0.875rem;
+    }
+    
+    .footer-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    
+    .save-button {
+      padding: 0.75rem 2rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: white;
+      background-color: var(--accent-color);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      border: none;
+    }
+    
+    .save-button:hover {
+      background-color: var(--button-hover-color);
+    }
+    
+    .save-button:disabled {
+      background-color: #4b5563;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    input[type="checkbox"]{
+        display: none;
+    }
+
+ //****************************************************
+
+ :host {
+      display: block;
+    }
+
+
+    .drink-card {
+      background-color: #374151;
+      border: 5px solid transparent;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      cursor: pointer;
+
+        &.is-selected {
+            border-color: #16a34a;
+        }
+
+        &.is-selected::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 4rem; /* Adjust size as needed */
+            height: 4rem;
+            background-color: #16a34a;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+            transform-origin: top left;
+            z-index: 10;
+        }
+
+        &.is-selected::after {
+            content: '✔';
+            font-size: 1.5rem;
+            color: #0d0d0d;
+            position: absolute;
+            top: 0.25rem;
+            left: 0.75rem;
+            z-index: 11;
+            font-weight: bold;
+        }
+        &:hover {
+            transform: translateY(-5px);
+        }
+    }
+
+    
+    .checkbox-container {
+      /* This is now unused and can be removed if desired */
+      display: none;
+    }
+
+    .drink-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #93c5fd;
+    }
+    
+    .drink-type {
+      display: inline-block;
+      background-color: #4b5563;
+      color: #d1d5db;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 0.75rem;
+    }
+    
+    .drink-description {
+      color: #9ca3af;
+      font-size: 0.875rem;
+    }
+
+
+
+

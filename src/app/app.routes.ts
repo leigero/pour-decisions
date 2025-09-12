@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RoomComponent } from './guest/room/room.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DashboardComponent } from './host/dashboard/dashboard.component';
+import { MenuEditorComponent } from './host/dashboard/menu/menu-editor.component';
 
 export const routes: Routes = [
  
@@ -14,6 +15,8 @@ export const routes: Routes = [
   // The ':roomCode' is a route parameter that can be read from within the RoomComponent.
   { path: 'room/:roomCode', component: RoomComponent },
   
-  { path: 'dashboard/:roomId', component: DashboardComponent }
+  { path: 'dashboard/:roomId', component: DashboardComponent },
+
+  { path: 'menu-editor', component: MenuEditorComponent }
 
 ];
