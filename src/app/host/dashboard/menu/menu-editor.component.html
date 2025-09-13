@@ -20,12 +20,10 @@
         <!-- Drink cards will be rendered here by JavaScript -->
         @for (drink of drinks(); track drink.id) {
           <div class="drink-card" [class.is-selected]="drink.isSelected">
-            <label [for]="drink.id"
-              ><pd-drink
-                [drink]="drink"
-                [isSelected]="drink.isSelected"
-              ></pd-drink
-            ></label>
+            <label [for]="drink.id">
+              <pd-drink [drink]="drink" [isSelected]="drink.isSelected">
+              </pd-drink>
+            </label>
             <input
               type="checkbox"
               [id]="drink.id"
