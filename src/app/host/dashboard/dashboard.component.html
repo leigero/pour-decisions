@@ -1,8 +1,3 @@
 <h1>Welcome to Room: {{ room()?.name }}</h1>
 
-<div class="drink-cards-container">
-  @for (drink of drinks(); track $index) {
-    <pd-drink [drink]="drink" [isSelected]="false"></pd-drink>
-  }
-  <button (click)="openMenu()">Go to menu</button>
-</div>
+<button (click)="openMenu()">Go to menu</button>
