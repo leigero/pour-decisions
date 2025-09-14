@@ -1,3 +1,20 @@
-<h1>Welcome to Room: {{ room()?.name }}</h1>
+@let rm = room();
+<header>
+  <h1>{{ rm?.name }}</h1>
+  <div class="header-details">
+    @if (view2() === "main") {
+      <button class="pd-button" (click)="navigate('menu')">Go to menu</button>
+    } @else {
+      <button class="pd-button" (click)="navigate('main')">&lt;</button>
+    }
 
-<button (click)="openMenu()">Go to menu</button>
+    <div class="room-code">
+      <small>Room Code:</small>
+      <h1>{{ rm?.code }}</h1>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

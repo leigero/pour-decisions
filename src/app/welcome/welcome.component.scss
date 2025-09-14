@@ -9,7 +9,6 @@
       background-color: #1f2937;
       color: #f3f4f6;
       padding: 1rem;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     }
     
     /* Styles for the main card layout */
@@ -101,45 +100,11 @@
       outline: none;
       box-shadow: 0 0 0 2px #2563eb;
     }
-    
-    /* Button styles */
-    .join-button,
-    .create-button {
+
+    .pd-button{
       width: 100%;
-      padding: 0.75rem 1.5rem;
-      font-weight: 600;
-      color: #f3f4f6;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      transition: all 0.3s ease-in-out;
-      transform: scale(1);
-      border: none;
     }
-    
-    .join-button:focus,
-    .create-button:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
-    }
-    
-    .join-button {
-      background-color: #2563eb;
-    }
-    
-    .join-button:hover {
-      background-color: #1d4ed8;
-      transform: scale(1.05);
-    }
-    
-    .create-button {
-      background-color: #16a34a;
-    }
-    
-    .create-button:hover {
-      background-color: #15803d;
-      transform: scale(1.05);
-    }
-    
+
     /* Modal specific styles */
     .modal-backdrop {
       position: fixed;

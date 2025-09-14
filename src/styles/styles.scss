@@ -1,0 +1,42 @@
+* {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Button styles */
+.pd-button {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+  transform: scale(1);
+  border: none;
+}
+
+.pd-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+}
+
+.pd-button {
+  background-color: #2563eb;
+}
+
+.pd-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.pd-button.secondary {
+  background-color: #16a34a;
+}
+
+.pd-button.secondary:hover {
+  background-color: #15803d;
+  transform: scale(1.05);
+}

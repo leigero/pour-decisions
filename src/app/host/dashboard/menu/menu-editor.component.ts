@@ -1,7 +1,7 @@
-import { Component, OnInit, signal, inject, computed, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, inject, computed, WritableSignal, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../../services/supabase/supabase.service';
-import { Drink } from '../../../services/supabase/models';
+import { Drink, Room } from '../../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
 import { DrinkComponent } from '../../../shared/drink/drink.component';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +24,8 @@ export interface DrinkVM extends Drink {
 export class MenuEditorComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private route = inject(ActivatedRoute);
+  
+  public readonly room = input.required<Room>();
 
   public readonly drinks = signal<DrinkVM[]>([]);
 
