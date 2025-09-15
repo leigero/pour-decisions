@@ -30,34 +30,6 @@
               [(ngModel)]="drink.isSelected"
             />
           </div>
-
-          <!-- <div
-          class="drink-card"
-          [ngClass]="{ 'is-selected': isSelected(drink.id) }"
-          (click)="toggleSelection(drink.id)"
-        >
-          <div class="checkbox-container">
-            @if (isSelected(drink.id)) {
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="selected-icon"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M19.916 4.626a.75.75 0 01.208 1.04l-9.5 13.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 8.875-12.629a.75.75 0 011.04-.208z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            } @else {
-              <div class="unselected-icon"></div>
-            }
-          </div>
-          <h3 class="drink-name">{{ drink.name }}</h3>
-          <span class="drink-type">{{ drink.type }}</span>
-          <p class="drink-description">{{ drink.description }}</p>
-        </div> -->
         }
       </div>
     }

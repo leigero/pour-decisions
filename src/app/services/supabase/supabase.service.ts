@@ -14,95 +14,101 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export class SupabaseService {
   private roomCodeService = inject(RoomCodeService);
   // ROOMS
-  async getRooms(): Promise<Room[]>{
-    const {data, error} = await supabase.from('rooms').select();
-    if(error){
+  async getRooms(): Promise<Room[]> {
+    const { data, error } = await supabase.from('rooms').select();
+    if (error) {
       console.error(error);
       return null;
     }
     return data;
   }
-  async getRoomById(roomId: string) : Promise<Room> {
-    const {data, error} = await supabase.from('rooms').select().eq('id', roomId);
-    if(error){
+  async getRoomById(roomId: string): Promise<Room> {
+    const { data, error } = await supabase
+      .from('rooms')
+      .select()
+      .eq('id', roomId);
+    if (error) {
       console.error(error);
       return null;
     }
-    if(data?.length > 0){
+    if (data?.length > 0) {
       return data[0] as Room;
     }
     return null;
   }
 
-  async getRoomByCode(roomCode: string) : Promise<Room> {
-    const {data, error} = await supabase.from('rooms').select().eq('code', roomCode);
-    if(error){
+  async getRoomByCode(roomCode: string): Promise<Room> {
+    const { data, error } = await supabase
+      .from('rooms')
+      .select()
+      .eq('code', roomCode);
+    if (error) {
       console.error(error);
       return null;
     }
-    if(data?.length > 0){
+    if (data?.length > 0) {
       return data[0] as Room;
     }
     return null;
   }
 
-  async getDrinks() : Promise<Drink[]> {
+  async getDrinks(): Promise<Drink[]> {
     const { data, error } = await supabase.from('drinks').select();
-    if(error){
+    if (error) {
       console.error(error);
       return null;
     }
     const drinks = data as Drink[];
 
-
-    const drinksWithUrls:Drink[] = drinks.map(drink => {
-    // Check if image_path exists before trying to get the URL
+    const drinksWithUrls: Drink[] = drinks.map((drink) => {
+      // Check if image_path exists before trying to get the URL
 
       if (drink.image_path) {
         const urlParts = drink.image_path.split('/');
-        const response = supabase
-          .storage
+        const response = supabase.storage
           .from(urlParts[0])
-          .getPublicUrl(urlParts[1], {transform:{width:300, height: 300}});
-        
+          .getPublicUrl(urlParts[1], {
+            transform: { width: 300, height: 300 },
+          });
+
         // The 'data' object contains the public URL
         return {
           ...drink,
-          image_url: response.data.publicUrl
-        }
+          image_url: response.data.publicUrl,
+        };
       } else {
         // Return the drink as is, without an image URL
         return drink;
       }
     });
 
-
     return drinksWithUrls;
   }
-     
 
   async addDrink(drinkName: string, ingredients: string[], roomId: string) {
     const { data, error } = await supabase
       .from('drinks')
-      .insert({name: drinkName, ingredients: ingredients, room_id: roomId });
+      .insert({ name: drinkName, ingredients: ingredients, room_id: roomId });
 
     if (error) throw error;
     return data!;
   }
 
   async createRoom(roomName: string, description: string) {
-    
     let roomCode = this.roomCodeService.generateRoomcode();
-
-
     const { data, error } = await supabase
       .from('rooms')
-      .insert({name: roomName, description: description, is_active: true, code: roomCode})
+      .insert({
+        name: roomName,
+        description: description,
+        is_active: true,
+        code: roomCode,
+      })
       .select();
 
     if (error) throw error;
 
-    if(data?.length > 0){
+    if (data?.length > 0) {
       return data[0] as Room;
     }
     return null;
@@ -119,12 +125,46 @@ export class SupabaseService {
   // DRINKS
   async getDrinksForRoom(roomId: string): Promise<Drink[]> {
     const { data, error } = await supabase
-      .from('drinks')
-      .select()
+      .from('drink_room')
+      .select('drinks(*)')
       .eq('room_id', roomId);
 
     if (error) throw error;
-    return data || [];
+    // Map the results to flatten the nested 'drinks' object
+    const drinks = data.flatMap((d: { drinks: Drink[] }) => d.drinks);
+    console.log('in get drinks service: ', drinks);
+    return drinks || [];
+  }
+
+  async assignDrinksToRoom(roomId: string, drinks: Drink[]): Promise<Drink[]> {
+    // Step 1: Delete all existing drinks for this room to ensure a clean slate
+    const { error: deleteError } = await supabase
+      .from('drink_room')
+      .delete()
+      .eq('room_id', roomId);
+
+    if (deleteError) throw deleteError;
+
+    // If there are no drinks to insert, we can stop here
+    if (drinks.length === 0) {
+      return [];
+    }
+
+    // Step 2: Map the 'drinks' array to the shape of your join table.
+    const recordsToInsert = drinks.map((drink) => ({
+      room_id: roomId,
+      drink_id: drink.id,
+    }));
+
+    // Step 3: Insert the new, selected drinks
+    const { data, error: insertError } = await supabase
+      .from('drink_room')
+      .insert(recordsToInsert)
+      .select();
+
+    if (insertError) throw insertError;
+
+    return data;
   }
 
   // ORDERS
@@ -138,8 +178,6 @@ export class SupabaseService {
     if (error) throw error;
     return data || [];
   }
-
-
 
   // async addOrder(guestId: string, drinkId: string, roomId: string): Promise<Order> {
   //   const { data, error } = await supabase
@@ -168,5 +206,4 @@ export class SupabaseService {
   //     return [];
   //   }
   // }
-
 }
