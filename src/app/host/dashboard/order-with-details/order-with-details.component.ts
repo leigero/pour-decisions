@@ -3,6 +3,6 @@ import { Guest } from '../../../services/supabase/models';
 import { Drink } from '../../../services/supabase/models';
 
 export interface OrderWithDetails extends Order {
-  guest: Pick<Guest, 'name'>;
+  guest: Pick<Guest, 'display_name'>;
   drink: Pick<Drink, 'name'>;
 }

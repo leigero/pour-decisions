@@ -1,6 +1,7 @@
 export interface Guest {
   id: string;
-  name: string;
+  profile_picture: string;
   room_id: string;
+  display_name: string;
   created_at: string;
 }

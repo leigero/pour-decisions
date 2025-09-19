@@ -1,0 +1,36 @@
+<!-- Current Orders Card -->
+<div class="card">
+  <h2 class="section-title">Your Orders</h2>
+  <p class="section-description">Track the status of your drinks.</p>
+  <ul class="order-list">
+    @for (order of orders(); track order.id) {
+      <li class="order-item">
+        <span class="order-name">{{ order.drinkName }}</span>
+        <span
+          class="order-status"
+          [ngClass]="{
+            'status-ready': order.status === 'ready',
+            'status-progress': order.status === 'in-progress',
+          }"
+        >
+          {{ order.status }}
+        </span>
+      </li>
+    } @empty {
+      <p class="text-center text-gray-400">No orders placed yet.</p>
+    }
+  </ul>
+</div>
+<!-- Menu and Orders Section -->
+<div class="secondary-card-container">
+  <!-- Room Menu Card -->
+  <div class="card">
+    <h2 class="section-title text-green-400">Room Menu</h2>
+    <p class="section-description">
+      Explore all available drinks for this room.
+    </p>
+    <button class="pd-button secondary" (click)="openMenu.emit()">
+      Open Menu
+    </button>
+  </div>
+</div>

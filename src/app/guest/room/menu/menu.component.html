@@ -1,0 +1,37 @@
+<div class="page-container">
+  <header class="header-section">
+    <h2 class="title">View Menu</h2>
+    <p class="description">Select the drink you would like to order</p>
+  </header>
+  <!-- Loading and error states, you can bind these to your signals -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <span class="loading-text">Loading drinks...</span>
+    </div>
+  } @else if (hasError()) {
+    <div class="error-message">
+      An error occurred while fetching the drinks.
+    </div>
+  } @else {
+    <div id="menu-grid" class="menu-grid">
+      <!-- Drink cards will be rendered here by JavaScript -->
+      @for (drink of drinks(); track drink.id) {
+        <div class="drink-card">
+          <pd-drink-summary [drink]="drink"> </pd-drink-summary>
+          <button class="pd-button">Order</button>
+        </div>
+      }
+    </div>
+  }
+
+  <footer class="footer-section">
+    <button
+      id="save-button"
+      class="save-button"
+      [disabled]="isSaving()"
+      (click)="toLobby.emit()"
+    >
+      {{ isSaving() ? "Saving..." : "Back to Lobby" }}
+    </button>
+  </footer>
+</div>

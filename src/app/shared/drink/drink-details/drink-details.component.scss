@@ -1,0 +1,31 @@
+.drink-description {
+  font-size: 1rem;
+  color: #9ca3af;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.ingredients-container {
+  padding-top: 1rem;
+  border-top: 1px solid #4b5563;
+}
+
+.ingredients-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 0.5rem;
+}
+
+.ingredients-list {
+  list-style-type: disc;
+  list-style-position: inside;
+  padding-left: 0;
+  font-size: 0.875rem;
+  color: #d1d5db;
+}
+
+.ingredients-list li {
+  margin-bottom: 0.25rem;
+}

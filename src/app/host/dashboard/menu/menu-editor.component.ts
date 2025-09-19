@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../../services/supabase/supabase.service';
 import { Drink, Room } from '../../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
-import { DrinkComponent } from '../../../shared/drink/drink.component';
+import { DrinkDetailsComponent } from '../../../shared/drink/drink-details/drink-details.component';
 import { FormsModule } from '@angular/forms';
 
 export interface DrinkVM extends Drink {
@@ -21,13 +21,11 @@ export interface DrinkVM extends Drink {
 @Component({
   selector: 'pd-menu-editor',
   standalone: true,
-  imports: [CommonModule, DrinkComponent, FormsModule],
+  imports: [CommonModule, DrinkDetailsComponent, FormsModule],
   templateUrl: './menu-editor.component.html',
   styleUrls: ['./menu-editor.component.scss'],
 })
 export class MenuEditorComponent implements OnInit {
-  public readonly room = input.required<Room>();
-
   public readonly roomId: string;
 
   private supabase = inject(SupabaseService);
@@ -67,7 +65,7 @@ export class MenuEditorComponent implements OnInit {
       const drinkVMs = allDrinks.map((d) => {
         return { ...d, isSelected: selectedDrinkIdSet.has(d.id) };
       });
-      console.log(drinkVMs);
+
       this.drinks.set(drinkVMs);
     } catch (error) {
       this.hasError.set(true);

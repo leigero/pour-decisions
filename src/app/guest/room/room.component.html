@@ -1,6 +1,63 @@
-<div class="room">
-  <h1>Welcome to {{ room()?.name }}</h1>
-  <p>room code: {{ room()?.code }}</p>
+<div class="room-container">
+  <!-- Room and User Info Card -->
+  @if (room()) {
+    <div class="main-info-card">
+      <div class="header">
+        <h1 class="section-title text-blue-400">
+          {{ room()?.name || "Loading..." }}
+        </h1>
+        <div class="user-profile">
+          @if (guest()) {
+            <img
+              [src]="guest().profile_picture"
+              alt="{{ guest().display_name }}'s profile photo"
+              class="profile-photo"
+            />
+            <span class="user-name">{{ guest().display_name }}</span>
+            <!-- This would be a button to open a modal for editing -->
+            <button class="edit-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                <path d="m15 5 4 4" />
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+      <p class="section-description">{{ room()?.description || "" }}</p>
+      <div class="room-code-container">
+        <span class="room-code-label">Room Code:</span>
+        <p class="room-code">{{ room()?.code || "Loading..." }}</p>
+      </div>
+    </div>
+  } @else {
+    <div class="main-info-card loading-card">
+      <h1 class="section-title">Loading Room...</h1>
+    </div>
+  }
 
-  <div class="drinks">TODO: show this room's drinks.</div>
+  <div class="content">
+    @switch (view()) {
+      @case ("main") {
+        <pd-lobby
+          [room]="room()"
+          [orders]="orders()"
+          (openMenu)="navigate('menu')"
+        ></pd-lobby>
+      }
+      @case ("menu") {
+        <pd-menu [room]="room()" (toLobby)="navigate('main')"></pd-menu>
+      }
+    }
+  </div>
 </div>

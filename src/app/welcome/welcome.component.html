@@ -6,13 +6,17 @@
       <p class="section-description">
         Enter a room code to join an existing session.
       </p>
-
+      <input
+        type="text"
+        placeholder="Enter Your Name"
+        class="room-input"
+        [(ngModel)]="guestName"
+      />
       <input
         type="text"
         placeholder="Enter Room Code"
         class="room-input"
-        [ngModel]="roomCode()"
-        (ngModelChange)="onRoomCodeUpdate($event)"
+        [(ngModel)]="roomCode"
       />
 
       <button class="pd-button" (click)="joinRoom()">Join</button>

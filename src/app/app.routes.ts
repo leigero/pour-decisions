@@ -3,6 +3,8 @@ import { RoomComponent } from './guest/room/room.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DashboardComponent } from './host/dashboard/dashboard.component';
 import { MenuEditorComponent } from './host/dashboard/menu/menu-editor.component';
+import { MenuComponent } from './guest/room/menu/menu.component';
+import { LobbyComponent } from './guest/room/lobby/lobby.component';
 
 export const routes: Routes = [
   // A route for the main page of your application.
@@ -12,7 +14,10 @@ export const routes: Routes = [
   // This is the route for a specific room, which will have a URL like:
   // http://localhost:4200/room/12345
   // The ':roomCode' is a route parameter that can be read from within the RoomComponent.
-  { path: 'room/:roomCode', component: RoomComponent },
+  {
+    path: 'room/:roomCode',
+    component: RoomComponent,
+  },
 
   {
     path: 'dashboard/:roomId',

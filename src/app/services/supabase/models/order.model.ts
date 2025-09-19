@@ -1,6 +1,11 @@
-import { Drink } from "./drinks.model";
-import { Guest } from "./guest.model";
-export type OrderStatus = 'queued' | 'in-progress' | 'complete';
+import { Drink } from './drinks.model';
+import { Guest } from './guest.model';
+export type OrderStatus =
+  | 'queued'
+  | 'in-progress'
+  | 'ready'
+  | 'served'
+  | 'cancelled';
 
 export interface Order {
   id: string;
@@ -12,6 +17,6 @@ export interface Order {
 }
 
 export interface OrderWithDetails extends Order {
-  guest: Pick<Guest, 'name'>;
+  guest: Pick<Guest, 'display_name'>;
   drink: Pick<Drink, 'name'>;
 }

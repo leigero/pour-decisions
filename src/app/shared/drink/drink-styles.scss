@@ -1,0 +1,28 @@
+.drink-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #60a5fa;
+}
+
+.drink-card {
+  background-color: #374151;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.drink-image {
+  object-fit: cover;
+}
+
+.drink-details {
+  padding: 1.5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

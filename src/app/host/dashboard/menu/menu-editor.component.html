@@ -21,8 +21,7 @@
         @for (drink of drinks(); track drink.id) {
           <div class="drink-card" [class.is-selected]="drink.isSelected">
             <label [for]="drink.id">
-              <pd-drink [drink]="drink" [isSelected]="drink.isSelected">
-              </pd-drink>
+              <pd-drink-details [drink]="drink"></pd-drink-details>
             </label>
             <input
               type="checkbox"

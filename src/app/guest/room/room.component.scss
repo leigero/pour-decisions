@@ -1,0 +1,178 @@
+:host {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1f2937;
+  color: #f3f4f6;
+  padding: 1rem;
+  font-family: "Inter", sans-serif;
+}
+
+.room-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  max-width: 48rem;
+  width: 100%;
+  padding: 2rem;
+  background-color: #374151;
+  border-radius: 1.5rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #4b5563;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.main-info-card,
+.card {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background-color: #1f2937;
+  border-radius: 0.75rem;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #4b5563;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.main-info-card {
+  grid-column: 1 / -1;
+}
+
+.main-info-card:hover {
+  border-color: #60a5fa;
+}
+
+.card:hover {
+  border-color: #4ade80;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.profile-photo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid #34d399;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.user-name {
+  font-weight: 600;
+  color: #d1d5db;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .user-name {
+    display: inline;
+  }
+}
+
+.edit-button {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  background-color: #111827;
+  color: #9ca3af;
+  border-radius: 9999px;
+  padding: 0.25rem;
+  border: 1px solid #4b5563;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.user-profile:hover .edit-button {
+  opacity: 1;
+}
+
+.room-code-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #111827;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  width: fit-content;
+  margin: 0 auto;
+  color: #6b7280;
+}
+
+.room-code-label {
+  font-weight: 600;
+}
+
+.room-code {
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  font-size: 1rem;
+  color: #e5e7eb;
+}
+
+.secondary-card-container {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .secondary-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pd-button {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  background-color: #2563eb;
+  color: #f3f4f6;
+  box-shadow: 0 4px #1d4ed8;
+}
+
+.pd-button.secondary {
+  background-color: #16a34a;
+  box-shadow: 0 4px #15803d;
+}
+
+.pd-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px #1d4ed8;
+}
+
+.pd-button.secondary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px #15803d;
+}
