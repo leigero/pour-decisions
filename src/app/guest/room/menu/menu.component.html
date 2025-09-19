@@ -16,7 +16,7 @@
     <div id="menu-grid" class="menu-grid">
       <!-- Drink cards will be rendered here by JavaScript -->
       @for (drink of drinks(); track drink.id) {
-        <div class="drink-card">
+        <div class="menu-item">
           <pd-drink-summary [drink]="drink"> </pd-drink-summary>
           <button class="pd-button">Order</button>
         </div>

@@ -8,22 +8,6 @@
   gap: 2rem;
 }
 
-.main-container {
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: colors.$pd-card-background-color;
-  border-radius: 1.5rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border: 1px solid #4b5563;
-}
-
 .header-section {
   text-align: center;
 }
@@ -71,54 +55,6 @@
   }
 }
 
-.checkbox-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: white;
-}
-
-.selected-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-  color: colors.$pd-primary-green;
-  background-color: #0d0d0d;
-  border-radius: 9999px;
-  border: 1px solid colors.$pd-primary-green;
-  padding: 0.25rem;
-}
-
-.unselected-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-  background-color: #0d0d0d;
-  border-radius: 9999px;
-  border: 2px solid #4b5563;
-}
-
-.drink-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  color: colors.$pd-secondary-blue;
-}
-
-.drink-type {
-  display: inline-block;
-  background-color: #4b5563;
-  color: #d1d5db;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  margin-bottom: 0.75rem;
-}
-
-.drink-description {
-  color: colors.$pd-subtle-text-color;
-  font-size: 0.875rem;
-}
-
 .footer-section {
   display: flex;
   justify-content: center;
@@ -149,17 +85,13 @@
   opacity: 0.5;
 }
 
-input[type="checkbox"] {
-  display: none;
-}
-
 //****************************************************
 
 :host {
   display: block;
 }
 
-.drink-card {
+.menu-item {
   background-color: #374151;
   /*border: 5px solid transparent;*/
   border-radius: 1.5rem;
@@ -170,66 +102,4 @@ input[type="checkbox"] {
   transition: all 175ms linear;
   position: relative;
   cursor: pointer;
-
-  /* The checkmark. It exists but is hidden and scaled down. */
-  &::after {
-    content: "✔";
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-      sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-    position: absolute;
-    top: 0.25rem;
-    left: 0.75rem;
-    font-size: 2rem;
-    color: #111827;
-    z-index: 11;
-    /* Animate opacity and scale to reveal smoothly */
-    transition: opacity 175ms linear;
-    opacity: 0;
-  }
-
-  /* When the card is selected, its border and the pseudo-elements transition. */
-  &.is-selected {
-    box-shadow: 0 0 0 5px #16a34a;
-    /*border-color: #16a34a;*/
-    transform: translateY(-5px);
-  }
-
-  &.is-selected::before {
-    /* Set the border color to make the triangle visible */
-    border-color: #16a34a transparent transparent transparent;
-    opacity: 1;
-  }
-
-  &.is-selected::after {
-    opacity: 1;
-  }
-}
-
-.checkbox-container {
-  /* This is now unused and can be removed if desired */
-  display: none;
-}
-
-.drink-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  color: #93c5fd;
-}
-
-.drink-type {
-  display: inline-block;
-  background-color: #4b5563;
-  color: #d1d5db;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  margin-bottom: 0.75rem;
-}
-
-.drink-description {
-  color: #9ca3af;
-  font-size: 0.875rem;
 }
