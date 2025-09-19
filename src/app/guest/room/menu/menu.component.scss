@@ -92,6 +92,9 @@
 }
 
 .menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #374151;
   /*border: 5px solid transparent;*/
   border-radius: 1.5rem;
@@ -102,4 +105,8 @@
   transition: all 175ms linear;
   position: relative;
   cursor: pointer;
+
+  button {
+    align-self: stretch;
+  }
 }
