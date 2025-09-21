@@ -1,5 +1,39 @@
 @use "colors";
 
+:host {
+  display: block;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #374151;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transition: all 175ms linear;
+  position: relative;
+  cursor: pointer;
+
+  /* --- FIXES FOR HIGHLIGHTING --- */
+  /* Prevents standard text selection */
+  user-select: none;
+  /* Removes the tap highlight color on mobile/webkit */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes the default focus outline */
+  outline: none;
+
+  button {
+    align-self: stretch;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .page-container {
   font-family: sans-serif;
   color: colors.$pd-text-color;
@@ -85,28 +119,91 @@
   opacity: 0.5;
 }
 
-//****************************************************
-
-:host {
-  display: block;
+// =========== MODAL STYLES ===========
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
-.menu-item {
+.modal-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: #374151;
-  /*border: 5px solid transparent;*/
-  border-radius: 1.5rem;
-  overflow: hidden;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: #1f2937;
+  border-radius: 0.75rem;
+  border: 1px solid #4b5563;
   box-shadow:
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  transition: all 175ms linear;
-  position: relative;
-  cursor: pointer;
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 90%;
+  width: 28rem;
+}
 
-  button {
-    align-self: stretch;
+.modal-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  text-align: center;
+}
+
+/* Styles for the drink name in the modal */
+.modal-panel h4 {
+  text-align: center;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  color: colors.$pd-primary-green;
+  background-color: #374151;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #4b5563;
+}
+
+.modal-body {
+  color: #d1d5db;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+// =========== CONSISTENT BUTTON STYLES ===========
+.pd-button {
+  width: auto; // Override width from room.component.scss
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  background-color: #2563eb;
+  color: #f3f4f6;
+  box-shadow: 0 4px #1d4ed8;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px #1d4ed8;
+  }
+
+  &.secondary {
+    background-color: #4b5563;
+    box-shadow: 0 4px #374151;
+    &:active {
+      box-shadow: 0 2px #374151;
+    }
   }
 }

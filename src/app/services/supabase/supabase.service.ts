@@ -13,6 +13,23 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private roomCodeService = inject(RoomCodeService);
+
+  // IMAGES
+  async getImage(image_path: string, width: number, height: number) {
+    // Check if image_path exists before trying to get the URL
+    const imgWidth = width || 300;
+    const imgHeight = height || 300;
+
+    const urlParts = image_path.split('/');
+    const response = supabase.storage
+      .from(urlParts[0])
+      .getPublicUrl(urlParts[1], {
+        transform: { width: imgWidth, height: imgHeight },
+      });
+
+    // The 'data' object contains the public URL
+    return response.data.publicUrl;
+  }
   // ROOMS
   async getRooms(): Promise<Room[]> {
     const { data, error } = await supabase.from('rooms').select();

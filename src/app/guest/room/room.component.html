@@ -56,7 +56,11 @@
         ></pd-lobby>
       }
       @case ("menu") {
-        <pd-menu [room]="room()" (toLobby)="navigate('main')"></pd-menu>
+        <pd-menu
+          [room]="room()"
+          (toLobby)="navigate('main')"
+          (orderDrink)="orderDrink($event)"
+        ></pd-menu>
       }
     }
   </div>

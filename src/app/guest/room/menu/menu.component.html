@@ -18,7 +18,7 @@
       @for (drink of drinks(); track drink.id) {
         <div class="menu-item">
           <pd-drink-summary [drink]="drink"> </pd-drink-summary>
-          <button class="pd-button">Order</button>
+          <button class="pd-button" (click)="onOrderClick(drink)">Order</button>
         </div>
       }
     </div>
@@ -35,3 +35,28 @@
     </button>
   </footer>
 </div>
+@if (orderConfirmModal()) {
+  <div class="modal-backdrop" id="confirmation-modal">
+    <div class="modal-panel">
+      <h3 class="modal-title">Would you like to order the</h3>
+      <h4>{{ orderConfirmModal().name }}</h4>
+      <p class="modal-body" id="modal-body-text"></p>
+      <div class="modal-actions">
+        <button
+          class="pd-button secondary"
+          id="cancel-order-btn"
+          (click)="onCancelOrder()"
+        >
+          Cancel
+        </button>
+        <button
+          class="pd-button"
+          id="confirm-order-btn"
+          (click)="onConfirmOrder()"
+        >
+          Confirm Order
+        </button>
+      </div>
+    </div>
+  </div>
+}

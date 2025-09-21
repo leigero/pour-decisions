@@ -36,7 +36,6 @@ export class RoomComponent implements OnInit {
   constructor() {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode');
     this.guestId = this.route.snapshot.queryParamMap.get('guestId');
-    console.log('Guest Id: ', this.guestId);
   }
 
   async ngOnInit() {
@@ -58,5 +57,10 @@ export class RoomComponent implements OnInit {
 
   public navigate(view: GuestDashboardView) {
     this.view.set(view);
+  }
+
+  public orderDrink(drinkId: string) {
+    this.navigate('main');
+    console.log(drinkId);
   }
 }
