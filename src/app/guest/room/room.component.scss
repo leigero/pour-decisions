@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 1.5rem;
   max-width: 48rem;
   width: 100%;
   padding: 1rem;
@@ -31,36 +31,47 @@
   align-self: stretch;
 }
 
-.main-info-card,
-.card {
+/* --- Main Info Card Styles --- */
+.main-info-card {
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  background-color: #1f2937;
-  border-radius: 0.75rem;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #2c3e50, #1f2937);
+  border-radius: 1rem;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid #4b5563;
-  transition: border-color 0.3s ease-in-out;
-}
-
-.main-info-card {
-  grid-column: 1 / -1;
+  transition: all 0.3s ease-in-out;
 }
 
 .main-info-card:hover {
   border-color: #60a5fa;
-}
-
-.card:hover {
-  border-color: #4ade80;
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 20px -5px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #4b5563;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e5e7eb;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.section-description {
+  color: #9ca3af;
+  font-size: 1rem;
+  padding-top: 0.5rem;
 }
 
 .user-profile {
@@ -71,13 +82,18 @@
 }
 
 .profile-photo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 9999px;
   border: 2px solid #34d399;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease-in-out;
+}
+
+.user-profile:hover .profile-photo {
+  transform: scale(1.1);
 }
 
 .user-name {
@@ -101,53 +117,120 @@
   border-radius: 9999px;
   padding: 0.25rem;
   border: 1px solid #4b5563;
-  transition: opacity 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   opacity: 0;
+  cursor: pointer;
 }
 
 .user-profile:hover .edit-button {
   opacity: 1;
+  transform: scale(1.1);
 }
 
 .room-code-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background-color: #111827;
-  border-radius: 0.75rem;
-  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
   width: fit-content;
-  margin: 0 auto;
-  color: #6b7280;
+  margin: 0.5rem auto 0;
+  color: #9ca3af;
+  border: 1px solid #4b5563;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.room-code-container:hover {
+  background-color: #374151;
+  border-color: #60a5fa;
 }
 
 .room-code-label {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .room-code {
   font-family: monospace;
-  letter-spacing: 0.1em;
-  font-size: 1rem;
+  letter-spacing: 0.15em;
+  font-size: 1.125rem;
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+/* --- pd-button is now a global style, keeping this for reference/overrides if needed --- */
+.pd-button {
+  /* You can add specific overrides for buttons inside the room component here */
+}
+
+/* --- Styles for the "Guest Gate" Join Modal --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: #1f2937;
+  border-radius: 1rem;
+  border: 1px solid #4b5563;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 28rem;
+}
+
+.modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
   color: #e5e7eb;
 }
 
-.secondary-card-container {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+.modal-description {
+  text-align: center;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.modal-input {
   width: 100%;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.125rem;
+  color: #e5e7eb;
+  background-color: #374151;
+  border-radius: 0.5rem;
+  border: 1px solid #4b5563;
+  transition: all 0.2s ease-in-out;
 }
 
-@media (min-width: 768px) {
-  .secondary-card-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.modal-input::placeholder {
+  color: #6b7280;
 }
 
-.pd-button {
+.modal-input:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Using a general .pd-button class for consistency */
+.modal-actions .pd-button {
   width: 100%;
   padding: 0.75rem 1.25rem;
   font-size: 1.125rem;
@@ -160,19 +243,16 @@
   background-color: #2563eb;
   color: #f3f4f6;
   box-shadow: 0 4px #1d4ed8;
-}
 
-.pd-button.secondary {
-  background-color: #16a34a;
-  box-shadow: 0 4px #15803d;
-}
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px #1d4ed8;
+  }
 
-.pd-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px #1d4ed8;
-}
-
-.pd-button.secondary:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px #15803d;
+  &:disabled {
+    background-color: #4b5563;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }

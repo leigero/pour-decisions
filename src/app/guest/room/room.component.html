@@ -1,37 +1,66 @@
+<!-- NEW: "Guest Gate" Modal. This covers the page if no guestId is present. -->
+@if (showJoinModal()) {
+  <div class="modal-backdrop">
+    <div class="modal-content">
+      <h2 class="modal-title">Join "{{ room()?.name }}"</h2>
+      <div class="modal-body">
+        <p class="modal-description">
+          To join the room and place orders, please enter your name below.
+        </p>
+        <input
+          type="text"
+          placeholder="Enter Your Name"
+          class="modal-input"
+          [(ngModel)]="newGuestName"
+          (keyup.enter)="handleJoinRoom()"
+        />
+      </div>
+      <div class="modal-actions">
+        <button
+          class="pd-button"
+          (click)="handleJoinRoom()"
+          [disabled]="!newGuestName()"
+        >
+          Join Room
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- The main room content is now wrapped in a condition to ensure a guest is identified first. -->
 <div class="room-container">
-  <!-- Room and User Info Card -->
-  @if (room()) {
+  @if (room() && guest()) {
+    <!-- Room and User Info Card -->
     <div class="main-info-card">
       <div class="header">
-        <h1 class="section-title text-blue-400">
+        <h1 class="section-title">
           {{ room()?.name || "Loading..." }}
         </h1>
         <div class="user-profile">
-          @if (guest()) {
-            <img
-              [src]="guest().profile_picture"
-              alt="{{ guest().display_name }}'s profile photo"
-              class="profile-photo"
-            />
-            <span class="user-name">{{ guest().display_name }}</span>
-            <!-- This would be a button to open a modal for editing -->
-            <button class="edit-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                <path d="m15 5 4 4" />
-              </svg>
-            </button>
-          }
+          <img
+            [src]="guest()!.profile_picture"
+            [alt]="guest()!.display_name + 's profile photo'"
+            class="profile-photo"
+          />
+          <span class="user-name">{{ guest()!.display_name }}</span>
+          <!-- This would be a button to open a modal for editing -->
+          <button class="edit-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+              <path d="m15 5 4 4" />
+            </svg>
+          </button>
         </div>
       </div>
       <p class="section-description">{{ room()?.description || "" }}</p>
@@ -40,28 +69,30 @@
         <p class="room-code">{{ room()?.code || "Loading..." }}</p>
       </div>
     </div>
-  } @else {
+
+    <!-- Main content area for lobby/menu -->
+    <div class="content">
+      @switch (view()) {
+        @case ("main") {
+          <pd-lobby
+            [room]="room()!"
+            [orders]="orders()"
+            (openMenu)="navigate('menu')"
+          ></pd-lobby>
+        }
+        @case ("menu") {
+          <pd-menu
+            [room]="room()!"
+            (toLobby)="navigate('main')"
+            (orderDrink)="orderDrink($event)"
+          ></pd-menu>
+        }
+      }
+    </div>
+  } @else if (!showJoinModal()) {
+    <!-- Loading state shown before guest is identified or modal is shown -->
     <div class="main-info-card loading-card">
       <h1 class="section-title">Loading Room...</h1>
     </div>
   }
-
-  <div class="content">
-    @switch (view()) {
-      @case ("main") {
-        <pd-lobby
-          [room]="room()"
-          [orders]="orders()"
-          (openMenu)="navigate('menu')"
-        ></pd-lobby>
-      }
-      @case ("menu") {
-        <pd-menu
-          [room]="room()"
-          (toLobby)="navigate('main')"
-          (orderDrink)="orderDrink($event)"
-        ></pd-menu>
-      }
-    }
-  </div>
 </div>

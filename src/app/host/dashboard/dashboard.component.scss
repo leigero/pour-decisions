@@ -1,30 +1,337 @@
 @use "colors";
 
-.content {
-  font-size: 30px;
-  color: red;
+:host {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  /* UPDATED: Added a subtle radial gradient for more visual texture */
+  background: radial-gradient(circle, #2c3e50 0%, #1f2937 100%);
+  color: #f3f4f6;
+  padding: 1rem;
+  font-family: "Inter", sans-serif;
 }
-.drink-cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 72rem;
-  width: 100%;
-  padding: 2rem;
-}
-header {
+
+.dashboard-container {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 72rem;
+}
+
+/* --- UPDATED HEADER STYLES --- */
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  /* UPDATED: More vibrant gradient using a primary blue accent */
+  background: linear-gradient(145deg, #1e40af, #1f2937);
+  border-radius: 1rem;
+  border: 1px solid #4b5563;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); /* Softer shadow */
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.back-button {
+  display: inline-flex;
   align-items: center;
-  padding-block: 20px;
-  padding-inline: 20px;
-  border-bottom: 4px solid #16a34a;
-  .header-details {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s;
+
+  &:hover {
+    color: white;
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
+
+.room-name {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #4ade80;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.room-description {
+  color: #9ca3af;
+  margin: 0;
+  max-width: 60ch;
+}
+
+.room-code-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #111827;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  width: fit-content;
+  border: 1px solid #4b5563;
+  margin-top: 0.5rem;
+}
+
+.room-code-label {
+  font-weight: 500;
+  color: #9ca3af;
+}
+
 .room-code {
-  color: colors.$pd-primary-green;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  font-size: 1.125rem;
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  color: #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #4b5563;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.content {
+  background-color: #374151;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #4b5563;
+  flex-grow: 1;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- UPDATED SUMMARY CARD STYLES --- */
+.summary-card {
+  background-color: #1f2937;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #4b5563;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  /* NEW: Add top border for color accent */
+  border-top: 3px solid transparent;
+
+  &:hover {
+    transform: translateY(-4px); /* Increased lift on hover */
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* NEW: Color accent for the menu card */
+  &.menu-card {
+    border-top-color: colors.$pd-primary-green;
+    &:hover {
+      border-color: colors.$pd-primary-green;
+      /* NEW: Add a glow effect on hover */
+      box-shadow: 0 0 15px rgba(22, 163, 74, 0.3);
+    }
+  }
+
+  /* NEW: Color accent for the orders card */
+  &.orders-card {
+    border-top-color: #60a5fa;
+    cursor: pointer;
+    &:hover {
+      border-color: #60a5fa;
+      /* NEW: Add a glow effect on hover */
+      box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+    }
+  }
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #e5e7eb;
+}
+
+.card-description {
+  color: #9ca3af;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.card-actions {
+  margin-top: 1.5rem;
+  display: flex;
+}
+
+.pd-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  background-color: colors.$pd-primary-green;
+  color: white;
+  box-shadow: 0 4px darken(colors.$pd-primary-green, 10%);
+  text-decoration: none;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px darken(colors.$pd-primary-green, 10%);
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* --- UPDATED Active Order List Styles --- */
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #374151;
+  border-radius: 0.5rem;
+  /* UPDATED: Softer border */
+  border: 1px solid #4b5563;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #4b5563; /* Subtle hover state */
+  }
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.order-drink-name {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.order-guest-name {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.order-status {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 110px;
+}
+
+/* Status Colors (consistent with lobby) */
+.status-queued {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+.order-status.status-queued::before {
+  content: "🕒";
+}
+
+.status-in-progress {
+  background-color: #ca8a04;
+  color: #fef9c3;
+}
+.order-status.status-in-progress::before {
+  content: "👨‍🍳";
+}
+
+.status-ready {
+  background-color: #15803d;
+  color: #dcfce7;
+}
+.order-status.status-ready::before {
+  content: "✅";
+}
+
+.status-served {
+  background-color: #2563eb;
+  color: #dbeafe;
+}
+.order-status.status-served::before {
+  content: "🍹";
+}
+
+.status-cancelled {
+  background-color: #991b1b;
+  color: #fecaca;
+}
+.order-status.status-cancelled::before {
+  content: "❌";
+}
+
+/* Empty state for the order list */
+.empty-orders {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  font-style: italic;
+  padding: 1rem;
+  background-color: #374151;
+  border-radius: 0.5rem;
 }

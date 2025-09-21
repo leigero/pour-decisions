@@ -1,47 +1,86 @@
-<div class="page-container">
-  <div class="main-container">
-    <header class="header-section">
-      <h2 class="title">Manage Room Menu</h2>
-      <p class="description">
-        Select the drinks you want to be available in this room.
-      </p>
-    </header>
-    <!-- Loading and error states, you can bind these to your signals -->
-    @if (isLoading()) {
-      <div class="loading-state">
-        <span class="loading-text">Loading drinks...</span>
-      </div>
-    } @else if (hasError()) {
-      <div class="error-message">
-        An error occurred while fetching the drinks.
-      </div>
-    } @else {
-      <div id="menu-grid" class="menu-grid">
-        <!-- Drink cards will be rendered here by JavaScript -->
-        @for (drink of drinks(); track drink.id) {
-          <div class="drink-card" [class.is-selected]="drink.isSelected">
-            <label [for]="drink.id">
-              <pd-drink-details [drink]="drink"></pd-drink-details>
-            </label>
-            <input
-              type="checkbox"
-              [id]="drink.id"
-              [(ngModel)]="drink.isSelected"
+<header class="header-section">
+  <h2 class="title">Manage Room Menu</h2>
+  <p class="description">
+    Click on a card to add or remove it from the room's menu. Use the info
+    button to view drink images and ingredients.
+  </p>
+</header>
+
+@if (isLoading()) {
+  <div class="loading-state">Loading drinks...</div>
+} @else if (hasError()) {
+  <div class="error-message">An error occurred while fetching the drinks.</div>
+} @else {
+  <div id="menu-grid" class="menu-grid">
+    @for (drink of drinks(); track drink.id) {
+      <div
+        class="drink-card"
+        [class.is-selected]="drink.isSelected"
+        (click)="toggleSelection(drink)"
+      >
+        <!-- Hidden checkbox for model binding -->
+        <input type="checkbox" [id]="drink.id" [(ngModel)]="drink.isSelected" />
+
+        <!-- Conditionally render the image container only when details are expanded -->
+        @if (expandedDrinkId() === drink.id) {
+          <div class="card-image-container">
+            <img
+              [src]="drink.image_url"
+              [alt]="drink.name"
+              class="drink-image"
+              loading="lazy"
+              onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
             />
           </div>
         }
+
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="drink-name">{{ drink.name }}</h3>
+            <button
+              class="details-toggle"
+              (click)="toggleDetails($event, drink.id)"
+            >
+              <!-- Heroicon: information-circle -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Collapsible Details Section -->
+          <div
+            class="drink-details"
+            [class.is-open]="expandedDrinkId() === drink.id"
+          >
+            <p>{{ drink.description }}</p>
+            <ul class="ingredients-list">
+              @for (ingredient of drink.ingredients; track ingredient) {
+                <li class="ingredient-item">{{ ingredient }}</li>
+              }
+            </ul>
+          </div>
+        </div>
       </div>
     }
-
-    <footer class="footer-section">
-      <button
-        id="save-button"
-        class="save-button"
-        [disabled]="isSaving()"
-        (click)="saveMenu()"
-      >
-        {{ isSaving() ? "Saving..." : "Save Changes" }}
-      </button>
-    </footer>
   </div>
-</div>
+}
+
+<footer class="footer-section">
+  <button
+    id="save-button"
+    class="save-button"
+    [disabled]="isSaving()"
+    (click)="saveMenu()"
+  >
+    {{ isSaving() ? "Saving..." : "Save Changes" }}
+  </button>
+</footer>

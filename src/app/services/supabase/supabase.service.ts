@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 
 import { Room, Guest, Drink, Order, OrderWithDetails } from './models';
@@ -192,12 +192,24 @@ export class SupabaseService {
   async getOrdersForRoom(roomId: string): Promise<OrderWithDetails[]> {
     const { data, error } = await supabase
       .from('orders')
-      .select('*, guest:guest_id(name), drink:drink_id(name)')
+      .select('*, guest:guest_id(display_name), drink:drink_id(name)')
       .eq('room_id', roomId)
       .order('created_at');
 
     if (error) throw error;
     return data || [];
+  }
+
+  async getSingleOrderForRoom(orderId: string): Promise<OrderWithDetails> {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*, guest:guest_id(display_name), drink:drink_id(name)')
+      .eq('id', orderId)
+      .order('created_at')
+      .single();
+
+    if (error) throw error;
+    return data;
   }
 
   async getOrdersForGuest(
@@ -217,6 +229,58 @@ export class SupabaseService {
     if (error) throw error;
     console.log(data);
     return data || [];
+  }
+
+  async placeOrder(drinkId: string, roomId: string, guestId: string) {
+    const { data, error } = await supabase
+      .from('orders')
+      .insert({ drink_id: drinkId, room_id: roomId, guest_id: guestId });
+
+    if (error) throw error;
+    return data!;
+  }
+
+  /**
+   * Subscribes to new orders for a specific room.
+   * @param roomId The ID of the room to listen to.
+   * @param callback The function to execute when a new order is received.
+   * @returns The RealtimeChannel for later unsubscribing.
+   */
+  public onNewOrder(
+    roomId: string,
+    callback: (newOrder: OrderWithDetails) => void,
+  ): RealtimeChannel {
+    const channel = supabase
+      .channel(`room-orders-${roomId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'orders',
+          filter: `room_id=eq.${roomId}`,
+        },
+        (payload) => {
+          // When a new order is inserted, we receive its data.
+          // We need to fetch its details (guest and drink name).
+          this.getSingleOrderForRoom(payload.new['id']).then((orderDetails) => {
+            if (orderDetails) {
+              callback(orderDetails);
+            }
+          });
+        },
+      )
+      .subscribe();
+
+    return channel;
+  }
+
+  /**
+   * Removes a Supabase Realtime subscription.
+   * @param channel The channel to unsubscribe from.
+   */
+  public removeSubscription(channel: RealtimeChannel) {
+    supabase.removeChannel(channel);
   }
 
   //GUEST

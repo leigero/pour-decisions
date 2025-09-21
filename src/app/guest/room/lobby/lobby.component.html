@@ -4,20 +4,16 @@
   <p class="section-description">Track the status of your drinks.</p>
   <ul class="order-list">
     @for (order of orders(); track order.id) {
+      <!-- Add [ngClass] here to enable the colored dot -->
       <li class="order-item">
         <span class="order-name">{{ order.drinkName }}</span>
-        <span
-          class="order-status"
-          [ngClass]="{
-            'status-ready': order.status === 'ready',
-            'status-progress': order.status === 'in-progress',
-          }"
-        >
+        <!-- Keep this [ngClass] for the badge itself -->
+        <span class="order-status" [ngClass]="'status-' + order.status">
           {{ order.status }}
         </span>
       </li>
     } @empty {
-      <p class="text-center text-gray-400">No orders placed yet.</p>
+      <p>No orders placed yet. Time to get a drink!</p>
     }
   </ul>
 </div>

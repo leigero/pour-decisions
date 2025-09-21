@@ -1,239 +1,203 @@
 @use "colors";
 
-.page-container {
-  font-family: sans-serif;
-  background-color: colors.$pd-background-color;
-  color: colors.$pd-text-color;
-}
-
-.main-container {
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem;
+:host {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  background-color: colors.$pd-card-background-color;
-  border-radius: 1.5rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border: 1px solid #4b5563;
+  gap: 1.5rem;
 }
 
 .header-section {
   text-align: center;
+  padding: 1rem 0;
 }
 
 .title {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: 800;
-  color: colors.$pd-primary-blue;
+  color: #e5e7eb;
   margin-bottom: 0.5rem;
 }
 
 .description {
-  font-size: 1.125rem;
-  color: colors.$pd-subtle-text-color;
-}
-
-.loading-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20rem;
-}
-
-.loading-text {
-  font-size: 1.5rem;
-  font-style: italic;
-  color: #6b7280;
-}
-
-.error-message {
-  text-align: center;
-  color: #f87171;
-  font-weight: 500;
+  font-size: 1rem;
+  color: #9ca3af;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .menu-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* --- Drink Card Styles --- */
+.drink-card {
+  background-color: #374151;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  &.is-selected {
+    border-color: colors.$pd-primary-green;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
   }
 }
 
-@media (min-width: 1024px) {
-  .menu-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+/* UPDATED: Image container aspect ratio is now 1/1 for square images */
+.card-image-container {
+  aspect-ratio: 1 / 1;
+  background-color: #4b5563; /* Placeholder color */
 }
 
-.checkbox-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: white;
+.drink-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease-in-out;
 }
 
-.selected-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-  color: colors.$pd-primary-green;
-  background-color: #0d0d0d;
-  border-radius: 9999px;
-  border: 1px solid colors.$pd-primary-green;
-  padding: 0.25rem;
+.drink-card:hover .drink-image {
+  transform: scale(1.05);
 }
 
-.unselected-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-  background-color: #0d0d0d;
-  border-radius: 9999px;
-  border: 2px solid #4b5563;
+.card-content {
+  padding: 1rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .drink-name {
   font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
-  color: colors.$pd-secondary-blue;
-}
-
-.drink-type {
-  display: inline-block;
-  background-color: #4b5563;
-  color: #d1d5db;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  margin-bottom: 0.75rem;
-}
-
-.drink-description {
-  color: colors.$pd-subtle-text-color;
-  font-size: 0.875rem;
-}
-
-.footer-section {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.save-button {
-  padding: 0.75rem 2rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: white;
-  background-color: colors.$pd-primary-green;
-  border-radius: 0.5rem;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  border: none;
-}
-
-.save-button:hover {
-  background-color: colors.$pd-primary-green-hover;
-}
-
-.save-button:disabled {
-  background-color: #4b5563;
-  cursor: not-allowed;
-  opacity: 0.5;
+  color: #e5e7eb;
 }
 
 input[type="checkbox"] {
   display: none;
 }
 
-//****************************************************
-
-:host {
-  display: block;
-}
-
-.drink-card {
-  background-color: #374151;
-  /*border: 5px solid transparent;*/
-  border-radius: 1.5rem;
-  overflow: hidden;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  transition: all 175ms linear;
-  position: relative;
-  cursor: pointer;
-
-  /* The checkmark. It exists but is hidden and scaled down. */
-  &::after {
-    content: "✔";
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-      sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-    position: absolute;
-    top: 0.25rem;
-    left: 0.75rem;
-    font-size: 2rem;
-    color: #111827;
-    z-index: 11;
-    /* Animate opacity and scale to reveal smoothly */
-    transition: opacity 175ms linear;
-    opacity: 0;
-  }
-
-  /* When the card is selected, its border and the pseudo-elements transition. */
-  &.is-selected {
-    box-shadow: 0 0 0 5px #16a34a;
-    /*border-color: #16a34a;*/
-    transform: translateY(-5px);
-  }
-
-  &.is-selected::before {
-    /* Set the border color to make the triangle visible */
-    border-color: #16a34a transparent transparent transparent;
-    opacity: 1;
-  }
-
-  &.is-selected::after {
-    opacity: 1;
-  }
-}
-
-.checkbox-container {
-  /* This is now unused and can be removed if desired */
-  display: none;
-}
-
-.drink-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  color: #93c5fd;
-}
-
-.drink-type {
-  display: inline-block;
-  background-color: #4b5563;
-  color: #d1d5db;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.25rem 0.75rem;
+/* --- Details Toggle Button --- */
+.details-toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
   border-radius: 9999px;
-  margin-bottom: 0.75rem;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 }
 
-.drink-description {
+/* --- Details Section (Collapsible) --- */
+.drink-details {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease-out,
+    margin-top 0.3s ease-out;
+
+  &.is-open {
+    max-height: 200px;
+    margin-top: 1rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: #d1d5db;
+    margin-bottom: 0.5rem;
+  }
+
+  .ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* UPDATED: Ingredient bubbles are now the primary blue */
+  .ingredient-item {
+    background-color: #2563eb; /* Approved blue color */
+    color: #e0f2fe; /* Lighter text for contrast */
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+  }
+}
+
+/* --- Footer and Save Button --- */
+.footer-section {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+  border-top: 1px solid #4b5563;
+  margin-top: 1.5rem;
+}
+
+.save-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  background-color: colors.$pd-primary-green;
+  color: white;
+  box-shadow: 0 4px darken(colors.$pd-primary-green, 10%);
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px darken(colors.$pd-primary-green, 10%);
+  }
+
+  &:disabled {
+    background-color: #4b5563;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+  }
+}
+
+/* --- Loading/Error States --- */
+.loading-state,
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: 1.25rem;
   color: #9ca3af;
-  font-size: 0.875rem;
+  font-style: italic;
+}
+.error-message {
+  color: #f87171;
+  font-style: normal;
 }

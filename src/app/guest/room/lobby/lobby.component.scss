@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-height: 10rem;
 }
 
 .order-item {
@@ -24,31 +25,81 @@
   align-items: center;
   padding: 1rem;
   background-color: #374151;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   border: 1px solid #4b5563;
+  transition: all 0.2s ease-in-out;
+}
+
+.order-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-color: #6b7280;
 }
 
 .order-name {
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.125rem;
   color: #e5e7eb;
 }
 
 .order-status {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.375rem 0.75rem;
   border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 120px; /* Ensures all status bubbles are the same width */
 }
 
+/* --- Status Colors & Icons --- */
+
+/* Queued (Gray) */
+.status-queued {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+.order-status.status-queued::before {
+  content: "🕒";
+}
+
+/* In Progress (Yellow) */
+.status-in-progress {
+  background-color: #ca8a04;
+  color: #fef9c3;
+}
+.order-status.status-in-progress::before {
+  content: "👨‍🍳";
+}
+
+/* Ready (Green) */
 .status-ready {
   background-color: #15803d;
   color: #dcfce7;
 }
+.order-status.status-ready::before {
+  content: "✅";
+}
 
-.status-progress {
-  background-color: #ca8a04;
-  color: #fef9c3;
+/* Served (Blue) */
+.status-served {
+  background-color: #2563eb;
+  color: #dbeafe;
+}
+.order-status.status-served::before {
+  content: "🍹";
+}
+
+/* Cancelled (Red) */
+.status-cancelled {
+  background-color: #991b1b;
+  color: #fecaca;
+}
+.order-status.status-cancelled::before {
+  content: "❌";
 }
 
 .card {
@@ -65,4 +116,13 @@
 
 .card:hover {
   border-color: #4ade80;
+}
+
+/* Styles for the @empty block message */
+.order-list p {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  margin-top: 2rem;
+  font-style: italic;
 }
