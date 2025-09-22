@@ -36,6 +36,7 @@ export class RoomComponent implements OnInit {
 
   // Signal for order detail view modal
   public readonly selectedOrder = signal<OrderVM | null>(null);
+  public readonly selectedDrink = signal<Drink | null>(null);
 
   constructor() {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode')!;
@@ -65,6 +66,14 @@ export class RoomComponent implements OnInit {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
     }
+  }
+
+  public viewDrinkDetails(drink: Drink): void {
+    this.selectedDrink.set(drink);
+  }
+
+  public closeDrinkModal(): void {
+    this.selectedDrink.set(null);
   }
 
   public viewOrderDetails(order: OrderVM): void {
@@ -137,6 +146,7 @@ export class RoomComponent implements OnInit {
         this.guest()!.id,
       );
       await this.fetchOrders();
+      this.closeDrinkModal();
       this.navigate('main');
     } catch (error) {
       console.error('Failed to place order:', error);

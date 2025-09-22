@@ -31,10 +31,11 @@ export class MenuComponent implements OnInit {
   public readonly isLoading = signal(false);
   public readonly hasError = signal(false);
   public readonly isSaving = signal(false);
-  public readonly orderConfirmModal = signal<Drink | null>(null);
 
   public toLobby = output();
   public orderDrink = output<string>();
+
+  public viewDrink = output<Drink>();
 
   async ngOnInit() {
     this.isLoading.set(true);
@@ -49,21 +50,7 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  // Called by the "Order" button in the grid to show the modal
-  public onOrderClick(drink: Drink): void {
-    this.orderConfirmModal.set(drink);
-  }
-
-  // Called by the "Cancel" button or backdrop to hide the modal
-  public onCancelOrder(): void {
-    this.orderConfirmModal.set(null);
-  }
-
-  // Called by the "Confirm" button to emit the order and hide the modal
-  public onConfirmOrder(): void {
-    if (this.orderConfirmModal()) {
-      this.orderDrink.emit(this.orderConfirmModal().id);
-      this.orderConfirmModal.set(null);
-    }
+  public onViewDetailsClick(drink: Drink): void {
+    this.viewDrink.emit(drink);
   }
 }
