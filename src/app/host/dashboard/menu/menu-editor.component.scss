@@ -27,8 +27,14 @@
 
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }
 
 /* --- Drink Card Styles --- */
@@ -40,6 +46,7 @@
   transition: all 0.2s ease-in-out;
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
   cursor: pointer;
 
   &.is-selected {

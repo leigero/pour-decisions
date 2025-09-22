@@ -4,18 +4,58 @@
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+body.modal-open {
+  /* This is the magic property that prevents scrolling */
+  overflow: hidden;
+}
+
 /* Button styles */
 .pd-button {
-  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #f3f4f6;
   border-radius: 0.5rem;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease-in-out;
-  transform: scale(1);
+  cursor: pointer;
   border: none;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  background-color: #2563eb;
+  color: #f3f4f6;
+  box-shadow: 0 4px #1d4ed8;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px #1d4ed8;
+  }
+
+  &:disabled {
+    background-color: #4b5563;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.secondary {
+    background-color: #4b5563;
+    color: #f3f4f6;
+    box-shadow: 0 4px #374151;
+    &:active {
+      box-shadow: 0 2px #374151;
+    }
+  }
+
+  &.danger {
+    background-color: #dc2626;
+    color: #f3f4f6;
+    box-shadow: 0 4px #991b1b;
+    &:active {
+      box-shadow: 0 2px #991b1b;
+    }
+  }
 }
 
 .pd-button:focus {

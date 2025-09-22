@@ -98,99 +98,18 @@
   }
 </div>
 
-<!-- UPDATED: Order Details Modal for the Guest -->
 @if (selectedOrder(); as order) {
-  <div class="modal-backdrop" (click)="closeOrderModal()">
-    <div class="modal-panel" (click)="$event.stopPropagation()">
-      <!-- NEW: Image Container -->
-      <div class="modal-image-container">
-        <img
-          [src]="order.drink.image_url"
-          [alt]="order.drink.name"
-          class="modal-drink-image"
-          onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
-        />
-      </div>
-
-      <div class="modal-header">
-        <h3 class="modal-title">{{ order.drink.name }}</h3>
-        <span class="order-status" [ngClass]="'status-' + order.status">{{
-          order.status
-        }}</span>
-      </div>
-
-      <div class="modal-body">
-        <!-- NEW: Drink Description -->
-        <p class="modal-description">{{ order.drink.description }}</p>
-
-        <!-- NEW: Ingredients List -->
-        <div class="ingredients-section">
-          <h4 class="ingredients-title">Ingredients</h4>
-          <ul class="ingredients-list">
-            @for (ingredient of order.drink.ingredients; track ingredient) {
-              <li class="ingredient-item">{{ ingredient }}</li>
-            }
-          </ul>
-        </div>
-
-        <div class="detail-item">
-          <span class="detail-label">Ordered At:</span>
-          <span class="detail-value">{{
-            order.created_at | date: "shortTime"
-          }}</span>
-        </div>
-      </div>
-
-      <div class="modal-actions">
-        <button class="pd-button secondary" (click)="closeOrderModal()">
-          Close
-        </button>
-        @if (order.status === "queued" || order.status === "in-progress") {
-          <button class="pd-button danger" (click)="cancelOrder(order.id)">
-            Cancel Order
-          </button>
-        }
-      </div>
-    </div>
-  </div>
+  <pd-order-details-modal
+    [order]="order"
+    (close)="closeOrderModal()"
+    (cancelOrder)="cancelOrder($event)"
+  />
 }
+
 @if (selectedDrink(); as drink) {
-  <div class="modal-backdrop" (click)="closeDrinkModal()">
-    <div class="modal-panel" (click)="$event.stopPropagation()">
-      <div class="modal-image-container">
-        <img
-          [src]="drink.image_url"
-          [alt]="drink.name"
-          class="modal-drink-image"
-          onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
-        />
-      </div>
-
-      <div class="modal-header">
-        <h3 class="modal-title">{{ drink.name }}</h3>
-      </div>
-
-      <div class="modal-body">
-        <p class="modal-description">{{ drink.description }}</p>
-
-        <div class="ingredients-section">
-          <h4 class="ingredients-title">Ingredients</h4>
-          <ul class="ingredients-list">
-            @for (ingredient of drink.ingredients; track ingredient) {
-              <li class="ingredient-item">{{ ingredient }}</li>
-            }
-          </ul>
-        </div>
-      </div>
-
-      <div class="modal-actions">
-        <button class="pd-button secondary" (click)="closeDrinkModal()">
-          Back to Menu
-        </button>
-        <button class="pd-button" (click)="orderDrink(drink.id)">
-          Place Order
-        </button>
-      </div>
-    </div>
-  </div>
+  <pd-drink-details-modal
+    [drink]="drink"
+    (close)="closeDrinkModal()"
+    (order)="orderDrink($event)"
+  />
 }

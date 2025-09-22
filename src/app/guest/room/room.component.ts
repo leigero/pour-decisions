@@ -1,9 +1,10 @@
 import {
   Component,
-  computed,
+  effect,
   inject,
   OnDestroy,
   OnInit,
+  Renderer2,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,13 +16,22 @@ import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { OrderVM } from '../../shared/models/vm.models';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { OrderDetailsModalComponent } from '../../shared/modals/order-details-modal/order-details-modal.component';
+import { DrinkDetailsModalComponent } from '../../shared/modals/drink-details-modal.component/drink-details-modal.component';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
 
 @Component({
   selector: 'pd-room',
   standalone: true,
-  imports: [CommonModule, LobbyComponent, MenuComponent, FormsModule], // Add FormsModule here
+  imports: [
+    CommonModule,
+    LobbyComponent,
+    MenuComponent,
+    FormsModule,
+    OrderDetailsModalComponent,
+    DrinkDetailsModalComponent,
+  ], // Add FormsModule here
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
@@ -48,9 +58,19 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private orderSubscription: RealtimeChannel;
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode')!;
     this.guestId = this.route.snapshot.queryParamMap.get('guestId');
+
+    effect(() => {
+      if (this.selectedOrder() || this.selectedDrink()) {
+        // If any modal is open, add the class to the body
+        this.renderer.addClass(document.body, 'modal-open');
+      } else {
+        // If all modals are closed, remove the class
+        this.renderer.removeClass(document.body, 'modal-open');
+      }
+    });
   }
 
   async ngOnInit() {
