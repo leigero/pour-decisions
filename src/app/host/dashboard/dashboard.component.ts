@@ -14,6 +14,7 @@ import {
   OrderWithDetails,
   Drink,
   Order,
+  OrderStatus,
 } from '../../services/supabase/models';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly drinks = signal<Drink[]>([]);
   public readonly orders = signal<OrderWithDetails[]>([]);
   public readonly view2 = signal<DashboardView>('main');
+  public readonly selectedOrder = signal<OrderWithDetails | null>(null);
 
   // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
@@ -116,6 +118,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.view2.set('menu');
     } else {
       this.view2.set('main');
+    }
+  }
+
+  /** Opens the modal and sets the selected order. */
+  public viewOrderDetails(order: OrderWithDetails): void {
+    this.selectedOrder.set(order);
+  }
+
+  /** Closes the modal by clearing the selected order. */
+  public closeOrderModal(): void {
+    this.selectedOrder.set(null);
+  }
+
+  /** Updates an order's status and provides immediate UI feedback. */
+  public async updateOrderStatus(
+    orderId: string,
+    status: OrderStatus,
+  ): Promise<void> {
+    // Optimistically update the local 'orders' signal for a snappy UX
+    this.orders.update((currentOrders) =>
+      currentOrders.map((o) =>
+        o.id === orderId ? { ...o, status: status } : o,
+      ),
+    );
+
+    // If the order being updated is the one in the modal, close the modal
+    if (this.selectedOrder()?.id === orderId) {
+      this.closeOrderModal();
+    }
+
+    try {
+      // Make the actual call to the backend
+      await this.supabase.updateOrderStatus(orderId, status);
+    } catch (error) {
+      console.error('Failed to update order status:', error);
+      // Optional: Add logic here to revert the optimistic update on failure
     }
   }
 

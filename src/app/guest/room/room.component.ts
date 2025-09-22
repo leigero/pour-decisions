@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Room, Order, Guest, Drink } from '../../services/supabase/models';
 import { SupabaseService } from '../../services/supabase/supabase.service';
@@ -7,6 +14,7 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { OrderVM } from '../../shared/models/vm.models';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
 
@@ -17,7 +25,7 @@ type GuestDashboardView = 'main' | 'menu' | 'orders';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   public readonly room = signal<Room | null>(null);
   public readonly guest = signal<Guest | undefined>(undefined);
   public readonly orders = signal<OrderVM[]>([]);
@@ -37,6 +45,8 @@ export class RoomComponent implements OnInit {
   // Signal for order detail view modal
   public readonly selectedOrder = signal<OrderVM | null>(null);
   public readonly selectedDrink = signal<Drink | null>(null);
+
+  private orderSubscription: RealtimeChannel;
 
   constructor() {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode')!;
@@ -65,6 +75,12 @@ export class RoomComponent implements OnInit {
     } else {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.orderSubscription) {
+      this.supabase.removeSubscription(this.orderSubscription);
     }
   }
 
@@ -126,6 +142,23 @@ export class RoomComponent implements OnInit {
       this.guest()!.profile_picture =
         'https://ui-avatars.com/api/?name=' + this.guest()!.display_name;
       await this.fetchOrders();
+      // After fetching initial orders, set up the real-time subscription
+      this.orderSubscription = this.supabase.onGuestOrderChanges(
+        guestId,
+        (payload) => {
+          console.log('Guest order update received!', payload);
+
+          // Since we only listen for UPDATES, we can process the payload directly.
+          const updatedOrder = payload.new as Order;
+          this.orders.update((currentOrders) =>
+            currentOrders.map((order) =>
+              order.id === updatedOrder.id
+                ? { ...order, status: updatedOrder.status } // Update status
+                : order,
+            ),
+          );
+        },
+      );
     } else {
       // If guest is not found (e.g., deleted), clear storage and show modal
       this.clearGuestIdFromStorage();

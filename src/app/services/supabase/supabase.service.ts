@@ -300,6 +300,37 @@ export class SupabaseService {
   }
 
   /**
+   * Subscribes to all changes on the orders table for a specific guest.
+   * @param guestId The ID of the guest to listen for.
+   * @param callback The function to execute when a change occurs.
+   * @returns The RealtimeChannel for later unsubscribing.
+   */
+  public onGuestOrderChanges(
+    guestId: string,
+    callback: (
+      payload: RealtimePostgresChangesPayload<{ [key: string]: any }>,
+    ) => void,
+  ): RealtimeChannel {
+    const channel = supabase
+      .channel(`guest-orders-${guestId}`) // A unique channel for this guest
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'orders',
+          filter: `guest_id=eq.${guestId}`, // Filter specifically for the guest
+        },
+        (payload) => {
+          callback(payload);
+        },
+      )
+      .subscribe();
+
+    return channel;
+  }
+
+  /**
    * Removes a Supabase Realtime subscription.
    * @param channel The channel to unsubscribe from.
    */

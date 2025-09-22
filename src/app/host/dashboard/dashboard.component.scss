@@ -151,6 +151,7 @@
   border: 1px solid #4b5563;
   display: flex;
   flex-direction: column;
+  -webkit-tap-highlight-color: transparent;
   gap: 0.5rem;
   transition: all 0.2s ease-in-out;
   /* NEW: Add top border for color accent */
@@ -334,4 +335,87 @@
   padding: 1rem;
   background-color: #374151;
   border-radius: 0.5rem;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #1f2937;
+  border-radius: 1rem;
+  border: 1px solid #4b5563;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 32rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+.modal-body {
+  color: #d1d5db;
+  font-size: 1.125rem;
+  border-top: 1px solid #374151;
+  border-bottom: 1px solid #374151;
+  padding: 1.5rem 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Add secondary button style if it's not already global */
+.pd-button.secondary {
+  background-color: #4b5563;
+  box-shadow: 0 4px #374151;
+  &:active {
+    box-shadow: 0 2px #374151;
+  }
+}
+
+/* Custom button colors for workflow actions */
+.pd-button.in-progress {
+  background-color: #ca8a04; /* Yellow */
+  box-shadow: 0 4px #a16207;
+  &:active {
+    box-shadow: 0 2px #a16207;
+  }
+}
+
+.pd-button.ready {
+  background-color: #16a34a; /* Green */
+  box-shadow: 0 4px #15803d;
+  &:active {
+    box-shadow: 0 2px #15803d;
+  }
+}
+
+.pd-button.served {
+  background-color: #2563eb; /* Blue */
+  box-shadow: 0 4px #1d4ed8;
+  &:active {
+    box-shadow: 0 2px #1d4ed8;
+  }
 }

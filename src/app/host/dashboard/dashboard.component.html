@@ -62,7 +62,7 @@
           </p>
           <ul class="order-list">
             @for (order of activeOrders(); track order.id) {
-              <li class="order-item">
+              <li class="order-item" (click)="viewOrderDetails(order)">
                 <div class="order-details">
                   <span class="order-drink-name">{{ order.drink.name }}</span>
                   <span class="order-guest-name"
@@ -112,3 +112,54 @@
     }
   </main>
 </div>
+@if (selectedOrder(); as order) {
+  <div class="modal-backdrop" (click)="closeOrderModal()">
+    <div class="modal-panel" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ order.drink.name }}</h3>
+        <span class="order-status" [ngClass]="'status-' + order.status">{{
+          order.status
+        }}</span>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          Order for <strong>{{ order.guest.display_name }}</strong> placed at
+          <strong>{{ order.created_at | date: "shortTime" }}</strong
+          >.
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="pd-button secondary" (click)="closeOrderModal()">
+          Close
+        </button>
+
+        @if (order.status === "queued") {
+          <button
+            class="pd-button in-progress"
+            (click)="updateOrderStatus(order.id, 'in-progress')"
+          >
+            Start Progress
+          </button>
+        }
+        @if (order.status === "in-progress") {
+          <button
+            class="pd-button ready"
+            (click)="updateOrderStatus(order.id, 'ready')"
+          >
+            Mark as Ready
+          </button>
+        }
+        @if (order.status === "ready") {
+          <button
+            class="pd-button served"
+            (click)="updateOrderStatus(order.id, 'served')"
+          >
+            Mark as Served
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}
