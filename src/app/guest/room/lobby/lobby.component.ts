@@ -2,10 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Order, Room } from '../../../services/supabase/models';
-
-export interface OrderVM extends Order {
-  drinkName: string;
-}
+import { OrderVM } from '../../../shared/models/vm.models';
 
 @Component({
   selector: 'pd-lobby',
@@ -19,4 +16,5 @@ export class LobbyComponent {
   public readonly orders = input.required<OrderVM[]>();
 
   public openMenu = output();
+  public viewOrder = output<OrderVM>();
 }

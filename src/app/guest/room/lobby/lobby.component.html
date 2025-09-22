@@ -5,8 +5,8 @@
   <ul class="order-list">
     @for (order of orders(); track order.id) {
       <!-- Add [ngClass] here to enable the colored dot -->
-      <li class="order-item">
-        <span class="order-name">{{ order.drinkName }}</span>
+      <li class="order-item" (click)="viewOrder.emit(order)">
+        <span class="order-name">{{ order.drink.name }}</span>
         <!-- Keep this [ngClass] for the badge itself -->
         <span class="order-status" [ngClass]="'status-' + order.status">
           {{ order.status }}

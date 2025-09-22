@@ -40,13 +40,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly orders = signal<OrderWithDetails[]>([]);
   public readonly view2 = signal<DashboardView>('main');
 
-  // NEW: Signal to manage the text of the copy button for user feedback
+  // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
 
   public readonly activeOrders = computed(() => {
-    return this.orders().filter((order) => order.status == 'queued');
+    const nonActiveStatuses = ['served', 'cancelled'];
+    return this.orders().filter(
+      (order) => !nonActiveStatuses.includes(order.status),
+    );
   });
-
   constructor() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
   }
@@ -58,17 +60,55 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const drinks = await this.supabase.getDrinks();
     this.drinks.set(drinks);
 
-    // Get the initial list of orders.
     const orders = await this.supabase.getOrdersForRoom(this.room().id);
     this.orders.set(orders);
-    // Set up the real-time subscription
-    this.orderSubscription = this.supabase.onNewOrder(
+
+    // Set up the real-time subscription for ALL order changes.
+    this.orderSubscription = this.supabase.onOrderChanges(
       this.room().id,
-      (newOrder) => {
-        // This function runs every time a new order is created
-        console.log('Realtime event received!', newOrder);
-        // Add the new order to our signal, which automatically updates the UI
-        this.orders.update((currentOrders) => [...currentOrders, newOrder]);
+      (payload) => {
+        console.log('Realtime event received!', payload);
+
+        switch (payload.eventType) {
+          case 'INSERT':
+            // A new order was created. Fetch its details and add it to our signal.
+            this.supabase
+              .getSingleOrderForRoom(payload.new['id'])
+              .then((newOrder) => {
+                if (newOrder) {
+                  this.orders.update((currentOrders) => [
+                    ...currentOrders,
+                    newOrder,
+                  ]);
+                }
+              });
+            break;
+
+          case 'UPDATE':
+            // An order was updated. Fetch its new details and replace the old one.
+            this.supabase
+              .getSingleOrderForRoom(payload.new['id'])
+              .then((updatedOrder) => {
+                if (updatedOrder) {
+                  this.orders.update((currentOrders) =>
+                    currentOrders.map((order) =>
+                      order.id === updatedOrder.id ? updatedOrder : order,
+                    ),
+                  );
+                }
+              });
+            break;
+
+          case 'DELETE':
+            // An order was deleted. Remove it from the signal.
+            const deletedOrderId = payload.old['id'];
+            if (deletedOrderId) {
+              this.orders.update((currentOrders) =>
+                currentOrders.filter((order) => order.id !== deletedOrderId),
+              );
+            }
+            break;
+        }
       },
     );
 

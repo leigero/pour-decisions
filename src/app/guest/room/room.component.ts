@@ -1,17 +1,14 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Room, Order, Guest } from '../../services/supabase/models';
+import { Room, Order, Guest, Drink } from '../../services/supabase/models';
 import { SupabaseService } from '../../services/supabase/supabase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LobbyComponent } from './lobby/lobby.component';
 import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { OrderVM } from '../../shared/models/vm.models';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
-
-export interface OrderVM extends Order {
-  drinkName: string;
-}
 
 @Component({
   selector: 'pd-room',
@@ -37,6 +34,9 @@ export class RoomComponent implements OnInit {
   public readonly showJoinModal = signal(false);
   public readonly newGuestName = signal('');
 
+  // Signal for order detail view modal
+  public readonly selectedOrder = signal<OrderVM | null>(null);
+
   constructor() {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode')!;
     this.guestId = this.route.snapshot.queryParamMap.get('guestId');
@@ -58,11 +58,35 @@ export class RoomComponent implements OnInit {
       this.updateUrlWithGuestId(this.guestId);
       await this.loadGuestData(this.guestId);
     } else if (this.guestId) {
+      console.log('guestID from URL', this.guestId);
       // If no saved guest, but guestId is in the URL (from welcome page)
       await this.loadGuestData(this.guestId);
     } else {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
+    }
+  }
+
+  public viewOrderDetails(order: OrderVM): void {
+    this.selectedOrder.set(order);
+  }
+
+  public closeOrderModal(): void {
+    this.selectedOrder.set(null);
+  }
+
+  public async cancelOrder(orderId: string): Promise<void> {
+    try {
+      await this.supabase.updateOrderStatus(orderId, 'cancelled');
+      // Update the local state instantly for a great UX
+      this.orders.update((currentOrders) =>
+        currentOrders.map((o) =>
+          o.id === orderId ? { ...o, status: 'cancelled' } : o,
+        ),
+      );
+      this.closeOrderModal();
+    } catch (error) {
+      console.error('Failed to cancel order:', error);
     }
   }
 
@@ -85,6 +109,7 @@ export class RoomComponent implements OnInit {
   }
 
   private async loadGuestData(guestId: string) {
+    console.log('loading guest data ', guestId);
     this.guest.set(await this.supabase.getGuestById(guestId));
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page
@@ -124,14 +149,19 @@ export class RoomComponent implements OnInit {
       this.roomCode,
       this.guest()!.id,
     );
-    const vmOrders = orders.map((o) => ({
-      ...o,
-      drinkName: o.drinks.name,
+    const vmOrders: OrderVM[] = orders.map((o: any) => ({
+      id: o.id,
+      guest_id: o.guest_id,
+      room_id: o.room_id,
+      status: o.status,
+      created_at: o.created_at,
+      drink: o.drinks, // Assign the nested object to the 'drink' property
     }));
     this.orders.set(vmOrders);
+    console.log('just set: ', this.orders());
   }
 
-  // --- NEW: Helper methods for localStorage ---
+  // Helper methods for localStorage
   private getStorageKey(): string {
     return `pd-guest-${this.roomCode}`;
   }

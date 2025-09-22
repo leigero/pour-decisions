@@ -1,5 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { createClient, RealtimeChannel } from '@supabase/supabase-js';
+import {
+  createClient,
+  RealtimeChannel,
+  RealtimePostgresChangesPayload,
+} from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 
 import { Room, Guest, Drink, Order, OrderWithDetails } from './models';
@@ -209,26 +213,33 @@ export class SupabaseService {
       .single();
 
     if (error) throw error;
+
     return data;
   }
 
-  async getOrdersForGuest(
-    roomCode: string,
-    guestUsername: string,
-  ): Promise<any[]> {
+  async getOrdersForGuest(roomCode: string, guestId: string): Promise<any[]> {
     // we first need to get the room by Code then use the code to get the room by ID
     const room = await this.getRoomByCode(roomCode);
-    console.log(room);
+    if (!room) return [];
     const { data, error } = await supabase
       .from('orders')
-      .select('*, drinks(name)')
+      .select('*, drinks(*)')
       .eq('room_id', room.id)
-      .eq('guest_id', guestUsername)
+      .eq('guest_id', guestId)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    console.log(data);
-    return data || [];
+    if (!data) return [];
+
+    const ordersWithImages = data.map((order) => {
+      const drinkWithImage = this.populateDrinkImages([order.drinks])[0];
+      return {
+        ...order,
+        drinks: drinkWithImage,
+      };
+    });
+
+    return ordersWithImages;
   }
 
   async placeOrder(drinkId: string, roomId: string, guestId: string) {
@@ -240,34 +251,47 @@ export class SupabaseService {
     return data!;
   }
 
+  async updateOrderStatus(orderId: string, orderStatus: string) {
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status: orderStatus })
+      .eq('id', orderId);
+    if (error) throw error;
+    return data!;
+  }
+
   /**
    * Subscribes to new orders for a specific room.
    * @param roomId The ID of the room to listen to.
    * @param callback The function to execute when a new order is received.
    * @returns The RealtimeChannel for later unsubscribing.
    */
-  public onNewOrder(
+  /**
+   * Subscribes to all changes (INSERT, UPDATE, DELETE) on the orders table for a specific room.
+   * @param roomId The ID of the room to listen to.
+   * @param callback The function to execute when a change occurs. It receives the raw Supabase payload.
+   * @returns The RealtimeChannel for later unsubscribing.
+   */
+  public onOrderChanges(
     roomId: string,
-    callback: (newOrder: OrderWithDetails) => void,
+    callback: (
+      payload: RealtimePostgresChangesPayload<{ [key: string]: any }>,
+    ) => void,
   ): RealtimeChannel {
     const channel = supabase
       .channel(`room-orders-${roomId}`)
       .on(
         'postgres_changes',
         {
-          event: 'INSERT',
+          event: '*', // Listen to INSERT, UPDATE, and DELETE
           schema: 'public',
           table: 'orders',
           filter: `room_id=eq.${roomId}`,
         },
         (payload) => {
-          // When a new order is inserted, we receive its data.
-          // We need to fetch its details (guest and drink name).
-          this.getSingleOrderForRoom(payload.new['id']).then((orderDetails) => {
-            if (orderDetails) {
-              callback(orderDetails);
-            }
-          });
+          // Pass the entire payload to the component's callback function.
+          // This allows the component to handle INSERT, UPDATE, and DELETE events.
+          callback(payload);
         },
       )
       .subscribe();
