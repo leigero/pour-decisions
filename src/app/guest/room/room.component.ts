@@ -18,6 +18,7 @@ import { OrderVM } from '../../shared/models/vm.models';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { OrderDetailsModalComponent } from '../../shared/modals/order-details-modal/order-details-modal.component';
 import { DrinkDetailsModalComponent } from '../../shared/modals/drink-details-modal.component/drink-details-modal.component';
+import { JoinRoomModalComponent } from '../../shared/modals/join-room-modal/join-room-modal.component';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
 
@@ -31,6 +32,7 @@ type GuestDashboardView = 'main' | 'menu' | 'orders';
     FormsModule,
     OrderDetailsModalComponent,
     DrinkDetailsModalComponent,
+    JoinRoomModalComponent,
   ], // Add FormsModule here
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
@@ -50,7 +52,6 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   // Signals for the "Guest Gate" Modal
   public readonly showJoinModal = signal(false);
-  public readonly newGuestName = signal('');
 
   // Signal for order detail view modal
   public readonly selectedOrder = signal<OrderVM | null>(null);
@@ -135,8 +136,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async handleJoinRoom() {
-    const guestName = this.newGuestName();
+  public async handleJoinRoom(guestName: string) {
     if (!guestName || !this.room()) return;
 
     try {

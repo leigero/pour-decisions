@@ -1,0 +1,26 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2 class="modal-title">Join "{{ roomName() }}"</h2>
+    <div class="modal-body">
+      <p class="modal-description">
+        To join the room and place orders, please enter your name below.
+      </p>
+      <input
+        type="text"
+        placeholder="Enter Your Name"
+        class="modal-input"
+        [(ngModel)]="guestName"
+        (keyup.enter)="joinRoom.emit(guestName())"
+      />
+    </div>
+    <div class="modal-actions">
+      <button
+        class="pd-button"
+        (click)="joinRoom.emit(guestName())"
+        [disabled]="!guestName()"
+      >
+        Join Room
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,31 +1,9 @@
 <!-- "Guest Gate" Modal (no changes) -->
 @if (showJoinModal()) {
-  <div class="modal-backdrop">
-    <div class="modal-content">
-      <h2 class="modal-title">Join "{{ room()?.name }}"</h2>
-      <div class="modal-body">
-        <p class="modal-description">
-          To join the room and place orders, please enter your name below.
-        </p>
-        <input
-          type="text"
-          placeholder="Enter Your Name"
-          class="modal-input"
-          [(ngModel)]="newGuestName"
-          (keyup.enter)="handleJoinRoom()"
-        />
-      </div>
-      <div class="modal-actions">
-        <button
-          class="pd-button"
-          (click)="handleJoinRoom()"
-          [disabled]="!newGuestName()"
-        >
-          Join Room
-        </button>
-      </div>
-    </div>
-  </div>
+  <pd-join-room-modal
+    [roomName]="room()!.name"
+    (joinRoom)="handleJoinRoom($event)"
+  />
 }
 
 <!-- The main room content -->
