@@ -33,13 +33,9 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src", "src/styles"]
+              "includePaths": ["src/styles"]
             },
-            "styles": [
-              "src/reset.scss",
-              "src/styles/styles.scss",
-              "src/styles/_colors.scss"
-            ]
+            "styles": ["src/styles/reset.scss", "src/styles/styles.scss"]
           },
           "configurations": {
             "production": {
