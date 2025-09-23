@@ -1,3 +1,5 @@
+@use "colors" as colors;
+
 /* --- Styles for Modals --- */
 .modal-backdrop {
   position: fixed;
@@ -10,77 +12,41 @@
   backdrop-filter: blur(4px);
 }
 
-.modal-content,
 .modal-panel {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 0;
   background-color: #1f2937;
   border-radius: 1rem;
   border: 1px solid #4b5563;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
   max-width: 90%;
-  max-height: 90vh;
   width: 28rem;
   overflow: hidden;
+  max-height: 90vh;
 }
 
-/* --- Guest Gate Modal Specifics (for padding) --- */
-.modal-content {
-  padding: 2rem;
-  gap: 1.5rem;
-}
-
-.modal-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  text-align: center;
-  color: #e5e7eb;
-}
-
-.modal-content .modal-description {
-  text-align: center;
-  color: #9ca3af;
-  margin-bottom: 0.5rem;
-}
-
-.modal-input {
-  width: 100%;
-  padding: 0.75rem 1.25rem;
-  font-size: 1.125rem;
-  color: #e5e7eb;
-  background-color: #374151;
-  border-radius: 0.5rem;
-  border: 1px solid #4b5563;
-  transition: all 0.2s ease-in-out;
-}
-
-.modal-input:focus {
-  outline: none;
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
-}
-
-.modal-content .modal-actions {
+.modal-content-wrapper {
+  overflow-y: auto;
+  padding: 1.5rem;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 1rem;
 }
 
-.modal-content .modal-actions .pd-button {
-  flex-grow: 1;
-}
-
-/* --- Order Details Modal Specifics --- */
-.modal-panel {
+.modal-header {
+  display: flex;
+  align-items: flex-start;
   gap: 1rem;
 }
 
 .modal-image-container {
-  aspect-ratio: 16 / 9;
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
   background-color: #374151;
-  width: 100%;
+  flex-shrink: 0;
 }
 
 .modal-drink-image {
@@ -89,15 +55,18 @@
   object-fit: cover;
 }
 
-.modal-header {
+.modal-title-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-grow: 1;
 }
 
-.modal-panel .modal-title {
+.modal-title {
   font-size: 1.5rem;
+  font-weight: 700;
+  color: colors.$pd-text-color;
   text-align: left;
 }
 
@@ -105,23 +74,20 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0 1.5rem;
-  overflow-y: auto;
 }
 
-.modal-body .modal-description {
-  text-align: left;
-  margin-bottom: 0;
+.modal-description {
   font-size: 1rem;
-  color: #d1d5db;
+  color: colors.$pd-subtle-text-color;
 }
 
-.modal-panel .modal-actions {
+.modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  margin-top: 0.5rem;
-  padding: 0 1.5rem 1.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #374151;
+  background-color: #1f2937;
 }
 
 .ingredients-section {
@@ -132,7 +98,7 @@
 .ingredients-title {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #9ca3af;
+  color: colors.$pd-subtle-text-color;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -148,7 +114,7 @@
 }
 
 .ingredient-item {
-  background-color: #2563eb;
+  background-color: colors.$pd-primary-blue;
   color: #e0f2fe;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
