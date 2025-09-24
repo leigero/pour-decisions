@@ -1,9 +1,30 @@
 $pd-primary-blue: #60a5fa;
 $pd-secondary-blue: #93c5fd;
+$pd-action-blue: #2563eb;
+$pd-action-blue-hover: #1d4ed8;
+
 $pd-primary-green: #4ade80;
 $pd-secondary-green: #16a34a;
-$pd-background-color: #111827;
-$pd-card-background-color: #374151;
-$pd-text-color: #e5e7eb;
-$pd-subtle-text-color: #9ca3af;
 $pd-primary-green-hover: #15803d;
+
+$pd-background-color: #111827;
+$pd-background-color-alt: #1f2937;
+$pd-card-background-color: #374151;
+$pd-element-background-color: #4b5563;
+
+$pd-text-color: #e5e7eb;
+$pd-text-color-light: #f3f4f6;
+$pd-subtle-text-color: #9ca3af;
+$pd-subtle-text-color-alt: #d1d5db;
+
+$pd-error-color: #f87171;
+$pd-danger-color: #dc2626;
+$pd-danger-color-hover: #b91c1c;
+
+$pd-status-inprogress-bg: #ca8a04;
+$pd-status-inprogress-text: #fef9c3;
+$pd-status-ready-bg: #15803d;
+$pd-status-ready-text: #dcfce7;
+$pd-status-served-text: #dbeafe;
+$pd-status-cancelled-bg: #991b1b;
+$pd-status-cancelled-text: #fecaca;

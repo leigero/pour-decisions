@@ -14,13 +14,13 @@
 .title {
   font-size: 2rem;
   font-weight: 800;
-  color: #e5e7eb;
+  color: colors.$pd-text-color;
   margin-bottom: 0.5rem;
 }
 
 .description {
   font-size: 1rem;
-  color: #9ca3af;
+  color: colors.$pd-subtle-text-color;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -39,7 +39,7 @@
 
 /* --- Drink Card Styles --- */
 .drink-card {
-  background-color: #374151;
+  background-color: colors.$pd-card-background-color;
   border-radius: 1rem;
   border: 2px solid transparent;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -59,7 +59,7 @@
 /* UPDATED: Image container aspect ratio is now 1/1 for square images */
 .card-image-container {
   aspect-ratio: 1 / 1;
-  background-color: #4b5563; /* Placeholder color */
+  background-color: colors.$pd-element-background-color; /* Placeholder color */
 }
 
 .drink-image {
@@ -87,7 +87,7 @@
 .drink-name {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #e5e7eb;
+  color: colors.$pd-text-color;
 }
 
 input[type="checkbox"] {
@@ -99,7 +99,7 @@ input[type="checkbox"] {
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 9999px;
-  color: #9ca3af;
+  color: colors.$pd-subtle-text-color;
   cursor: pointer;
   padding: 0.25rem;
   transition:
@@ -133,7 +133,7 @@ input[type="checkbox"] {
 
   p {
     font-size: 0.875rem;
-    color: #d1d5db;
+    color: colors.$pd-subtle-text-color-alt;
     margin-bottom: 0.5rem;
   }
 
@@ -148,8 +148,8 @@ input[type="checkbox"] {
 
   /* UPDATED: Ingredient bubbles are now the primary blue */
   .ingredient-item {
-    background-color: #2563eb; /* Approved blue color */
-    color: #e0f2fe; /* Lighter text for contrast */
+    background-color: colors.$pd-action-blue; /* Approved blue color */
+    color: colors.$pd-status-served-text; /* Lighter text for contrast */
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -161,7 +161,7 @@ input[type="checkbox"] {
   display: flex;
   justify-content: center;
   padding: 2rem 0;
-  border-top: 1px solid #4b5563;
+  border-top: 1px solid colors.$pd-element-background-color;
   margin-top: 1.5rem;
 }
 
@@ -186,7 +186,7 @@ input[type="checkbox"] {
   }
 
   &:disabled {
-    background-color: #4b5563;
+    background-color: colors.$pd-element-background-color;
     cursor: not-allowed;
     opacity: 0.7;
     box-shadow: none;
@@ -201,10 +201,10 @@ input[type="checkbox"] {
   align-items: center;
   min-height: 300px;
   font-size: 1.25rem;
-  color: #9ca3af;
+  color: colors.$pd-subtle-text-color;
   font-style: italic;
 }
 .error-message {
-  color: #f87171;
+  color: colors.$pd-error-color;
   font-style: normal;
 }

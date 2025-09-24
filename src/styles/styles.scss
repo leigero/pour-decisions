@@ -1,3 +1,5 @@
+@use "colors" as colors;
+
 * {
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
@@ -23,60 +25,77 @@ body.modal-open {
   border: none;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  background-color: #2563eb;
-  color: #f3f4f6;
-  box-shadow: 0 4px #1d4ed8;
+  background-color: colors.$pd-action-blue;
+  color: colors.$pd-text-color-light;
+  box-shadow: 0 4px colors.$pd-action-blue-hover;
 
   &:active {
     transform: translateY(2px);
-    box-shadow: 0 2px #1d4ed8;
+    box-shadow: 0 2px colors.$pd-action-blue-hover;
   }
 
   &:disabled {
-    background-color: #4b5563;
+    background-color: colors.$pd-element-background-color;
     box-shadow: none;
     cursor: not-allowed;
     opacity: 0.6;
   }
 
+  &:hover:not(:disabled) {
+    background-color: colors.$pd-action-blue-hover;
+    transform: translateY(-1px);
+  }
+
   &.secondary {
-    background-color: #4b5563;
-    color: #f3f4f6;
-    box-shadow: 0 4px #374151;
+    background-color: colors.$pd-element-background-color;
+    color: colors.$pd-text-color-light;
+    box-shadow: 0 4px colors.$pd-card-background-color;
     &:active {
-      box-shadow: 0 2px #374151;
+      box-shadow: 0 2px colors.$pd-card-background-color;
+    }
+    &:hover:not(:disabled) {
+      background-color: darken(colors.$pd-element-background-color, 5%);
     }
   }
 
   &.danger {
-    background-color: #dc2626;
-    color: #f3f4f6;
-    box-shadow: 0 4px #991b1b;
+    background-color: colors.$pd-danger-color;
+    color: colors.$pd-text-color-light;
+    box-shadow: 0 4px colors.$pd-danger-color-hover;
     &:active {
-      box-shadow: 0 2px #991b1b;
+      box-shadow: 0 2px colors.$pd-danger-color-hover;
+    }
+    &:hover:not(:disabled) {
+      background-color: colors.$pd-danger-color-hover;
     }
   }
 }
 
 .pd-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 2px rgba(colors.$pd-action-blue, 0.5);
 }
 
-.pd-button {
-  background-color: #2563eb;
+/* --- Global Modal Styles --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(colors.$pd-background-color, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
-.pd-button:hover {
-  background-color: #1d4ed8;
-  transform: scale(1.05);
-}
-
-.pd-button.secondary {
-  background-color: #16a34a;
-}
-
-.pd-button.secondary:hover {
-  background-color: #15803d;
-  transform: scale(1.05);
+.modal-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: colors.$pd-background-color-alt;
+  border-radius: 1rem;
+  border: 1px solid colors.$pd-element-background-color;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
 }
