@@ -1,30 +1,31 @@
-$pd-primary-blue: #60a5fa;
-$pd-secondary-blue: #93c5fd;
-$pd-action-blue: #2563eb;
-$pd-action-blue-hover: #1d4ed8;
+// --- Rustic & Polished Theme ---
 
-$pd-primary-green: #4ade80;
-$pd-secondary-green: #16a34a;
-$pd-primary-green-hover: #15803d;
+// Core Action & Accent Colors
+$pd-primary-amber: #d97706; // A rich, warm amber for primary actions
+$pd-primary-amber-hover: #b45309;
+$pd-accent-green: #166534; // A deep, earthy green for accents
+$pd-accent-green-hover: #14532d;
 
-$pd-background-color: #111827;
-$pd-background-color-alt: #1f2937;
-$pd-card-background-color: #374151;
-$pd-element-background-color: #4b5563;
+// Background & Surface Colors
+$pd-background-color: #1c1917; // A very dark, warm gray (almost black)
+$pd-background-color-alt: #292524; // A slightly lighter warm gray for panels
+$pd-card-background-color: #44403c; // A warmer gray for cards
+$pd-element-background-color: #57534e; // For secondary buttons and UI elements
 
-$pd-text-color: #e5e7eb;
-$pd-text-color-light: #f3f4f6;
-$pd-subtle-text-color: #9ca3af;
-$pd-subtle-text-color-alt: #d1d5db;
+// Text Colors
+$pd-text-color: #e7e5e4; // Off-white with a hint of warmth
+$pd-text-color-light: #f5f5f4;
+$pd-subtle-text-color: #a8a29e;
+$pd-subtle-text-color-alt: #d6d3d1;
 
+// Feedback & Status Colors
 $pd-error-color: #f87171;
-$pd-danger-color: #dc2626;
-$pd-danger-color-hover: #b91c1c;
-
+$pd-danger-color: #991b1b;
+$pd-danger-color-hover: #7f1d1d;
 $pd-status-inprogress-bg: #ca8a04;
 $pd-status-inprogress-text: #fef9c3;
-$pd-status-ready-bg: #15803d;
+$pd-status-ready-bg: $pd-accent-green;
 $pd-status-ready-text: #dcfce7;
-$pd-status-served-text: #dbeafe;
+$pd-status-served-text: #fef9c3; // Using a warmer text for served status
 $pd-status-cancelled-bg: #991b1b;
 $pd-status-cancelled-text: #fecaca;

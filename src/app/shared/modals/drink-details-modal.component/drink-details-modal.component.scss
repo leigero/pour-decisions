@@ -4,7 +4,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(17, 24, 39, 0.9);
+  background-color: rgba(colors.$pd-background-color, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +15,9 @@
 .modal-panel {
   display: flex;
   flex-direction: column;
-  background-color: #1f2937;
+  background-color: colors.$pd-background-color-alt;
   border-radius: 1rem;
-  border: 1px solid #4b5563;
+  border: 1px solid colors.$pd-element-background-color;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
   max-width: 90%;
   width: 28rem;
@@ -45,7 +45,7 @@
   aspect-ratio: 1 / 1;
   border-radius: 0.5rem;
   overflow: hidden;
-  background-color: #374151;
+  background-color: colors.$pd-card-background-color;
   flex-shrink: 0;
 }
 
@@ -86,12 +86,12 @@
   justify-content: flex-end;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #374151;
-  background-color: #1f2937;
+  border-top: 1px solid colors.$pd-card-background-color;
+  background-color: colors.$pd-background-color-alt;
 }
 
 .ingredients-section {
-  border-top: 1px solid #374151;
+  border-top: 1px solid colors.$pd-card-background-color;
   padding-top: 1rem;
 }
 
@@ -114,8 +114,8 @@
 }
 
 .ingredient-item {
-  background-color: colors.$pd-primary-blue;
-  color: #e0f2fe;
+  background-color: colors.$pd-primary-amber;
+  color: colors.$pd-text-color-light;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.875rem;

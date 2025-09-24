@@ -25,13 +25,13 @@ body.modal-open {
   border: none;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  background-color: colors.$pd-action-blue;
+  background-color: colors.$pd-primary-amber;
   color: colors.$pd-text-color-light;
-  box-shadow: 0 4px colors.$pd-action-blue-hover;
+  box-shadow: 0 4px colors.$pd-primary-amber-hover;
 
   &:active {
     transform: translateY(2px);
-    box-shadow: 0 2px colors.$pd-action-blue-hover;
+    box-shadow: 0 2px colors.$pd-primary-amber-hover;
   }
 
   &:disabled {
@@ -42,7 +42,7 @@ body.modal-open {
   }
 
   &:hover:not(:disabled) {
-    background-color: colors.$pd-action-blue-hover;
+    background-color: colors.$pd-primary-amber-hover;
     transform: translateY(-1px);
   }
 
@@ -73,7 +73,7 @@ body.modal-open {
 
 .pd-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(colors.$pd-action-blue, 0.5);
+  box-shadow: 0 0 0 2px rgba(colors.$pd-primary-amber, 0.5);
 }
 
 /* --- Global Modal Styles --- */

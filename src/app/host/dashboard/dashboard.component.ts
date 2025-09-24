@@ -19,7 +19,7 @@ import {
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
-type DashboardView = 'main' | 'menu' | 'orders';
+type DashboardView = 'main' | 'menu' | 'orders'; // This can be simplified or removed if 'orders' route is not planned
 
 @Component({
   selector: 'pd-dashboard',
@@ -39,7 +39,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly room = signal<Room | undefined>(undefined);
   public readonly drinks = signal<Drink[]>([]);
   public readonly orders = signal<OrderWithDetails[]>([]);
-  public readonly view2 = signal<DashboardView>('main');
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
 
   // Signal to manage the text of the copy button for user feedback
@@ -113,12 +112,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       },
     );
-
-    if (this.router.url.includes('menu-editor')) {
-      this.view2.set('menu');
-    } else {
-      this.view2.set('main');
-    }
   }
 
   /** Opens the modal and sets the selected order. */
@@ -163,11 +156,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  public navigate(view: DashboardView) {
-    this.view2.set(view);
-
+  public navigate(view: 'main' | 'menu' | 'orders') {
     switch (view) {
       case 'main':
+        console.log('switch to main view');
         this.router.navigate(['./'], { relativeTo: this.route });
         break;
       case 'menu':

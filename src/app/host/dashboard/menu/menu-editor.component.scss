@@ -1,11 +1,5 @@
 @use "colors";
 
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
 .header-section {
   text-align: center;
   padding: 1rem 0;
@@ -50,7 +44,7 @@
   cursor: pointer;
 
   &.is-selected {
-    border-color: colors.$pd-primary-green;
+    border-color: colors.$pd-primary-amber;
     transform: translateY(-4px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
   }
@@ -148,8 +142,8 @@ input[type="checkbox"] {
 
   /* UPDATED: Ingredient bubbles are now the primary blue */
   .ingredient-item {
-    background-color: colors.$pd-action-blue; /* Approved blue color */
-    color: colors.$pd-status-served-text; /* Lighter text for contrast */
+    background-color: colors.$pd-primary-amber;
+    color: colors.$pd-text-color-light;
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -176,13 +170,13 @@ input[type="checkbox"] {
   cursor: pointer;
   border: none;
   transition: all 0.2s ease-in-out;
-  background-color: colors.$pd-primary-green;
-  color: white;
-  box-shadow: 0 4px darken(colors.$pd-primary-green, 10%);
+  background-color: colors.$pd-accent-green;
+  color: colors.$pd-text-color-light;
+  box-shadow: 0 4px colors.$pd-accent-green-hover;
 
   &:active {
     transform: translateY(2px);
-    box-shadow: 0 2px darken(colors.$pd-primary-green, 10%);
+    box-shadow: 0 2px colors.$pd-accent-green-hover;
   }
 
   &:disabled {

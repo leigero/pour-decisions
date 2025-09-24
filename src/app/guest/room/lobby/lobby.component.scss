@@ -1,3 +1,5 @@
+@use "colors";
+
 .section-title {
   font-size: 1.75rem;
   line-height: 2rem;
@@ -7,7 +9,7 @@
 }
 
 .section-description {
-  color: #9ca3af;
+  color: colors.$pd-subtle-text-color;
   margin-bottom: 1.5rem;
   text-align: left;
 }
@@ -24,22 +26,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #374151;
+  background-color: colors.$pd-card-background-color;
   border-radius: 0.75rem;
-  border: 1px solid #4b5563;
+  border: 1px solid colors.$pd-element-background-color;
   transition: all 0.2s ease-in-out;
 }
 
 .order-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-color: #6b7280;
+  border-color: colors.$pd-subtle-text-color;
 }
 
 .order-name {
   font-weight: 600;
   font-size: 1.125rem;
-  color: #e5e7eb;
+  color: colors.$pd-text-color;
 }
 
 .order-status {
@@ -59,8 +61,8 @@
 
 /* Queued (Gray) */
 .status-queued {
-  background-color: #4b5563;
-  color: #d1d5db;
+  background-color: colors.$pd-element-background-color;
+  color: colors.$pd-subtle-text-color-alt;
 }
 .order-status.status-queued::before {
   content: "🕒";
@@ -68,8 +70,8 @@
 
 /* In Progress (Yellow) */
 .status-in-progress {
-  background-color: #ca8a04;
-  color: #fef9c3;
+  background-color: colors.$pd-status-inprogress-bg;
+  color: colors.$pd-status-inprogress-text;
 }
 .order-status.status-in-progress::before {
   content: "👨‍🍳";
@@ -77,8 +79,8 @@
 
 /* Ready (Green) */
 .status-ready {
-  background-color: #15803d;
-  color: #dcfce7;
+  background-color: colors.$pd-status-ready-bg;
+  color: colors.$pd-status-ready-text;
 }
 .order-status.status-ready::before {
   content: "✅";
@@ -86,8 +88,8 @@
 
 /* Served (Blue) */
 .status-served {
-  background-color: #2563eb;
-  color: #dbeafe;
+  background-color: colors.$pd-primary-amber;
+  color: colors.$pd-status-served-text;
 }
 .order-status.status-served::before {
   content: "🍹";
@@ -95,8 +97,8 @@
 
 /* Cancelled (Red) */
 .status-cancelled {
-  background-color: #991b1b;
-  color: #fecaca;
+  background-color: colors.$pd-status-cancelled-bg;
+  color: colors.$pd-status-cancelled-text;
 }
 .order-status.status-cancelled::before {
   content: "❌";
@@ -107,21 +109,21 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  background-color: #1f2937;
+  background-color: colors.$pd-background-color-alt;
   border-radius: 0.75rem;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid #4b5563;
+  border: 1px solid colors.$pd-element-background-color;
   transition: border-color 0.3s ease-in-out;
 }
 
 .card:hover {
-  border-color: #4ade80;
+  border-color: colors.$pd-accent-green;
 }
 
 /* Styles for the @empty block message */
 .order-list p {
   text-align: center;
-  color: #6b7280;
+  color: colors.$pd-subtle-text-color;
   font-size: 1rem;
   margin-top: 2rem;
   font-style: italic;
