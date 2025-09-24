@@ -21,22 +21,14 @@
         <!-- Hidden checkbox for model binding -->
         <input type="checkbox" [id]="drink.id" [(ngModel)]="drink.isSelected" />
 
-        <!-- Conditionally render the image container only when details are expanded -->
-        @if (expandedDrinkId() === drink.id) {
-          <div class="card-image-container">
-            <img
-              [src]="drink.image_url"
-              [alt]="drink.name"
-              class="drink-image"
-              loading="lazy"
-              onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
-            />
-          </div>
-        }
-
         <div class="card-content">
           <div class="card-header">
-            <h3 class="drink-name">{{ drink.name }}</h3>
+            <h3
+              class="drink-name"
+              [class.is-hidden]="expandedDrinkId() === drink.id"
+            >
+              {{ drink.name }}
+            </h3>
             <button
               class="details-toggle"
               (click)="toggleDetails($event, drink.id)"
@@ -56,18 +48,13 @@
             </button>
           </div>
 
-          <!-- Collapsible Details Section -->
-          <div
-            class="drink-details"
-            [class.is-open]="expandedDrinkId() === drink.id"
-          >
-            <p>{{ drink.description }}</p>
-            <ul class="ingredients-list">
-              @for (ingredient of drink.ingredients; track ingredient) {
-                <li class="ingredient-item">{{ ingredient }}</li>
-              }
-            </ul>
-          </div>
+          <!-- Conditionally render the drink details when expanded -->
+          @if (expandedDrinkId() === drink.id) {
+            <pd-drink-details
+              [drink]="drink"
+              [class.is-open]="expandedDrinkId() === drink.id"
+            ></pd-drink-details>
+          }
         </div>
       </div>
     }

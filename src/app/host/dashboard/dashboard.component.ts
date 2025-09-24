@@ -25,7 +25,7 @@ type DashboardView = 'orders' | 'menu';
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MenuEditorComponent],
+  imports: [CommonModule, MenuEditorComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })

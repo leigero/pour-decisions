@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Drink } from '../../../services/supabase/models';
+import { DrinkDetailsComponent } from '../../drink/drink-details/drink-details.component';
 
 @Component({
   selector: 'pd-drink-details-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DrinkDetailsComponent],
   templateUrl: './drink-details-modal.component.html',
   styleUrls: ['./drink-details-modal.component.scss'],
 })

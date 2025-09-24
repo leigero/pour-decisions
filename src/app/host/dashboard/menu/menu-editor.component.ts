@@ -11,6 +11,7 @@ import { SupabaseService } from '../../../services/supabase/supabase.service';
 import { Drink, Room } from '../../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DrinkDetailsComponent } from '../../../shared/drink/drink-details/drink-details.component';
 
 export interface DrinkVM extends Drink {
   isSelected: boolean;
@@ -19,7 +20,7 @@ export interface DrinkVM extends Drink {
 @Component({
   selector: 'pd-menu-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DrinkDetailsComponent],
   templateUrl: './menu-editor.component.html',
   styleUrls: ['./menu-editor.component.scss'],
 })
