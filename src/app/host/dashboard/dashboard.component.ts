@@ -18,20 +18,20 @@ import {
 } from '../../services/supabase/models';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { MenuEditorComponent } from './menu/menu-editor.component';
 
-type DashboardView = 'main' | 'menu' | 'orders'; // This can be simplified or removed if 'orders' route is not planned
+type DashboardView = 'orders' | 'menu';
 
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, MenuEditorComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private supabase = inject(SupabaseService);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
 
   private readonly roomId: string;
   private orderSubscription: RealtimeChannel;
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly room = signal<Room | undefined>(undefined);
   public readonly drinks = signal<Drink[]>([]);
   public readonly orders = signal<OrderWithDetails[]>([]);
+  public readonly view = signal<DashboardView>('orders');
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
 
   // Signal to manage the text of the copy button for user feedback
@@ -156,19 +157,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  public navigate(view: 'main' | 'menu' | 'orders') {
-    switch (view) {
-      case 'main':
-        console.log('switch to main view');
-        this.router.navigate(['./'], { relativeTo: this.route });
-        break;
-      case 'menu':
-        this.router.navigate(['menu-editor'], { relativeTo: this.route });
-        break;
-      case 'orders':
-        this.router.navigate(['orders'], { relativeTo: this.route });
-        break;
-    }
+  public navigate(view: DashboardView) {
+    this.view.set(view);
   }
 
   // copy the guest invite link to the clipboard

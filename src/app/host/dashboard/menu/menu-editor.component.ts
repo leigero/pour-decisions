@@ -1,7 +1,14 @@
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  inject,
+  computed,
+  input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../../services/supabase/supabase.service';
-import { Drink } from '../../../services/supabase/models';
+import { Drink, Room } from '../../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -17,10 +24,9 @@ export interface DrinkVM extends Drink {
   styleUrls: ['./menu-editor.component.scss'],
 })
 export class MenuEditorComponent implements OnInit {
-  public readonly roomId: string;
+  public readonly room = input.required<Room>();
 
   private supabase = inject(SupabaseService);
-  private route = inject(ActivatedRoute);
 
   public readonly drinks = signal<DrinkVM[]>([]);
   public readonly isLoading = signal(false);
@@ -34,15 +40,13 @@ export class MenuEditorComponent implements OnInit {
     return this.drinks().filter((d) => d.isSelected);
   });
 
-  constructor() {
-    this.roomId = this.route.parent.snapshot.paramMap.get('roomId');
-  }
+  constructor() {}
 
   async ngOnInit() {
     this.isLoading.set(true);
     try {
       const allDrinks = await this.supabase.getDrinks();
-      const roomDrinks = await this.supabase.getDrinksForRoom(this.roomId);
+      const roomDrinks = await this.supabase.getDrinksForRoom(this.room().id);
       const selectedDrinkIdSet = new Set(roomDrinks.map((d) => d.id));
 
       const drinkVMs = allDrinks.map((d) => ({
@@ -78,7 +82,7 @@ export class MenuEditorComponent implements OnInit {
     this.isSaving.set(true);
     try {
       await this.supabase.assignDrinksToRoom(
-        this.roomId,
+        this.room().id,
         this.selectedDrinks(),
       );
       // Optionally, show a success message

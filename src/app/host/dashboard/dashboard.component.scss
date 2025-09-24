@@ -138,6 +138,35 @@
   flex-direction: column;
 }
 
+.tabs {
+  display: flex;
+  border-bottom: 1px solid colors.$pd-element-background-color;
+  margin-bottom: -1px; // Overlap the content border
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: colors.$pd-subtle-text-color;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: -2px; // Align with the content border
+
+  &:hover {
+    background-color: colors.$pd-background-color-alt;
+    color: colors.$pd-text-color;
+  }
+
+  &.active {
+    color: colors.$pd-primary-amber;
+    border-bottom-color: colors.$pd-primary-amber;
+  }
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -238,7 +267,6 @@
 .order-list {
   list-style: none;
   padding: 0;
-  margin: 1rem 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
