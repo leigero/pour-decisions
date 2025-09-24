@@ -6,6 +6,13 @@
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: colors.$pd-text-color;
+  margin-bottom: 0.5rem;
+}
+
 body.modal-open {
   /* This is the magic property that prevents scrolling */
   overflow: hidden;

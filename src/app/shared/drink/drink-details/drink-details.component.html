@@ -1,16 +1,18 @@
 <div class="details-header">
-  <div class="card-image-container">
-    <img
-      [src]="drink().image_url"
-      alt="{{ drink().name }}"
-      class="drink-image"
-      loading="lazy"
-      onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
-    />
-  </div>
-  <div class="drink-summary">
-    <h3 class="drink-name">{{ drink().name }}</h3>
-    <p class="drink-description">{{ drink().description }}</p>
+  <h2>{{ drink().name }}</h2>
+  <div class="card-details-container">
+    <div class="card-image-container">
+      <img
+        [src]="drink().image_url"
+        alt="{{ drink().name }}"
+        class="drink-image"
+        loading="lazy"
+        onerror="this.src='https://placehold.co/300x300/374151/9ca3af?text=No+Image'"
+      />
+    </div>
+    <div class="drink-summary">
+      <p class="drink-description">{{ drink().description }}</p>
+    </div>
   </div>
 </div>
 

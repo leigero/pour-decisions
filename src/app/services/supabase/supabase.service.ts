@@ -196,7 +196,7 @@ export class SupabaseService {
   async getOrdersForRoom(roomId: string): Promise<OrderWithDetails[]> {
     const { data, error } = await supabase
       .from('orders')
-      .select('*, guest:guest_id(display_name), drink:drink_id(name)')
+      .select('*, guest:guest_id(display_name), drink:drink_id(*)')
       .eq('room_id', roomId)
       .order('created_at');
 
@@ -207,7 +207,7 @@ export class SupabaseService {
   async getSingleOrderForRoom(orderId: string): Promise<OrderWithDetails> {
     const { data, error } = await supabase
       .from('orders')
-      .select('*, guest:guest_id(display_name), drink:drink_id(name)')
+      .select('*, guest:guest_id(display_name), drink:drink_id(*)')
       .eq('id', orderId)
       .order('created_at')
       .single();

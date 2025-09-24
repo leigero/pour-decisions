@@ -1,9 +1,5 @@
 <header class="header-section">
-  <h2 class="title">Manage Room Menu</h2>
-  <p class="description">
-    Click on a card to add or remove it from the room's menu. Use the info
-    button to view drink images and ingredients.
-  </p>
+  <h2>Manage Room Menu</h2>
 </header>
 
 @if (isLoading()) {
@@ -15,11 +11,27 @@
     @for (drink of drinks(); track drink.id) {
       <div
         class="drink-card"
-        [class.is-selected]="drink.isSelected"
-        (click)="toggleSelection(drink)"
+        [class.is-expanded]="expandedDrinkId() === drink.id"
+        (click)="toggleDetails(drink.id)"
       >
         <!-- Hidden checkbox for model binding -->
         <input type="checkbox" [id]="drink.id" [(ngModel)]="drink.isSelected" />
+
+        <button
+          class="select-button"
+          [class.is-selected]="drink.isSelected"
+          (click)="$event.stopPropagation(); toggleSelection(drink)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
+            />
+          </svg>
+        </button>
 
         <div class="card-content">
           <div class="card-header">
@@ -29,23 +41,6 @@
             >
               {{ drink.name }}
             </h3>
-            <button
-              class="details-toggle"
-              (click)="toggleDetails($event, drink.id)"
-            >
-              <!-- Heroicon: information-circle -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
           </div>
 
           <!-- Conditionally render the drink details when expanded -->

@@ -70,8 +70,7 @@ export class MenuEditorComponent implements OnInit {
   }
 
   // NEW: Toggles the visibility of the drink details
-  toggleDetails(event: MouseEvent, drinkId: string): void {
-    event.stopPropagation(); // Prevents the card's click event from firing
+  toggleDetails(drinkId: string): void {
     if (this.expandedDrinkId() === drinkId) {
       this.expandedDrinkId.set(null); // Close if already open
     } else {
