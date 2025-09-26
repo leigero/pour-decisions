@@ -85,9 +85,15 @@
 }
 
 @if (selectedDrink(); as drink) {
-  <pd-drink-details-modal
-    [drink]="drink"
-    (close)="closeDrinkModal()"
-    (order)="orderDrink($event)"
-  />
+  <pd-modal class="modal-contents" (close)="closeDrinkModal()">
+    <pd-drink-details [drink]="drink"></pd-drink-details>
+    <div class="modal-actions">
+      <button class="pd-button secondary" (click)="closeDrinkModal()">
+        Close
+      </button>
+      <button class="pd-button" (click)="orderDrink(drink.id)">
+        Order Drink
+      </button>
+    </div>
+  </pd-modal>
 }

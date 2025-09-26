@@ -153,43 +153,6 @@ input[type="checkbox"] {
   }
 }
 
-/* --- Footer and Save Button --- */
-.footer-section {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0;
-  border-top: 1px solid colors.$pd-element-background-color;
-  margin-top: 1.5rem;
-}
-
-.save-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 2rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease-in-out;
-  background-color: colors.$pd-accent-green;
-  color: colors.$pd-text-color-light;
-  box-shadow: 0 4px colors.$pd-accent-green-hover;
-
-  &:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px colors.$pd-accent-green-hover;
-  }
-
-  &:disabled {
-    background-color: colors.$pd-element-background-color;
-    cursor: not-allowed;
-    opacity: 0.7;
-    box-shadow: none;
-  }
-}
-
 /* --- Loading/Error States --- */
 .loading-state,
 .error-message {

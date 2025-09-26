@@ -169,3 +169,13 @@
   color: colors.$pd-text-color;
   font-weight: 600;
 }
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-contents {
+  gap: 1rem;
+}

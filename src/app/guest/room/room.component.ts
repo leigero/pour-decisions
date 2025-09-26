@@ -17,8 +17,9 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { OrderVM } from '../../shared/models/vm.models';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { OrderDetailsModalComponent } from '../../shared/modals/order-details-modal/order-details-modal.component';
-import { DrinkDetailsModalComponent } from '../../shared/modals/drink-details-modal.component/drink-details-modal.component';
 import { JoinRoomModalComponent } from '../../shared/modals/join-room-modal/join-room-modal.component';
+import { ModalComponent } from '../../shared/modals/modal.component';
+import { DrinkDetailsComponent } from '../../shared/drink/drink-details/drink-details.component';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
 
@@ -31,8 +32,9 @@ type GuestDashboardView = 'main' | 'menu' | 'orders';
     MenuComponent,
     FormsModule,
     OrderDetailsModalComponent,
-    DrinkDetailsModalComponent,
     JoinRoomModalComponent,
+    ModalComponent,
+    DrinkDetailsComponent,
   ], // Add FormsModule here
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],

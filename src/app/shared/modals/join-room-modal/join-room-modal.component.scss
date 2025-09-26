@@ -24,23 +24,6 @@
   margin-bottom: 0.5rem;
 }
 
-.modal-input {
-  width: 100%;
-  padding: 0.75rem 1.25rem;
-  font-size: 1.125rem;
-  color: colors.$pd-text-color;
-  background-color: colors.$pd-card-background-color;
-  border-radius: 0.5rem;
-  border: 1px solid colors.$pd-element-background-color;
-  transition: all 0.2s ease-in-out;
-}
-
-.modal-input:focus {
-  outline: none;
-  border-color: colors.$pd-primary-amber;
-  box-shadow: 0 0 0 2px rgba(colors.$pd-primary-amber, 0.3);
-}
-
 .modal-actions {
   display: flex;
   justify-content: flex-end;

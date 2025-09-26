@@ -1,4 +1,5 @@
 @use "colors" as colors;
+@use "forms" as forms;
 
 * {
   font-family:
@@ -74,6 +75,18 @@ body.modal-open {
     }
     &:hover:not(:disabled) {
       background-color: colors.$pd-danger-color-hover;
+    }
+  }
+
+  &.accent {
+    background-color: colors.$pd-accent-green;
+    color: colors.$pd-text-color-light;
+    box-shadow: 0 4px colors.$pd-accent-green-hover;
+    &:active {
+      box-shadow: 0 2px colors.$pd-accent-green-hover;
+    }
+    &:hover:not(:disabled) {
+      background-color: colors.$pd-accent-green-hover;
     }
   }
 }

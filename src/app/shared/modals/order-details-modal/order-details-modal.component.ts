@@ -2,11 +2,12 @@ import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderVM } from '../../models/vm.models';
 import { DrinkDetailsComponent } from '../../drink/drink-details/drink-details.component';
+import { ModalComponent } from '../modal.component';
 
 @Component({
   selector: 'pd-order-details-modal',
   standalone: true,
-  imports: [CommonModule, DrinkDetailsComponent],
+  imports: [CommonModule, DrinkDetailsComponent, ModalComponent],
   templateUrl: './order-details-modal.component.html',
   styleUrls: ['./order-details-modal.component.scss'],
 })

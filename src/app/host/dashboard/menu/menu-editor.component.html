@@ -57,14 +57,3 @@
     }
   </div>
 }
-
-<footer class="footer-section">
-  <button
-    id="save-button"
-    class="save-button"
-    [disabled]="isSaving()"
-    (click)="saveMenu()"
-  >
-    {{ isSaving() ? "Saving..." : "Save Changes" }}
-  </button>
-</footer>

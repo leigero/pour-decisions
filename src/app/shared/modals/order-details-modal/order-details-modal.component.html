@@ -1,23 +1,11 @@
-<div class="modal-backdrop" (click)="close.emit()">
-  <div class="modal-panel" (click)="$event.stopPropagation()">
-    <div class="modal-content-wrapper">
-      <pd-drink-details [drink]="order().drink"> </pd-drink-details>
-
-      <div class="detail-item">
-        <span class="detail-label">Ordered At:</span>
-        <span class="detail-value">{{
-          order().created_at | date: "shortTime"
-        }}</span>
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="pd-button secondary" (click)="close.emit()">Close</button>
-      @if (order().status === "queued" || order().status === "in-progress") {
-        <button class="pd-button danger" (click)="cancelOrder.emit(order().id)">
-          Cancel Order
-        </button>
-      }
-    </div>
+<pd-modal class="modal-contents" (close)="close.emit()">
+  <pd-drink-details [drink]="order().drink"></pd-drink-details>
+  <div class="modal-actions">
+    <button class="pd-button secondary" (click)="close.emit()">Close</button>
+    @if (order().status === "queued") {
+      <button class="pd-button danger" (click)="cancelOrder.emit(order().id)">
+        Cancel Order
+      </button>
+    }
   </div>
-</div>
+</pd-modal>
