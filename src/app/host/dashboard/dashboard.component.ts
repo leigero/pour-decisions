@@ -161,21 +161,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.view.set(view);
   }
 
-  // copy the guest invite link to the clipboard
-  public copyInviteLink(): void {
+  // copy the guest invite link to the clipboard or share in mobile
+  public async copyInviteLink(): Promise<void> {
     const roomCode = this.room()?.code;
     if (!roomCode) return;
 
     // Construct the full URL for the guest page
     const guestUrl = `${window.location.origin}/room/${roomCode}`;
+    const shareData = {
+      title: 'Join my Pour Decisions room!',
+      text: 'Join my Pour Decisions room with code: ${roomCode}',
+      url: guestUrl,
+    };
 
-    navigator.clipboard
-      .writeText(guestUrl)
-      .then(() => {
-        // Provide feedback to the user
-        this.copyButtonText.set('Copied!');
-        setTimeout(() => this.copyButtonText.set('Share'), 2000);
-      })
-      .catch((err) => console.error('Failed to copy text: ', err));
+    if (navigator.share) {
+      try {
+        // Use the native share menu
+        await navigator.share(shareData);
+        // You could add feedback here if needed, but the native UI is usually enough
+      } catch (err) {
+        // This can happen if the user cancels the share dialog
+        console.log('User cancelled sharing', err);
+      }
+    } else {
+      navigator.clipboard
+        .writeText(guestUrl)
+        .then(() => {
+          // Provide feedback to the user
+          this.copyButtonText.set('Copied!');
+          setTimeout(() => this.copyButtonText.set('Share'), 2000);
+        })
+        .catch((err) => console.error('Failed to copy text: ', err));
+    }
   }
 }
