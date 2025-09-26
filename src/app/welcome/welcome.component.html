@@ -37,40 +37,8 @@
 
 <!-- Create Room Modal -->
 @if (showCreateRoomModal()) {
-  <div class="modal-backdrop">
-    <div class="modal-content">
-      <h2 class="modal-title">Create New Room</h2>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="room-name" class="form-label">Room Name</label>
-          <input
-            id="room-name"
-            type="text"
-            class="modal-input"
-            placeholder="e.g. 'Party Time!'"
-            [(ngModel)]="newRoomName"
-          />
-        </div>
-        <div class="form-group">
-          <label for="room-description" class="form-label"
-            >Description (optional)</label
-          >
-          <textarea
-            id="room-description"
-            class="modal-textarea"
-            placeholder="e.g. 'Drinks for my birthday party!'"
-            [(ngModel)]="newRoomDescription"
-          ></textarea>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="modal-button modal-button-cancel" (click)="resetModal()">
-          Cancel
-        </button>
-        <button class="modal-button modal-button-create" (click)="createRoom()">
-          Create
-        </button>
-      </div>
-    </div>
-  </div>
+  <pd-create-room-modal
+    (closeModal)="closeCreateRoomModal()"
+    (createRoom)="createRoom($event)"
+  ></pd-create-room-modal>
 }

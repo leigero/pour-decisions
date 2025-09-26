@@ -119,3 +119,9 @@ body.modal-open {
   max-height: 90vh;
   overflow: hidden;
 }
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

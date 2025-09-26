@@ -8,7 +8,6 @@ import { ModalComponent } from '../modal.component';
   standalone: true,
   imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './join-room-modal.component.html',
-  styleUrls: ['./join-room-modal.component.scss'],
 })
 export class JoinRoomModalComponent {
   // INPUT: The name of the room to display
