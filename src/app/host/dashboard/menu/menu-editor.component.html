@@ -12,45 +12,47 @@
       <div
         class="drink-card"
         [class.is-expanded]="expandedDrinkId() === drink.id"
-        (click)="toggleDetails(drink.id)"
       >
         <!-- Hidden checkbox for model binding -->
         <input type="checkbox" [id]="drink.id" [(ngModel)]="drink.isSelected" />
 
-        <button
-          class="select-button"
-          [class.is-selected]="drink.isSelected"
-          (click)="$event.stopPropagation(); toggleSelection(drink)"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
-            />
-          </svg>
-        </button>
-
-        <div class="card-content">
-          <div class="card-header">
-            <h3
-              class="drink-name"
-              [class.is-hidden]="expandedDrinkId() === drink.id"
-            >
-              {{ drink.name }}
-            </h3>
+        <div class="card-main" (click)="toggleDetails(drink.id)">
+          <img
+            [src]="drink.image_url"
+            alt="{{ drink.name }}"
+            class="drink-image"
+            loading="lazy"
+            onerror="this.src='https://placehold.co/100x100/44403c/a8a29e?text=PD'"
+          />
+          <div class="drink-summary">
+            <h3 class="drink-name">{{ drink.name }}</h3>
+            <p class="drink-tagline">
+              {{ drink.description | slice: 0 : 35
+              }}{{ drink.description.length > 35 ? "..." : "" }}
+            </p>
           </div>
-
-          <!-- Conditionally render the drink details when expanded -->
-          @if (expandedDrinkId() === drink.id) {
-            <pd-drink-details
-              [drink]="drink"
-              [class.is-open]="expandedDrinkId() === drink.id"
-            ></pd-drink-details>
-          }
         </div>
+
+        <!-- Custom Toggle Switch -->
+        <div class="toggle-container">
+          <label class="toggle-label" (click)="$event.stopPropagation()">
+            <input
+              type="checkbox"
+              class="sr-only"
+              [checked]="drink.isSelected"
+              (change)="toggleSelection(drink)"
+            />
+            <div class="toggle-switch"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Expanded Details Panel -->
+      <div
+        class="details-panel"
+        [class.is-open]="expandedDrinkId() === drink.id"
+      >
+        <pd-drink-details [drink]="drink"></pd-drink-details>
       </div>
     }
   </div>

@@ -13,118 +13,143 @@
 }
 
 .menu-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .menu-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 /* --- Drink Card Styles --- */
 .drink-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-bottom-color: colors.$pd-element-background-color;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background-color: colors.$pd-card-background-color;
+  border-radius: 0.75rem;
   transition: all 0.2s ease-in-out;
   -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-
-  &:hover {
-    background-color: colors.$pd-background-color;
-  }
 
   &.is-expanded {
-    background-color: colors.$pd-background-color;
-    border-color: colors.$pd-element-background-color;
-    border-radius: 0.5rem;
-    align-items: flex-start;
+    background-color: colors.$pd-element-background-color;
   }
 }
 
-.select-button {
+.card-main {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  background-color: colors.$pd-element-background-color;
-  color: colors.$pd-subtle-text-color;
-  transition: all 0.2s ease-in-out;
-  flex-shrink: 0;
-
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &.is-selected {
-    background-color: colors.$pd-accent-green;
-    color: colors.$pd-text-color-light;
-    svg {
-      transform: rotate(45deg);
-    }
-  }
-}
-
-.card-content {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  min-width: 0; /* Prevents flexbox overflow issues */
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
+.drink-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2px solid colors.$pd-element-background-color;
+  flex-shrink: 0;
+}
+
+.drink-summary {
+  min-width: 0;
 }
 
 .drink-name {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.125rem;
+  font-weight: 600;
   color: colors.$pd-text-color;
-  transition:
-    opacity 0.2s ease-in-out,
-    max-height 0.4s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  &.is-hidden {
-    opacity: 0;
-    max-height: 0;
-    margin: 0;
-  }
+.drink-tagline {
+  font-size: 0.875rem;
+  color: colors.$pd-subtle-text-color;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 input[type="checkbox"] {
   display: none;
 }
 
-/* --- Details Section (Collapsible) --- */
+/* --- Custom Toggle Switch --- */
+.toggle-container {
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
 
-/*
-  Since pd-drink-details is now a child, we can style its host or inner elements
-  from the parent's stylesheet. This ensures the transition works correctly.
-*/
-pd-drink-details {
-  display: block;
+.toggle-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.toggle-switch {
+  width: 3rem; // w-12
+  height: 1.75rem; // h-7
+  background-color: colors.$pd-element-background-color;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0.25rem; // top-1
+    left: 0.25rem; // left-1
+    background-color: white;
+    border: 1px solid #d1d5db; // border-gray-300
+    border-radius: 9999px;
+    height: 1.25rem; // h-5
+    width: 1.25rem; // w-5
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.sr-only:checked + .toggle-switch {
+  background-color: colors.$pd-accent-green;
+}
+
+.sr-only:checked + .toggle-switch::after {
+  transform: translateX(1.25rem); // translate-x-full (w-5)
+  border-color: white;
+}
+
+/* --- Details Section (Collapsible) --- */
+.details-panel {
   max-height: 0;
   overflow: hidden;
-  transition:
-    max-height 0.4s ease-in-out,
-    margin-top 0.4s ease-in-out;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 
   &.is-open {
-    max-height: 500px; /* Adjust as needed for content */
-    margin-top: 1rem;
+    max-height: 500px; // Should be larger than content
+  }
+
+  pd-drink-details {
+    display: block;
+    padding: 1rem;
+    border-top: 1px solid colors.$pd-element-background-color;
+    background-color: colors.$pd-background-color;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
   }
 }
 
