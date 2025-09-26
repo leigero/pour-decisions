@@ -4,11 +4,14 @@
   These styles are specific to the Join Room modal (Guest Gate).
   The global modal styles for backdrop and panel are in styles.scss.
 */
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 1.5rem;
+
+:host ::ng-deep .modal-panel {
+  gap: 1rem;
+}
+
+.modal-body,
+.modal-actions {
+  width: 100%;
 }
 
 .modal-title {
@@ -27,6 +30,5 @@
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
   flex-grow: 1;
 }

@@ -27,8 +27,7 @@
           <div class="drink-summary">
             <h3 class="drink-name">{{ drink.name }}</h3>
             <p class="drink-tagline">
-              {{ drink.description | slice: 0 : 35
-              }}{{ drink.description.length > 35 ? "..." : "" }}
+              {{ drink.description }}
             </p>
           </div>
         </div>
