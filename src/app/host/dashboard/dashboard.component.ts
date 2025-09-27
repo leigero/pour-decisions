@@ -4,19 +4,21 @@ import {
   signal,
   computed,
   inject,
-  Signal,
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SupabaseService } from '../../services/supabase/supabase.service';
+import {
+  RoomService,
+  MenuService,
+  OrderService,
+} from '../../services/supabase';
 import {
   Room,
   OrderWithDetails,
   Drink,
-  Order,
   OrderStatus,
 } from '../../services/supabase/models';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { MenuEditorComponent } from './menu/menu-editor.component';
 
@@ -30,7 +32,10 @@ type DashboardView = 'orders' | 'menu';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private supabase = inject(SupabaseService);
+  private roomService = inject(RoomService);
+  private menuService = inject(MenuService);
+  private orderService = inject(OrderService);
+
   private route = inject(ActivatedRoute);
 
   private readonly roomId: string;
@@ -56,17 +61,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    const thisRoom = await this.supabase.getRoomById(this.roomId);
+    const thisRoom = await this.roomService.getRoomById(this.roomId);
     this.room.set(thisRoom);
 
-    const drinks = await this.supabase.getDrinks();
+    const drinks = await this.menuService.getDrinks();
     this.drinks.set(drinks);
 
-    const orders = await this.supabase.getOrdersForRoom(this.room().id);
+    const orders = await this.orderService.getOrdersForRoom(this.room().id);
     this.orders.set(orders);
 
     // Set up the real-time subscription for ALL order changes.
-    this.orderSubscription = this.supabase.onOrderChanges(
+    this.orderSubscription = this.orderService.onOrderChanges(
       this.room().id,
       (payload) => {
         console.log('Realtime event received!', payload);
@@ -74,7 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         switch (payload.eventType) {
           case 'INSERT':
             // A new order was created. Fetch its details and add it to our signal.
-            this.supabase
+            this.orderService
               .getSingleOrderForRoom(payload.new['id'])
               .then((newOrder) => {
                 if (newOrder) {
@@ -88,7 +93,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
           case 'UPDATE':
             // An order was updated. Fetch its new details and replace the old one.
-            this.supabase
+            this.orderService
               .getSingleOrderForRoom(payload.new['id'])
               .then((updatedOrder) => {
                 if (updatedOrder) {
@@ -144,7 +149,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     try {
       // Make the actual call to the backend
-      await this.supabase.updateOrderStatus(orderId, status);
+      await this.orderService.updateOrderStatus(orderId, status);
     } catch (error) {
       console.error('Failed to update order status:', error);
       // Optional: Add logic here to revert the optimistic update on failure
@@ -153,7 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.orderSubscription) {
-      this.supabase.removeSubscription(this.orderSubscription);
+      this.orderService.removeSubscription(this.orderSubscription);
     }
   }
 

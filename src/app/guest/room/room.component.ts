@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Room, Order, Guest, Drink } from '../../services/supabase/models';
-import { SupabaseService } from '../../services/supabase/supabase.service';
+import { OrderService, RoomService } from '../../services/supabase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LobbyComponent } from './lobby/lobby.component';
 import { MenuComponent } from './menu/menu.component';
@@ -45,7 +45,8 @@ export class RoomComponent implements OnInit, OnDestroy {
   public readonly orders = signal<OrderVM[]>([]);
 
   private router = inject(Router);
-  private supabase = inject(SupabaseService);
+  private orderService = inject(OrderService);
+  private roomService = inject(RoomService);
   private route = inject(ActivatedRoute);
 
   public readonly view = signal<GuestDashboardView>('main');
@@ -77,7 +78,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    const room = await this.supabase.getRoomByCode(this.roomCode);
+    const room = await this.roomService.getRoomByCode(this.roomCode);
     if (!room) {
       this.router.navigate(['/']);
       return;
@@ -103,7 +104,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.orderSubscription) {
-      this.supabase.removeSubscription(this.orderSubscription);
+      this.orderService.removeSubscription(this.orderSubscription);
     }
   }
 
@@ -125,7 +126,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public async cancelOrder(orderId: string): Promise<void> {
     try {
-      await this.supabase.updateOrderStatus(orderId, 'cancelled');
+      await this.orderService.updateOrderStatus(orderId, 'cancelled');
       // Update the local state instantly for a great UX
       this.orders.update((currentOrders) =>
         currentOrders.map((o) =>
@@ -142,7 +143,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (!guestName || !this.room()) return;
 
     try {
-      const newGuest = await this.supabase.joinRoom(this.roomCode, guestName);
+      const newGuest = await this.roomService.joinRoom(
+        this.roomCode,
+        guestName,
+      );
       if (newGuest) {
         this.guestId = newGuest.id;
         this.saveGuestIdToStorage(this.guestId); // --- NEW: Save to localStorage ---
@@ -157,7 +161,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private async loadGuestData(guestId: string) {
     console.log('loading guest data ', guestId);
-    this.guest.set(await this.supabase.getGuestById(guestId));
+    this.guest.set(await this.roomService.getGuestById(guestId));
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page
       this.saveGuestIdToStorage(guestId);
@@ -165,7 +169,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         'https://ui-avatars.com/api/?name=' + this.guest()!.display_name;
       await this.fetchOrders();
       // After fetching initial orders, set up the real-time subscription
-      this.orderSubscription = this.supabase.onGuestOrderChanges(
+      this.orderSubscription = this.orderService.onGuestOrderChanges(
         guestId,
         (payload) => {
           console.log('Guest order update received!', payload);
@@ -195,7 +199,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public async orderDrink(drinkId: string) {
     if (!this.room() || !this.guest()) return;
     try {
-      await this.supabase.placeOrder(
+      await this.orderService.placeOrder(
         drinkId,
         this.room()!.id,
         this.guest()!.id,
@@ -210,7 +214,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private async fetchOrders() {
     if (!this.guest()) return;
-    const orders = await this.supabase.getOrdersForGuest(
+    const orders = await this.orderService.getOrdersForGuest(
       this.roomCode,
       this.guest()!.id,
     );

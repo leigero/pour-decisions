@@ -7,7 +7,7 @@ import {
   output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SupabaseService } from '../../../services/supabase/supabase.service';
+import { MenuService } from '../../../services/supabase';
 import { Drink, Room } from '../../../services/supabase/models';
 import { FormsModule } from '@angular/forms';
 import { DrinkSummaryComponent } from '../../../shared/drink/drink-summary/drink-summary.component';
@@ -24,7 +24,7 @@ type GuestDashboardView = 'main' | 'menu' | 'orders';
 export class MenuComponent implements OnInit {
   public readonly room = input.required<Room>();
 
-  private supabase = inject(SupabaseService);
+  private menuService = inject(MenuService);
 
   public readonly drinks = signal<Drink[]>([]);
 
@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit {
     this.isLoading.set(true);
     try {
       // Step 1: Fetch the full list of available drinks
-      this.drinks.set(await this.supabase.getDrinksForRoom(this.room().id));
+      this.drinks.set(await this.menuService.getDrinksForRoom(this.room().id));
     } catch (error) {
       this.hasError.set(true);
       console.error('Error fetching drinks:', error);

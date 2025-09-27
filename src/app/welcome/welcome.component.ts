@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SupabaseService } from '../services/supabase/supabase.service';
+import { RoomService } from '../services/supabase/room.service';
 import {
   CreateRoomModalComponent,
   CreateRoomPayload,
@@ -17,7 +17,7 @@ import {
 })
 export class WelcomeComponent {
   private router = inject(Router);
-  private supabase = inject(SupabaseService);
+  private sbRoomService = inject(RoomService);
 
   readonly roomCode = signal<string>('');
   readonly guestName = signal<string>('');
@@ -34,7 +34,7 @@ export class WelcomeComponent {
     if (!roomCode || !guestName) {
       return;
     }
-    const guest = await this.supabase.joinRoom(roomCode, guestName);
+    const guest = await this.sbRoomService.joinRoom(roomCode, guestName);
     this.router.navigate(['/room', roomCode], {
       queryParams: { guestId: guest.id },
     });
@@ -52,7 +52,7 @@ export class WelcomeComponent {
   }
 
   protected async createRoom(payload: CreateRoomPayload) {
-    const room = await this.supabase.createRoom(
+    const room = await this.sbRoomService.createRoom(
       payload.name,
       payload.description,
     );
