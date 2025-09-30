@@ -4,13 +4,28 @@ import {
   RealtimePostgresChangesPayload,
 } from '@supabase/supabase-js';
 import { SupabaseBaseService } from './supabase-base.service';
-import { OrderWithDetails } from './models';
+import { Drink, OrderWithDetails } from './models';
 import { RoomService } from './room.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends SupabaseBaseService {
   constructor(private roomService: RoomService) {
     super();
+  }
+
+  public populateDrinkImages(drinks: Drink[]): Drink[] {
+    return drinks.map((drink) => {
+      if (drink.image_path) {
+        const urlParts = drink.image_path.split('/');
+        const { data } = this.supabase.storage
+          .from(urlParts[0])
+          .getPublicUrl(urlParts[1], {
+            transform: { width: 300, height: 300 },
+          });
+        return { ...drink, image_url: data.publicUrl };
+      }
+      return drink;
+    });
   }
 
   async getOrdersForRoom(roomId: string): Promise<OrderWithDetails[]> {
@@ -36,7 +51,10 @@ export class OrderService extends SupabaseBaseService {
     return data;
   }
 
-  async getOrdersForGuest(roomCode: string, guestId: string): Promise<any[]> {
+  async getOrdersForGuest(
+    roomCode: string,
+    guestId: string,
+  ): Promise<(OrderWithDetails & { drinks: Drink })[]> {
     const room = await this.roomService.getRoomByCode(roomCode);
     if (!room) return [];
     const { data, error } = await this.supabase
@@ -47,7 +65,24 @@ export class OrderService extends SupabaseBaseService {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data || [];
+
+    const orders = data || [];
+
+    // 1. Extract all the 'drinks' objects from the orders
+    const drinksToPopulate = orders
+      .map((order) => order.drinks)
+      .filter(Boolean) as Drink[];
+
+    // 2. Populate their images in a single call
+    const populatedDrinks = this.populateDrinkImages(drinksToPopulate);
+
+    // 3. Map the populated drinks back to their original orders
+    return orders.map((order) => {
+      const matchingDrink = populatedDrinks.find(
+        (d) => d.id === order.drinks?.id,
+      );
+      return { ...order, drinks: matchingDrink || order.drinks };
+    });
   }
 
   async placeOrder(

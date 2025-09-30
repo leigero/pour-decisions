@@ -87,6 +87,13 @@
 @if (selectedDrink(); as drink) {
   <pd-modal class="modal-contents" (close)="closeDrinkModal()">
     <pd-drink-details [drink]="drink"></pd-drink-details>
+    <label for="orderNotes">Special Requests</label>
+    <textarea
+      id="orderNotes"
+      class="pd-textarea"
+      placeholder="Optional"
+    ></textarea>
+
     <div class="modal-actions">
       <button class="pd-button secondary" (click)="closeDrinkModal()">
         Close
