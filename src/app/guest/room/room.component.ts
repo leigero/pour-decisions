@@ -19,6 +19,7 @@ import { RealtimeChannel } from '@supabase/supabase-js';
 import { OrderDetailsModalComponent } from '../../shared/modals/order-details-modal/order-details-modal.component';
 import { JoinRoomModalComponent } from '../../shared/modals/join-room-modal/join-room-modal.component';
 import { ModalComponent } from '../../shared/modals/modal.component';
+import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { DrinkDetailsComponent } from '../../shared/drink/drink-details/drink-details.component';
 
 type GuestDashboardView = 'main' | 'menu' | 'orders';
@@ -35,6 +36,7 @@ type GuestDashboardView = 'main' | 'menu' | 'orders';
     JoinRoomModalComponent,
     ModalComponent,
     DrinkDetailsComponent,
+    EditProfileModalComponent,
   ], // Add FormsModule here
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
@@ -59,6 +61,8 @@ export class RoomComponent implements OnInit, OnDestroy {
   // Signal for order detail view modal
   public readonly selectedOrder = signal<OrderVM | null>(null);
   public readonly selectedDrink = signal<Drink | null>(null);
+
+  public readonly showEditProfileModal = signal<boolean>(false);
 
   private orderSubscription: RealtimeChannel;
 
@@ -253,5 +257,11 @@ export class RoomComponent implements OnInit, OnDestroy {
       queryParams: { guestId: guestId },
       queryParamsHandling: 'merge',
     });
+  }
+  closeEditProfileModal() {
+    this.showEditProfileModal.set(false);
+  }
+  openEditProfileModal() {
+    this.showEditProfileModal.set(true);
   }
 }

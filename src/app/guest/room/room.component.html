@@ -21,8 +21,8 @@
             [alt]="guest()!.display_name + 's profile photo'"
             class="profile-photo"
           />
-          <span class="user-name">{{ guest()!.display_name }}</span>
-          <button class="edit-button">
+          <span class="user-name">{{ guest()?.display_name }}</span>
+          <button class="edit-button" (click)="openEditProfileModal()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -103,4 +103,11 @@
       </button>
     </div>
   </pd-modal>
+}
+
+@if (showEditProfileModal()) {
+  <pd-edit-profile-modal
+    [guest]="guest()!"
+    (close)="closeEditProfileModal()"
+  ></pd-edit-profile-modal>
 }

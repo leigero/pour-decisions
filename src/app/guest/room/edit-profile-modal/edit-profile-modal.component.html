@@ -1,0 +1,9 @@
+<pd-modal>
+  <h2>Edit Profile</h2>
+  <label for="displayName">Display Name:</label>
+  <input type="text" class="pd-input" [(ngModel)]="this.guest.display_name" />
+  <div class="modal-actions">
+    <button class="pd-button secondary" (click)="close.emit()">Cancel</button>
+    <button class="pd-button" (click)="saveChanges()">Save</button>
+  </div>
+</pd-modal>
