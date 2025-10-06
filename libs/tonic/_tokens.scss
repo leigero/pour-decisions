@@ -1,0 +1,246 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:meta";
+
+/// Central design-token registry for the Tonic design system.
+/// Provides palette, spacing, typography, motion, elevation, and z-index scales.
+
+$tonic-colors: (
+  blue: (
+    100: #e6f0ff,
+    200: #c2daff,
+    300: #8cb9ff,
+    400: #4f8dff,
+    500: #1e5be6
+  ),
+  neutral: (
+    000: #ffffff,
+    050: #f8fafc,
+    100: #f1f5f9,
+    200: #e2e8f0,
+    300: #cbd5e1,
+    400: #94a3b8,
+    500: #64748b,
+    600: #475569,
+    700: #334155,
+    800: #1e293b,
+    900: #0f172a
+  ),
+  green: (
+    100: #e6fbf2,
+    200: #b1f1d4,
+    300: #7ce4b2,
+    400: #3ecf8e,
+    500: #1aab6c
+  ),
+  amber: (
+    100: #fff4e6,
+    200: #ffe0b2,
+    300: #ffcc80,
+    400: #ffb74d,
+    500: #fb8c00
+  ),
+  red: (
+    100: #fee7e6,
+    200: #fbb8b4,
+    300: #f68782,
+    400: #f05c59,
+    500: #d92d33
+  )
+);
+
+$tonic-spacing: (
+  "000": 0,
+  "025": 0.25rem,
+  "050": 0.5rem,
+  "075": 0.75rem,
+  "100": 1rem,
+  "125": 1.25rem,
+  "150": 1.5rem,
+  "200": 2rem,
+  "300": 3rem,
+  "400": 4rem,
+  "500": 5rem
+);
+
+$tonic-radii: (
+  "000": 0,
+  "050": 0.125rem,
+  "075": 0.2rem,
+  "100": 0.25rem,
+  "200": 0.5rem,
+  "300": 0.75rem,
+  "400": 1rem,
+  "pill": 9999px
+);
+
+$tonic-elevation: (
+  "000": none,
+  "100": 0 1px 2px rgba(15, 23, 42, 0.08),
+  "200": 0 4px 8px rgba(15, 23, 42, 0.12),
+  "300": 0 8px 16px rgba(15, 23, 42, 0.16),
+  "400": 0 16px 24px rgba(15, 23, 42, 0.2)
+);
+
+$tonic-font-stacks: (
+  sans: "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif",
+  serif: "'Source Serif 4', 'Georgia', serif",
+  mono: "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
+);
+
+$tonic-type-scale: (
+  "xs": 0.75rem,
+  "sm": 0.875rem,
+  "base": 1rem,
+  "lg": 1.125rem,
+  "xl": 1.25rem,
+  "2xl": 1.5rem,
+  "3xl": 1.875rem,
+  "4xl": 2.25rem
+);
+
+$tonic-line-heights: (
+  tight: 1.25,
+  base: 1.5,
+  relaxed: 1.7
+);
+
+$tonic-font-weights: (
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700
+);
+
+$tonic-durations: (
+  instant: 90ms,
+  fast: 140ms,
+  base: 200ms,
+  slow: 320ms
+);
+
+$tonic-easings: (
+  standard: cubic-bezier(0.2, 0, 0, 1),
+  entrance: cubic-bezier(0.16, 1, 0.3, 1),
+  exit: cubic-bezier(0.7, 0, 0.84, 0)
+);
+
+$tonic-z-scale: (
+  base: 0,
+  dropdown: 400,
+  overlay: 800,
+  modal: 1200,
+  toast: 1600
+);
+
+@function _tonic-ensure-map($map, $keys...) {
+  $cursor: $map;
+
+  @each $key in $keys {
+    @if $cursor == null or not map.has-key($cursor, $key) {
+      @error "Tonic token `#{meta.inspect($keys)}` is not defined.";
+    }
+    $cursor: map.get($cursor, $key);
+  }
+
+  @return $cursor;
+}
+
+@function color($family, $tone: 500, $alpha: 1) {
+  $base: _tonic-ensure-map($tonic-colors, $family, $tone);
+
+  @if $alpha == 1 {
+    @return $base;
+  }
+
+  @return color.change($base, $alpha: $alpha);
+}
+
+@function space($token) {
+  $key: if(type-of($token) == number, #{$token}, $token);
+  $key: if(type-of($key) == string, $key, #{$key});
+
+  @return _tonic-ensure-map($tonic-spacing, $key);
+}
+
+@function radius($token: "100") {
+  $key: if(type-of($token) == number, #{$token}, $token);
+  $key: if(type-of($key) == string, $key, #{$key});
+
+  @return _tonic-ensure-map($tonic-radii, $key);
+}
+
+@function shadow($token: "200") {
+  $key: if(type-of($token) == number, #{$token}, $token);
+  $key: if(type-of($key) == string, $key, #{$key});
+
+  @return _tonic-ensure-map($tonic-elevation, $key);
+}
+
+@function font($family: sans) {
+  @return _tonic-ensure-map($tonic-font-stacks, $family);
+}
+
+@function type-size($step: "base") {
+  $key: if(type-of($step) == number, #{$step}, $step);
+  $key: if(type-of($key) == string, $key, #{$key});
+
+  @return _tonic-ensure-map($tonic-type-scale, $key);
+}
+
+@function line-height($token: base) {
+  @return _tonic-ensure-map($tonic-line-heights, $token);
+}
+
+@function weight($token: regular) {
+  @return _tonic-ensure-map($tonic-font-weights, $token);
+}
+
+@function duration($token: base) {
+  @return _tonic-ensure-map($tonic-durations, $token);
+}
+
+@function easing($token: standard) {
+  @return _tonic-ensure-map($tonic-easings, $token);
+}
+
+@function z($token: base) {
+  @return _tonic-ensure-map($tonic-z-scale, $token);
+}
+
+:root {
+  color-scheme: light;
+  --tonic-font-sans: #{font(sans)};
+  --tonic-font-serif: #{font(serif)};
+  --tonic-font-mono: #{font(mono)};
+
+  @each $family, $palette in $tonic-colors {
+    @each $tone, $value in $palette {
+      --tonic-#{$family}-#{$tone}: #{$value};
+    }
+  }
+
+  @each $step, $value in $tonic-spacing {
+    --tonic-space-#{$step}: #{$value};
+  }
+
+  @each $radius, $value in $tonic-radii {
+    --tonic-radius-#{$radius}: #{$value};
+  }
+
+  @each $step, $value in $tonic-type-scale {
+    --tonic-type-#{$step}: #{$value};
+  }
+
+  @each $key, $shadow in $tonic-elevation {
+    --tonic-shadow-#{$key}: #{$shadow};
+  }
+
+  @each $speed, $value in $tonic-durations {
+    --tonic-duration-#{$speed}: #{$value};
+  }
+
+  @each $curve, $value in $tonic-easings {
+    --tonic-ease-#{$curve}: #{$value};
+  }
+}

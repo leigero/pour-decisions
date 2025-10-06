@@ -1,0 +1,83 @@
+@use "./tokens";
+@use "./mixins" as mix;
+
+$spacing-steps: ("000", "025", "050", "075", "100", "150", "200", "300");
+
+@each $step in $spacing-steps {
+  .u-m-#{$step} {
+    margin: tokens.space($step) !important;
+  }
+
+  .u-mx-#{$step} {
+    margin-inline: tokens.space($step) !important;
+  }
+
+  .u-my-#{$step} {
+    margin-block: tokens.space($step) !important;
+  }
+
+  .u-mt-#{$step} {
+    margin-top: tokens.space($step) !important;
+  }
+
+  .u-mb-#{$step} {
+    margin-bottom: tokens.space($step) !important;
+  }
+
+  .u-ml-#{$step} {
+    margin-left: tokens.space($step) !important;
+  }
+
+  .u-mr-#{$step} {
+    margin-right: tokens.space($step) !important;
+  }
+
+  .u-p-#{$step} {
+    padding: tokens.space($step) !important;
+  }
+
+  .u-px-#{$step} {
+    padding-inline: tokens.space($step) !important;
+  }
+
+  .u-py-#{$step} {
+    padding-block: tokens.space($step) !important;
+  }
+
+  .u-gap-#{$step} {
+    gap: tokens.space($step) !important;
+  }
+}
+
+.u-text-center {
+  text-align: center !important;
+}
+
+.u-text-right {
+  text-align: right !important;
+}
+
+.u-text-muted {
+  color: tokens.color(neutral, 500) !important;
+}
+
+.u-bg-surface {
+  background-color: tokens.color(neutral, 000) !important;
+  box-shadow: tokens.shadow("100") !important;
+}
+
+.u-border-subtle {
+  border: 1px solid tokens.color(neutral, 200) !important;
+}
+
+.u-radius {
+  border-radius: tokens.radius("200") !important;
+}
+
+.u-radius-pill {
+  border-radius: tokens.radius("pill") !important;
+}
+
+.u-visually-hidden {
+  @include mix.visually-hidden;
+}

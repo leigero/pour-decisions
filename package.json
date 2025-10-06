@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "docs:build": "sass apps/tonic-docs/styles/docs.scss apps/tonic-docs/styles/docs.css --load-path=libs",
+    "docs:watch": "sass --watch apps/tonic-docs/styles/docs.scss:apps/tonic-docs/styles/docs.css --load-path=libs"
   },
   "prettier": {
     "overrides": [
@@ -45,6 +47,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "3.6.2",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "sass": "^1.79.5"
   }
 }

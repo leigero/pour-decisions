@@ -1,0 +1,54 @@
+@use "./tokens";
+
+/// Apply a consistent outline/box-shadow focus affordance.
+@mixin focus-ring($color: tokens.color(blue, 300), $halo-alpha: 0.35, $width: 2px, $offset: 1px) {
+  outline: none;
+  box-shadow:
+    0 0 0 $offset tokens.color(neutral, 000),
+    0 0 0 ($offset + $width) tokens.color(blue, 400, $halo-alpha);
+}
+
+/// Normalize button-like elements by removing UA defaults.
+@mixin button-reset {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  text-align: inherit;
+}
+
+/// Apply standard transition affordances.
+@mixin transition($properties: all, $duration: base, $timing: standard) {
+  transition: $properties tokens.duration($duration) tokens.easing($timing);
+}
+
+/// Provide a consistent surface style made from tokens.
+@mixin surface($radius: "200", $shadow: "200", $background: tokens.color(neutral, 000), $border: tokens.color(neutral, 200)) {
+  border-radius: tokens.radius($radius);
+  box-shadow: tokens.shadow($shadow);
+  background: $background;
+  border: 1px solid $border;
+}
+
+/// Hide content visually while keeping it accessible to screen readers.
+@mixin visually-hidden {
+  position: absolute !important;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  height: 1px !important;
+  width: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/// Simple typography helper.
+@mixin text-style($size: "base", $line-height: base, $weight: regular, $letter-spacing: normal) {
+  font-size: tokens.type-size($size);
+  line-height: tokens.line-height($line-height);
+  font-weight: tokens.weight($weight);
+  letter-spacing: $letter-spacing;
+}

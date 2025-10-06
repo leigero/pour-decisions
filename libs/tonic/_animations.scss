@@ -1,0 +1,66 @@
+@use "./tokens";
+
+@keyframes tonic-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tonic-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(tokens.space("075"));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tonic-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tonic-animate-fade-in {
+  animation: tonic-fade-in tokens.duration(base) tokens.easing(entrance) both;
+}
+
+.tonic-animate-slide-up {
+  animation: tonic-slide-up tokens.duration(base) tokens.easing(entrance) both;
+}
+
+.tonic-animate-scale-in {
+  animation: tonic-scale-in tokens.duration(base) tokens.easing(entrance) both;
+}
+
+.tonic-animate-pulse {
+  animation: tonic-scale-in tokens.duration(slow) tokens.easing(standard) infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .tonic-animate-fade-in,
+  .tonic-animate-slide-up,
+  .tonic-animate-scale-in,
+  .tonic-animate-pulse {
+    animation: none !important;
+  }
+}

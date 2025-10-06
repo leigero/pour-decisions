@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tonic Docs · Foundations</title>
+  <link rel="stylesheet" href="styles/docs.css" />
+</head>
+
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav">
+      <div class="doc-nav__group">
+        <span class="doc-nav__title">Tonic Docs</span>
+        <p class="doc-nav__subtitle">Design system foundations</p>
+      </div>
+
+      <div class="doc-nav__group">
+        <span class="doc-nav__section">Pages</span>
+        <ul class="doc-nav__list">
+          <li><a class="doc-nav__link" href="index.html">Foundations</a></li>
+          <li><a class="doc-nav__link" href="components.html">Components</a></li>
+          <li><a class="doc-nav__link" href="forms.html">Forms</a></li>
+        </ul>
+      </div>
+
+      <div class="doc-nav__group">
+        <span class="doc-nav__section">On this page</span>
+        <ul class="doc-nav__list">
+          <li><a class="doc-nav__link" href="#overview">Overview</a></li>
+          <li><a class="doc-nav__link" href="#colors">Color Tokens</a></li>
+          <li><a class="doc-nav__link" href="#spacing">Spacing Scale</a></li>
+          <li><a class="doc-nav__link" href="#typography">Typography</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="doc-content" id="main">
+      <section class="doc-section" id="overview">
+        <header class="doc-section__header">
+          <h1 class="doc-section__title">Tonic Foundations</h1>
+          <span class="doc-section__description">
+            Baseline tokens and layout primitives that power reusable components across Pour Decisions.
+          </span>
+        </header>
+
+        <div class="preview-grid preview-grid--columns">
+          <article class="preview-card">
+            <span class="preview-card__title">Layout</span>
+            <div class="tonic-stack tonic-stack--tight">
+              <div class="tonic-panel">
+                <h3 class="tonic-panel__title">Stack</h3>
+                <p class="tonic-panel__body">
+                  Apply consistent vertical rhythm with `.tonic-stack`. Adjust density using modifier classes.
+                </p>
+              </div>
+              <div class="sample-block tonic-stack tonic-stack--tight">
+                <div class="tonic-panel">First item</div>
+                <div class="tonic-panel">Second item</div>
+                <div class="tonic-panel">Third item</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="preview-card">
+            <span class="preview-card__title">Type Scale</span>
+            <div class="tonic-stack tonic-stack--tight">
+              <h1>Heading 1 · Display</h1>
+              <h2>Heading 2 · Section</h2>
+              <h3>Heading 3 · Sub-section</h3>
+              <p>Body text uses the base scale, optimized for 16px root size with relaxed line-height.</p>
+            </div>
+          </article>
+
+          <article class="preview-card">
+            <span class="preview-card__title">Utilities</span>
+            <div class="sample-block tonic-stack">
+              <button class="tonic-button tonic-button--primary u-mb-050">Primary action</button>
+              <button class="tonic-button tonic-button--ghost">Ghost button</button>
+            </div>
+            <p class="doc-section__description">
+              Utility classes (`u-mb-050`, `u-gap-150`, etc.) complement component APIs for quick adjustments.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="doc-section" id="colors">
+        <header class="doc-section__header">
+          <h2 class="doc-section__title">Color Tokens</h2>
+          <p class="doc-section__description">
+            Semantic palettes named by hue. Use the numeric suffix (`$b100` → `$b500`) to select the intensity.
+          </p>
+        </header>
+
+        <div class="swatch-grid">
+          <article class="swatch-card">
+            <div class="swatch-card__chip" style="background: linear-gradient(135deg, #e6f0ff, #1e5be6);"></div>
+            <div class="swatch-card__meta">
+              <strong>Blue</strong>
+              <ul class="tonic-stack tonic-stack--tight u-mt-050">
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #e6f0ff;"></span> $b100 · #e6f0ff
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #c2daff;"></span> $b200 · #c2daff
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #8cb9ff;"></span> $b300 · #8cb9ff
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #4f8dff;"></span> $b400 · #4f8dff
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #1e5be6;"></span> $b500 · #1e5be6
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="swatch-card">
+            <div class="swatch-card__chip" style="background: linear-gradient(135deg, #ffffff, #0f172a);"></div>
+            <div class="swatch-card__meta">
+              <strong>Neutral</strong>
+              <ul class="tonic-stack tonic-stack--tight u-mt-050">
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #ffffff;"></span> $n000 · #ffffff
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #f8fafc;"></span> $n050 · #f8fafc
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #f1f5f9;"></span> $n100 · #f1f5f9
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #e2e8f0;"></span> $n200 · #e2e8f0
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #cbd5e1;"></span> $n300 · #cbd5e1
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #94a3b8;"></span> $n400 · #94a3b8
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #64748b;"></span> $n500 · #64748b
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #475569;"></span> $n600 · #475569
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #334155;"></span> $n700 · #334155
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #1e293b;"></span> $n800 · #1e293b
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #0f172a;"></span> $n900 · #0f172a
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="swatch-card">
+            <div class="swatch-card__chip" style="background: linear-gradient(135deg, #e6fbf2, #1aab6c);"></div>
+            <div class="swatch-card__meta">
+              <strong>Green</strong>
+              <ul class="tonic-stack tonic-stack--tight u-mt-050">
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #e6fbf2;"></span> $g100 · #e6fbf2
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #b1f1d4;"></span> $g200 · #b1f1d4
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #7ce4b2;"></span> $g300 · #7ce4b2
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #3ecf8e;"></span> $g400 · #3ecf8e
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #1aab6c;"></span> $g500 · #1aab6c
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="swatch-card">
+            <div class="swatch-card__chip" style="background: linear-gradient(135deg, #fff4e6, #fb8c00);"></div>
+            <div class="swatch-card__meta">
+              <strong>Amber</strong>
+              <ul class="tonic-stack tonic-stack--tight u-mt-050">
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #fff4e6;"></span> $a100 · #fff4e6
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #ffe0b2;"></span> $a200 · #ffe0b2
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #ffcc80;"></span> $a300 · #ffcc80
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #ffb74d;"></span> $a400 · #ffb74d
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #fb8c00;"></span> $a500 · #fb8c00
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="swatch-card">
+            <div class="swatch-card__chip" style="background: linear-gradient(135deg, #fee7e6, #d92d33);"></div>
+            <div class="swatch-card__meta">
+              <strong>Red</strong>
+              <ul class="tonic-stack tonic-stack--tight u-mt-050">
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #fee7e6;"></span> $r100 · #fee7e6
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #fbb8b4;"></span> $r200 · #fbb8b4
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #f68782;"></span> $r300 · #f68782
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #f05c59;"></span> $r400 · #f05c59
+                </li>
+                <li class="token-swatch">
+                  <span class="token-swatch__chip" style="background-color: #d92d33;"></span> $r500 · #d92d33
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="doc-section" id="spacing">
+        <header class="doc-section__header">
+          <h2 class="doc-section__title">Spacing Scale</h2>
+          <p class="doc-section__description">
+            Tokens follow quarter-rem increments. Utilities map directly to these values.
+          </p>
+        </header>
+
+        <table class="token-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Value</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$space-000</td>
+              <td>0</td>
+              <td>Reset / hard edge</td>
+            </tr>
+            <tr>
+              <td>$space-025</td>
+              <td>0.25rem</td>
+              <td>Micro spacing, icon alignment</td>
+            </tr>
+            <tr>
+              <td>$space-050</td>
+              <td>0.5rem</td>
+              <td>Pill buttons, compact gaps</td>
+            </tr>
+            <tr>
+              <td>$space-075</td>
+              <td>0.75rem</td>
+              <td>Input vertical padding</td>
+            </tr>
+            <tr>
+              <td>$space-100</td>
+              <td>1rem</td>
+              <td>Paragraph rhythm, button padding</td>
+            </tr>
+            <tr>
+              <td>$space-150</td>
+              <td>1.5rem</td>
+              <td>Stack default gap</td>
+            </tr>
+            <tr>
+              <td>$space-200</td>
+              <td>2rem</td>
+              <td>Section padding</td>
+            </tr>
+            <tr>
+              <td>$space-300</td>
+              <td>3rem</td>
+              <td>Hero padding, modal gutters</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="doc-section" id="typography">
+        <header class="doc-section__header">
+          <h2 class="doc-section__title">Typography</h2>
+          <p class="doc-section__description">
+            Inter-based sans stack with responsive type scale and accessible color contrast targets.
+          </p>
+        </header>
+
+        <div class="tonic-stack">
+          <article class="preview-card">
+            <span class="preview-card__title">Headings</span>
+            <div class="tonic-stack tonic-stack--tight">
+              <h1>Heading 1 &mdash; Page title</h1>
+              <h2>Heading 2 &mdash; Section title</h2>
+              <h3>Heading 3 &mdash; Sub-section</h3>
+              <h4>Heading 4 &mdash; Slot title</h4>
+            </div>
+          </article>
+          <article class="preview-card">
+            <span class="preview-card__title">Body Text</span>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fermentum, nisl at tincidunt
+              consectetur, libero arcu fringilla nulla, at posuere risus mauris sed lectus. Praesent faucibus
+              pharetra leo, quis facilisis lectus consectetur eget.
+            </p>
+            <p>
+              <strong>Strong text</strong> and <em>emphasis</em> are styled for clarity. Inline code like
+              <code>npm run docs:build</code> uses the mono stack.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
