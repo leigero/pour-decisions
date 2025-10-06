@@ -1,51 +1,52 @@
 @use "sass:color";
 @use "sass:map";
+@use "sass:math";
 @use "sass:meta";
 
 /// Central design-token registry for the Tonic design system.
 /// Provides palette, spacing, typography, motion, elevation, and z-index scales.
 
 $tonic-colors: (
-  blue: (
-    100: #e6f0ff,
-    200: #c2daff,
-    300: #8cb9ff,
-    400: #4f8dff,
-    500: #1e5be6
+  "blue": (
+    "100": #e6f0ff,
+    "200": #c2daff,
+    "300": #8cb9ff,
+    "400": #4f8dff,
+    "500": #1e5be6
   ),
-  neutral: (
-    000: #ffffff,
-    050: #f8fafc,
-    100: #f1f5f9,
-    200: #e2e8f0,
-    300: #cbd5e1,
-    400: #94a3b8,
-    500: #64748b,
-    600: #475569,
-    700: #334155,
-    800: #1e293b,
-    900: #0f172a
+  "neutral": (
+    "000": #ffffff,
+    "050": #f8fafc,
+    "100": #f1f5f9,
+    "200": #e2e8f0,
+    "300": #cbd5e1,
+    "400": #94a3b8,
+    "500": #64748b,
+    "600": #475569,
+    "700": #334155,
+    "800": #1e293b,
+    "900": #0f172a
   ),
-  green: (
-    100: #e6fbf2,
-    200: #b1f1d4,
-    300: #7ce4b2,
-    400: #3ecf8e,
-    500: #1aab6c
+  "green": (
+    "100": #e6fbf2,
+    "200": #b1f1d4,
+    "300": #7ce4b2,
+    "400": #3ecf8e,
+    "500": #1aab6c
   ),
-  amber: (
-    100: #fff4e6,
-    200: #ffe0b2,
-    300: #ffcc80,
-    400: #ffb74d,
-    500: #fb8c00
+  "amber": (
+    "100": #fff4e6,
+    "200": #ffe0b2,
+    "300": #ffcc80,
+    "400": #ffb74d,
+    "500": #fb8c00
   ),
-  red: (
-    100: #fee7e6,
-    200: #fbb8b4,
-    300: #f68782,
-    400: #f05c59,
-    500: #d92d33
+  "red": (
+    "100": #fee7e6,
+    "200": #fbb8b4,
+    "300": #f68782,
+    "400": #f05c59,
+    "500": #d92d33
   )
 );
 
@@ -83,9 +84,9 @@ $tonic-elevation: (
 );
 
 $tonic-font-stacks: (
-  sans: "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif",
-  serif: "'Source Serif 4', 'Georgia', serif",
-  mono: "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
+  "sans": "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif",
+  "serif": "'Source Serif 4', 'Georgia', serif",
+  "mono": "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
 );
 
 $tonic-type-scale: (
@@ -100,54 +101,80 @@ $tonic-type-scale: (
 );
 
 $tonic-line-heights: (
-  tight: 1.25,
-  base: 1.5,
-  relaxed: 1.7
+  "tight": 1.25,
+  "base": 1.5,
+  "relaxed": 1.7
 );
 
 $tonic-font-weights: (
-  regular: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 700
+  "regular": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700
 );
 
 $tonic-durations: (
-  instant: 90ms,
-  fast: 140ms,
-  base: 200ms,
-  slow: 320ms
+  "instant": 90ms,
+  "fast": 140ms,
+  "base": 200ms,
+  "slow": 320ms
 );
 
 $tonic-easings: (
-  standard: cubic-bezier(0.2, 0, 0, 1),
-  entrance: cubic-bezier(0.16, 1, 0.3, 1),
-  exit: cubic-bezier(0.7, 0, 0.84, 0)
+  "standard": cubic-bezier(0.2, 0, 0, 1),
+  "entrance": cubic-bezier(0.16, 1, 0.3, 1),
+  "exit": cubic-bezier(0.7, 0, 0.84, 0)
 );
 
 $tonic-z-scale: (
-  base: 0,
-  dropdown: 400,
-  overlay: 800,
-  modal: 1200,
-  toast: 1600
+  "base": 0,
+  "dropdown": 400,
+  "overlay": 800,
+  "modal": 1200,
+  "toast": 1600
 );
+
+@function _tonic-normalize-key($value) {
+  $type: meta.type-of($value);
+
+  @if $type == string {
+    @return $value;
+  }
+
+  @if $type == number and math.is-unitless($value) {
+    $digits: meta.inspect($value);
+
+    @if $value < 10 {
+      @return "00#{$digits}";
+    }
+
+    @if $value < 100 {
+      @return "0#{$digits}";
+    }
+
+    @return $digits;
+  }
+
+  @return meta.inspect($value);
+}
 
 @function _tonic-ensure-map($map, $keys...) {
   $cursor: $map;
 
   @each $key in $keys {
-    @if $cursor == null or not map.has-key($cursor, $key) {
+    $normalized-key: _tonic-normalize-key($key);
+
+    @if $cursor == null or not map.has-key($cursor, $normalized-key) {
       @error "Tonic token `#{meta.inspect($keys)}` is not defined.";
     }
-    $cursor: map.get($cursor, $key);
+    $cursor: map.get($cursor, $normalized-key);
   }
 
   @return $cursor;
 }
 
 @function color($family, $tone: 500, $alpha: 1) {
-  $base: _tonic-ensure-map($tonic-colors, $family, $tone);
+  $base: _tonic-ensure-map($tonic-colors, _tonic-normalize-key($family), _tonic-normalize-key($tone));
 
   @if $alpha == 1 {
     @return $base;
@@ -157,55 +184,43 @@ $tonic-z-scale: (
 }
 
 @function space($token) {
-  $key: if(type-of($token) == number, #{$token}, $token);
-  $key: if(type-of($key) == string, $key, #{$key});
-
-  @return _tonic-ensure-map($tonic-spacing, $key);
+  @return _tonic-ensure-map($tonic-spacing, _tonic-normalize-key($token));
 }
 
 @function radius($token: "100") {
-  $key: if(type-of($token) == number, #{$token}, $token);
-  $key: if(type-of($key) == string, $key, #{$key});
-
-  @return _tonic-ensure-map($tonic-radii, $key);
+  @return _tonic-ensure-map($tonic-radii, _tonic-normalize-key($token));
 }
 
 @function shadow($token: "200") {
-  $key: if(type-of($token) == number, #{$token}, $token);
-  $key: if(type-of($key) == string, $key, #{$key});
-
-  @return _tonic-ensure-map($tonic-elevation, $key);
+  @return _tonic-ensure-map($tonic-elevation, _tonic-normalize-key($token));
 }
 
 @function font($family: sans) {
-  @return _tonic-ensure-map($tonic-font-stacks, $family);
+  @return _tonic-ensure-map($tonic-font-stacks, _tonic-normalize-key($family));
 }
 
 @function type-size($step: "base") {
-  $key: if(type-of($step) == number, #{$step}, $step);
-  $key: if(type-of($key) == string, $key, #{$key});
-
-  @return _tonic-ensure-map($tonic-type-scale, $key);
+  @return _tonic-ensure-map($tonic-type-scale, _tonic-normalize-key($step));
 }
 
 @function line-height($token: base) {
-  @return _tonic-ensure-map($tonic-line-heights, $token);
+  @return _tonic-ensure-map($tonic-line-heights, _tonic-normalize-key($token));
 }
 
 @function weight($token: regular) {
-  @return _tonic-ensure-map($tonic-font-weights, $token);
+  @return _tonic-ensure-map($tonic-font-weights, _tonic-normalize-key($token));
 }
 
 @function duration($token: base) {
-  @return _tonic-ensure-map($tonic-durations, $token);
+  @return _tonic-ensure-map($tonic-durations, _tonic-normalize-key($token));
 }
 
 @function easing($token: standard) {
-  @return _tonic-ensure-map($tonic-easings, $token);
+  @return _tonic-ensure-map($tonic-easings, _tonic-normalize-key($token));
 }
 
 @function z($token: base) {
-  @return _tonic-ensure-map($tonic-z-scale, $token);
+  @return _tonic-ensure-map($tonic-z-scale, _tonic-normalize-key($token));
 }
 
 :root {
