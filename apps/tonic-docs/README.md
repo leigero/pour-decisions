@@ -1,33 +1,27 @@
-# Tonic Docs Playground
+# Tonic Docs (Angular)
 
-This lightweight docs site showcases the Tonic design system in isolation. It renders core HTML primitives (typography, buttons, forms, layout, dialogs, utilities) using the shared SCSS living in `libs/tonic`.
+This Angular application showcases the Tonic design system in isolation. Use it to verify foundational tokens, reusable UI primitives, and upcoming standalone components before integrating them into the Pour Decisions product apps.
 
-## Getting Started
+## Commands
 
 ```bash
-npm install
+# start the docs app on http://localhost:4200
+npm run start:docs
+
+# build a production bundle
 npm run docs:build
-# or watch changes
-npm run docs:watch
 ```
 
-The build step compiles `styles/docs.scss`, which pulls in the design system and adds a thin docs layout skin. After building, open any of the HTML files in this directory (`index.html`, `components.html`, `forms.html`) directly in the browser or serve the folder with your preferred static server.
+The docs app lives in `apps/tonic-docs`. It boots from a standalone root component with routes for:
 
-## Structure
+- `/foundations` - tokens, typography, spacing
+- `/components` - buttons, panels, dialogs, and future Angular wrapper components
+- `/forms` - inputs, selects, check/radio controls
 
-```
-apps/tonic-docs
-├── README.md
-├── index.html         # Foundations (colors, typography, layout)
-├── components.html    # Buttons, panels, dialogs
-├── forms.html         # Inputs, selects, checkboxes, form layout
-└── styles
-    ├── docs.scss      # Doc-specific styles (imports the design system)
-    └── docs.css       # Compiled output (created by docs:build/docs:watch)
-```
+Global styles import `libs/tonic/tonic.scss`, so updates to the design system appear immediately while you are developing.
 
-## Editing Tips
+## Adding Demos
 
-- Update design tokens and component styles in `libs/tonic`. Re-run the docs build to pick up changes.
-- Keep doc-only tweaks in `styles/docs.scss` so they do not leak into consuming applications.
-- Use semantic HTML when adding examples; the docs double as accessibility reference material.
+1. Generate a new standalone component under `apps/tonic-docs/src/app`.
+2. Register the component in `app.routes.ts` to expose a new route.
+3. Use Tonic classes and tokens (or import Angular components from the design system) to build the example markup.

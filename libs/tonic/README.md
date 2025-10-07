@@ -1,6 +1,6 @@
 # Tonic Design System
 
-Tonic is a lightweight SCSS design system that centralizes Pour Decisions’ visual language. It bundles design tokens, foundational styles, and reusable component patterns that any app in this repo can consume.
+Tonic is a lightweight SCSS design system that centralizes Pour Decisions’ visual language. It bundles design tokens, foundational styles, and reusable component patterns that any Angular app in this repo can consume.
 
 ## Structure
 
@@ -19,19 +19,19 @@ libs/tonic
 ├── _checkboxes.scss    # Checkbox and radio styling
 ├── _dialogs.scss       # Native <dialog> styling
 ├── _panels.scss        # Card/panel surfaces
-└── _utilities.scss     # Small helper classes (spacing, radius, text helpers)
+└── _utilities.scss     # Helper classes (spacing, radius, text utilities)
 ```
 
 ## Usage
 
-1. Install [`sass`](https://sass-lang.com/dart-sass) if you build SCSS locally (`npm install -D sass`).
-2. Import the entry point in your stylesheet:
+1. Install [`sass`](https://sass-lang.com/dart-sass) if you compile SCSS manually (`npm install -D sass`).
+2. Import the entry point wherever you need shared styles:
 
    ```scss
    @use '../../../libs/tonic/tonic' as tonic;
    ```
 
-3. Consume tokens or mixins forwarded through `tonic`:
+3. Consume tokens or mixins that `tonic.scss` forwards:
 
    ```scss
    @use '../../../libs/tonic/tonic' as tonic;
@@ -46,10 +46,10 @@ libs/tonic
 
 ## Extending Tokens
 
-- Colors live in `_tokens.scss`. Add new palettes or extend existing ones (`$tonic-colors`) as maps keyed by numeric steps (`100`, `200`, etc.).
+- Colors live in `_tokens.scss`. Add new palettes or extend existing ones by updating the `$tonic-colors` map with numeric steps (`100`, `200`, etc.).
 - Spacing tokens follow the `$space-###` scale. Stick to quarter-rem increments for consistency.
-- Elevation, radii, timing, and easing tokens include helper functions (`shadow()`, `radius()`, `duration()`, etc.) so component code can stay declarative.
+- Elevation, radii, timing, and easing tokens have helper functions (`shadow()`, `radius()`, `duration()`, etc.) so components stay declarative.
 
 ## Docs App
 
-`apps/tonic-docs` is a static reference site that imports the design system and showcases tokens and components in isolation. Use `npm run docs:build` (or `npm run docs:watch`) to regenerate its compiled CSS before opening the HTML pages in a browser.
+`apps/tonic-docs` is an Angular playground that imports this design system and showcases tokens, foundations, and reusable components. Use `npm run start:docs` for local development or `npm run docs:build` to generate a production bundle before sharing.

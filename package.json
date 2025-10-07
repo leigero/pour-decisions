@@ -5,11 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "start:app": "npm run docs:build && npm run start",
+    "start:docs": "ng serve tonic-docs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docs:build": "sass apps/tonic-docs/styles/docs.scss apps/tonic-docs/styles/docs.css --load-path=libs",
-    "docs:watch": "sass --watch apps/tonic-docs/styles/docs.scss:apps/tonic-docs/styles/docs.css --load-path=libs"
+    "docs:build": "ng build tonic-docs"
   },
   "prettier": {
     "overrides": [

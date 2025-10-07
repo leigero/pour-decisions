@@ -1,0 +1,28 @@
+<div class="doc-shell">
+  <nav class="doc-nav">
+    <div class="doc-nav__group">
+      <span class="doc-nav__title">Tonic Docs</span>
+      <p class="doc-nav__subtitle">Design system foundations</p>
+    </div>
+
+    <div class="doc-nav__group">
+      <span class="doc-nav__section">Pages</span>
+      <ul class="doc-nav__list">
+        <li *ngFor="let link of mainLinks; trackBy: trackByPath">
+          <a
+            class="doc-nav__link"
+            routerLinkActive="doc-nav__link--active"
+            [routerLinkActiveOptions]="{ exact: !!link.exact }"
+            [routerLink]="link.path"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="doc-content">
+    <router-outlet />
+  </main>
+</div>
