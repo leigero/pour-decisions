@@ -63,9 +63,6 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": {
-            "port": 9500
-          },
           "configurations": {
             "production": {
               "buildTarget": "pour-decisions:build:production"
@@ -170,6 +167,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 9500
+          },
           "configurations": {
             "production": {
               "buildTarget": "tonic-docs:build:production"
