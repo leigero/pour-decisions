@@ -63,6 +63,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 9500
+          },
           "configurations": {
             "production": {
               "buildTarget": "pour-decisions:build:production"
@@ -130,9 +133,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "apps/tonic-docs/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "apps/tonic-docs/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -141,9 +142,7 @@
                 "input": "apps/tonic-docs/public"
               }
             ],
-            "styles": [
-              "apps/tonic-docs/src/styles.scss"
-            ]
+            "styles": ["apps/tonic-docs/src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -187,21 +186,16 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "apps/tonic-docs/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/tonic-docs/public"
+                "input": "apps/tonic-docs/public"
               }
             ],
-            "styles": [
-              "projects/tonic-docs/src/styles.scss"
-            ]
+            "styles": ["apps/tonic-docs/src/styles.scss"]
           }
         }
       }
