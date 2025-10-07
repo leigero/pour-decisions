@@ -5,15 +5,15 @@ dialog {
   border-radius: tokens.radius("300");
   padding: tokens.space("200");
   box-shadow: tokens.shadow("300");
-  background-color: tokens.color(neutral, 000);
-  color: tokens.color(neutral, 800);
+  background-color: tokens.color(neutral, 700);
+  color: tokens.color(neutral, 050);
   min-width: min(32rem, 90vw);
   max-width: 90vw;
   animation: tonic-scale-in tokens.duration(base) tokens.easing(entrance);
 }
 
 dialog::backdrop {
-  background: tokens.color(neutral, 900, 0.55);
+  background: tokens.color(neutral, 900, 0.7);
   backdrop-filter: blur(2px);
 }
 
@@ -28,14 +28,14 @@ dialog::backdrop {
 .tonic-dialog__title {
   font-size: tokens.type-size("xl");
   font-weight: tokens.weight(semibold);
-  color: tokens.color(neutral, 900);
+  color: tokens.color(neutral, 050);
   margin: 0;
 }
 
 .tonic-dialog__body {
   display: grid;
   gap: tokens.space("100");
-  color: tokens.color(neutral, 700);
+  color: tokens.color(neutral, 100);
 }
 
 .tonic-dialog__actions {

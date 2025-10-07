@@ -13,9 +13,9 @@
   font-weight: tokens.weight(medium);
   font-size: tokens.type-size("sm");
   line-height: tokens.line-height(base);
-  background-color: tokens.color(neutral, 900);
-  color: tokens.color(neutral, 000);
-  border: 1px solid tokens.color(neutral, 900);
+  background-color: tokens.color(neutral, 500);
+  color: tokens.color(neutral, 050);
+  border: 1px solid tokens.color(neutral, 500);
   min-height: 2.5rem;
   @include mix.transition(all, fast);
   cursor: pointer;
@@ -23,13 +23,13 @@
 }
 
 .tonic-button:hover {
-  background-color: tokens.color(neutral, 800);
-  border-color: tokens.color(neutral, 800);
+  background-color: tokens.color(neutral, 400);
+  border-color: tokens.color(neutral, 400);
 }
 
 .tonic-button:active {
-  background-color: tokens.color(neutral, 700);
-  border-color: tokens.color(neutral, 700);
+  background-color: tokens.color(neutral, 600);
+  border-color: tokens.color(neutral, 600);
 }
 
 .tonic-button:focus-visible {
@@ -46,67 +46,67 @@
 }
 
 .tonic-button--primary {
-  background-color: tokens.color(blue, 500);
-  border-color: tokens.color(blue, 500);
-  color: tokens.color(neutral, 000);
+  background-color: tokens.color(brand, 300);
+  border-color: tokens.color(brand, 300);
+  color: tokens.color(neutral, 900);
 }
 
 .tonic-button--primary:hover {
-  background-color: tokens.color(blue, 400);
-  border-color: tokens.color(blue, 400);
+  background-color: tokens.color(brand, 200);
+  border-color: tokens.color(brand, 200);
 }
 
 .tonic-button--primary:active {
-  background-color: tokens.color(blue, 300);
-  border-color: tokens.color(blue, 300);
+  background-color: tokens.color(brand, 400);
+  border-color: tokens.color(brand, 400);
 }
 
 .tonic-button--secondary {
-  background-color: tokens.color(neutral, 000);
-  border-color: tokens.color(neutral, 300);
-  color: tokens.color(neutral, 700);
+  background-color: tokens.color(neutral, 700);
+  border-color: tokens.color(neutral, 500);
+  color: tokens.color(neutral, 050);
 }
 
 .tonic-button--secondary:hover {
   border-color: tokens.color(neutral, 400);
-  color: tokens.color(neutral, 800);
-  background-color: tokens.color(neutral, 050);
+  color: tokens.color(neutral, 050);
+  background-color: tokens.color(neutral, 600);
 }
 
 .tonic-button--secondary:active {
   border-color: tokens.color(neutral, 500);
-  color: tokens.color(neutral, 900);
+  color: tokens.color(neutral, 050);
 }
 
 .tonic-button--ghost {
   background-color: transparent;
-  color: tokens.color(neutral, 700);
+  color: tokens.color(neutral, 200);
   border-color: transparent;
 }
 
 .tonic-button--ghost:hover {
-  background-color: tokens.color(neutral, 100);
-  color: tokens.color(neutral, 800);
+  background-color: tokens.color(neutral, 700);
+  color: tokens.color(neutral, 050);
 }
 
 .tonic-button--ghost:active {
-  background-color: tokens.color(neutral, 200);
+  background-color: tokens.color(neutral, 600);
 }
 
 .tonic-button--danger {
-  background-color: tokens.color(red, 500);
-  border-color: tokens.color(red, 500);
+  background-color: tokens.color(red, 300);
+  border-color: tokens.color(red, 300);
   color: tokens.color(neutral, 000);
 }
 
 .tonic-button--danger:hover {
-  background-color: tokens.color(red, 400);
-  border-color: tokens.color(red, 400);
+  background-color: tokens.color(red, 200);
+  border-color: tokens.color(red, 200);
 }
 
 .tonic-button--danger:active {
-  background-color: tokens.color(red, 300);
-  border-color: tokens.color(red, 300);
+  background-color: tokens.color(red, 400);
+  border-color: tokens.color(red, 400);
 }
 
 .tonic-button--pill {

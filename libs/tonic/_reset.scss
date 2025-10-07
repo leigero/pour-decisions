@@ -57,14 +57,14 @@ a {
 }
 
 a[href] {
-  color: tokens.color(blue, 500);
+  color: tokens.color(brand, 300);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
 
 :focus-visible {
-  outline-color: tokens.color(blue, 400);
+  outline-color: tokens.color(brand, 300);
   outline-width: 2px;
   outline-offset: 2px;
 }

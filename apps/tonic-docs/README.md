@@ -1,6 +1,6 @@
 # Tonic Docs Playground
 
-This lightweight docs site showcases the Tonic design system in isolation. It renders core HTML primitives (typography, buttons, forms, layout, dialogs, utilities) using the shared SCSS that lives in `libs/tonic`.
+This lightweight docs site showcases the Tonic design system in isolation. It renders core HTML primitives (typography, buttons, forms, layout, dialogs, utilities) using the shared SCSS living in `libs/tonic`.
 
 ## Getting Started
 
@@ -11,7 +11,7 @@ npm run docs:build
 npm run docs:watch
 ```
 
-The build step compiles `styles/docs.scss`, which pulls in the design system and adds a thin docs layout layer. After building, open any of the HTML files in this directory (`index.html`, `components.html`, `forms.html`) directly in the browser or serve the folder with your preferred static server.
+The build step compiles `styles/docs.scss`, which pulls in the design system and adds a thin docs layout skin. After building, open any of the HTML files in this directory (`index.html`, `components.html`, `forms.html`) directly in the browser or serve the folder with your preferred static server.
 
 ## Structure
 
@@ -28,6 +28,6 @@ apps/tonic-docs
 
 ## Editing Tips
 
-- Update design tokens and component styles in `libs/tonic`. The docs site automatically picks up changes after recompiling.
-- Keep additional doc-only tweaks in `styles/docs.scss` to avoid leaking showcase-specific overrides back into the design system.
-- When adding new examples, stay within semantic HTML so the page can double as accessibility reference material.
+- Update design tokens and component styles in `libs/tonic`. Re-run the docs build to pick up changes.
+- Keep doc-only tweaks in `styles/docs.scss` so they do not leak into consuming applications.
+- Use semantic HTML when adding examples; the docs double as accessibility reference material.

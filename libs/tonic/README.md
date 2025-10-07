@@ -1,57 +1,55 @@
 # Tonic Design System
 
-Tonic is a lightweight SCSS design system that centralizes Pour Decisions' visual language and reusable UI primitives. It provides design tokens, foundational styles, and component patterns that can be consumed by any application in this repo (or elsewhere).
+Tonic is a lightweight SCSS design system that centralizes Pour Decisions’ visual language. It bundles design tokens, foundational styles, and reusable component patterns that any app in this repo can consume.
 
 ## Structure
 
-```text
+```
 libs/tonic
 ├── README.md
-├── tonic.scss          # Main entry point – import this into consuming stylesheets
-├── _tokens.scss        # Design tokens (colors, spacing, fonts, elevation, motion)
-├── _mixins.scss        # Reusable mixins/helpers built on top of the tokens
-├── _reset.scss         # Modern baseline reset
-├── _fonts.scss         # Font stacks, type scale, and text utilities
-├── _animations.scss    # Shared keyframes and transition utilities
-├── _layout.scss        # Layout primitives (stack, cluster, container, etc.)
-├── _buttons.scss       # Button component variants
-├── _inputs.scss        # Text inputs, textareas, selects
-├── _checkboxes.scss    # Checkbox styles (radio compatible)
-├── _dialogs.scss       # `<dialog>` element styling
-├── _panels.scss        # Card/panel pattern
-└── _utilities.scss     # Small helper classes (spacing, text alignment, etc.)
+├── tonic.scss          # Primary entry point – @use this file from consuming stylesheets
+├── _tokens.scss        # Design tokens (color, spacing, typography, elevation, motion)
+├── _mixins.scss        # Helper mixins for focus states, surfaces, transitions, etc.
+├── _reset.scss         # Modern reset tailored for Pour Decisions
+├── _fonts.scss         # Font stacks, type scale, selection styling
+├── _animations.scss    # Shared keyframes and animation utilities
+├── _layout.scss        # Layout primitives (stack, cluster, container)
+├── _buttons.scss       # Button variants and states
+├── _inputs.scss        # Inputs, textareas, selects, validation states
+├── _checkboxes.scss    # Checkbox and radio styling
+├── _dialogs.scss       # Native <dialog> styling
+├── _panels.scss        # Card/panel surfaces
+└── _utilities.scss     # Small helper classes (spacing, radius, text helpers)
 ```
 
 ## Usage
 
-1. Install [`sass`](https://sass-lang.com/dart-sass) if you need to compile SCSS locally (`npm install -D sass`).
-2. Import the main entry from anywhere within the repo:
+1. Install [`sass`](https://sass-lang.com/dart-sass) if you build SCSS locally (`npm install -D sass`).
+2. Import the entry point in your stylesheet:
 
    ```scss
    @use '../../../libs/tonic/tonic' as tonic;
-   // or, if you just want the output CSS:
-   @use '../../../libs/tonic/tonic';
    ```
 
-3. You can consume tokens and mixins that `tonic.scss` forwards:
+3. Consume tokens or mixins forwarded through `tonic`:
 
    ```scss
    @use '../../../libs/tonic/tonic' as tonic;
 
    .cta {
      padding-inline: tonic.space('200');
-     color: tonic.color('blue', 100);
-     background: tonic.color('blue', 500);
+     color: tonic.color('neutral', '050');
+     background: tonic.color('brand', '300');
      @include tonic.focus-ring();
    }
    ```
 
 ## Extending Tokens
 
-- Colors live in `_tokens.scss`. Add to the `$tonic-colors` map to expose new palettes.
-- Spacing follows the `$space-###` scale. Stick to quarter-rem increments for consistency.
-- Elevation, radii, and timing tokens are defined alongside helper functions for consistent usage.
+- Colors live in `_tokens.scss`. Add new palettes or extend existing ones (`$tonic-colors`) as maps keyed by numeric steps (`100`, `200`, etc.).
+- Spacing tokens follow the `$space-###` scale. Stick to quarter-rem increments for consistency.
+- Elevation, radii, timing, and easing tokens include helper functions (`shadow()`, `radius()`, `duration()`, etc.) so component code can stay declarative.
 
 ## Docs App
 
-The `apps/tonic-docs` directory contains a simple documentation playground that imports Tonic and demonstrates the primitives in isolation. See that README for usage details.
+`apps/tonic-docs` is a static reference site that imports the design system and showcases tokens and components in isolation. Use `npm run docs:build` (or `npm run docs:watch`) to regenerate its compiled CSS before opening the HTML pages in a browser.

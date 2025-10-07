@@ -58,16 +58,17 @@ $spacing-steps: ("000", "025", "050", "075", "100", "150", "200", "300");
 }
 
 .u-text-muted {
-  color: tokens.color(neutral, 500) !important;
+  color: tokens.color(neutral, 300) !important;
 }
 
 .u-bg-surface {
-  background-color: tokens.color(neutral, 000) !important;
+  background-color: tokens.color(neutral, 700) !important;
   box-shadow: tokens.shadow("100") !important;
+  border: 1px solid tokens.color(neutral, 500) !important;
 }
 
 .u-border-subtle {
-  border: 1px solid tokens.color(neutral, 200) !important;
+  border: 1px solid tokens.color(neutral, 500) !important;
 }
 
 .u-radius {

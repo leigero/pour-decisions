@@ -1,39 +1,39 @@
 :root {
-  color-scheme: light;
-  --tonic-font-sans: 'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: dark;
+  --tonic-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --tonic-font-serif: 'Source Serif 4', 'Georgia', serif;
   --tonic-font-mono: 'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace;
-  --tonic-blue-100: #e6f0ff;
-  --tonic-blue-200: #c2daff;
-  --tonic-blue-300: #8cb9ff;
-  --tonic-blue-400: #4f8dff;
-  --tonic-blue-500: #1e5be6;
+  --tonic-brand-100: #f3e8d0;
+  --tonic-brand-200: #e9d7b8;
+  --tonic-brand-300: #dec797;
+  --tonic-brand-400: #c6ae7a;
+  --tonic-brand-500: #9c875a;
   --tonic-neutral-000: #ffffff;
-  --tonic-neutral-050: #f8fafc;
-  --tonic-neutral-100: #f1f5f9;
-  --tonic-neutral-200: #e2e8f0;
-  --tonic-neutral-300: #cbd5e1;
-  --tonic-neutral-400: #94a3b8;
-  --tonic-neutral-500: #64748b;
-  --tonic-neutral-600: #475569;
-  --tonic-neutral-700: #334155;
-  --tonic-neutral-800: #1e293b;
-  --tonic-neutral-900: #0f172a;
-  --tonic-green-100: #e6fbf2;
-  --tonic-green-200: #b1f1d4;
-  --tonic-green-300: #7ce4b2;
-  --tonic-green-400: #3ecf8e;
-  --tonic-green-500: #1aab6c;
-  --tonic-amber-100: #fff4e6;
-  --tonic-amber-200: #ffe0b2;
-  --tonic-amber-300: #ffcc80;
-  --tonic-amber-400: #ffb74d;
-  --tonic-amber-500: #fb8c00;
-  --tonic-red-100: #fee7e6;
-  --tonic-red-200: #fbb8b4;
-  --tonic-red-300: #f68782;
-  --tonic-red-400: #f05c59;
-  --tonic-red-500: #d92d33;
+  --tonic-neutral-050: #f5f5f4;
+  --tonic-neutral-100: #e7e5e4;
+  --tonic-neutral-200: #d6d3d1;
+  --tonic-neutral-300: #a8a29e;
+  --tonic-neutral-400: #57534e;
+  --tonic-neutral-500: #44403c;
+  --tonic-neutral-600: #36302c;
+  --tonic-neutral-700: #292524;
+  --tonic-neutral-800: #1c1917;
+  --tonic-neutral-900: #13100e;
+  --tonic-green-100: #dcfce7;
+  --tonic-green-200: #bbf7d0;
+  --tonic-green-300: #4ade80;
+  --tonic-green-400: #166534;
+  --tonic-green-500: #14532d;
+  --tonic-amber-100: #fef3c7;
+  --tonic-amber-200: #fde68a;
+  --tonic-amber-300: #fbbf24;
+  --tonic-amber-400: #f59e0b;
+  --tonic-amber-500: #d97706;
+  --tonic-red-100: #fee2e2;
+  --tonic-red-200: #fecaca;
+  --tonic-red-300: #f87171;
+  --tonic-red-400: #991b1b;
+  --tonic-red-500: #7f1d1d;
   --tonic-space-000: 0;
   --tonic-space-025: 0.25rem;
   --tonic-space-050: 0.5rem;
@@ -132,14 +132,14 @@ a {
 }
 
 a[href] {
-  color: #1e5be6;
+  color: #dec797;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
 
 :focus-visible {
-  outline-color: #4f8dff;
+  outline-color: #dec797;
   outline-width: 2px;
   outline-offset: 2px;
 }
@@ -159,11 +159,11 @@ html {
 }
 
 body {
-  font-family: "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif";
+  font-family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'";
   font-size: 1rem;
   line-height: 1.5;
-  color: #1e293b;
-  background-color: #f8fafc;
+  color: #f5f5f4;
+  background-color: #1c1917;
   font-variant-ligatures: contextual;
 }
 
@@ -173,24 +173,26 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif";
+  font-family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'";
   font-weight: 600;
-  color: #0f172a;
+  color: #13100e;
   margin: 0;
 }
 
 h1 {
   font-size: 2.25rem;
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.02em;
+  color: #f5f5f4;
 }
 
 h2 {
   font-size: 1.875rem;
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.015em;
+  color: #f5f5f4;
 }
 
 h3 {
@@ -198,6 +200,7 @@ h3 {
   line-height: 1.25;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: #f5f5f4;
 }
 
 h4 {
@@ -205,6 +208,7 @@ h4 {
   line-height: 1.5;
   font-weight: 600;
   letter-spacing: normal;
+  color: #f5f5f4;
 }
 
 h5 {
@@ -212,6 +216,7 @@ h5 {
   line-height: 1.5;
   font-weight: 500;
   letter-spacing: normal;
+  color: #e7e5e4;
 }
 
 h6 {
@@ -221,7 +226,7 @@ h6 {
   letter-spacing: normal;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #64748b;
+  color: #d6d3d1;
 }
 
 p {
@@ -230,6 +235,7 @@ p {
   font-weight: 400;
   letter-spacing: normal;
   margin-block: 0;
+  color: #e7e5e4;
 }
 
 small {
@@ -237,7 +243,7 @@ small {
   line-height: 1.5;
   font-weight: 400;
   letter-spacing: normal;
-  color: #64748b;
+  color: #d6d3d1;
 }
 
 strong {
@@ -258,12 +264,12 @@ samp {
 
 a[href]:hover,
 a[href]:focus-visible {
-  color: #4f8dff;
+  color: #e9d7b8;
 }
 
 ::selection {
-  background-color: #c2daff;
-  color: #0f172a;
+  background-color: #dec797;
+  color: #13100e;
 }
 
 @keyframes tonic-fade-in {
@@ -327,7 +333,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: #1c1917;
+  color: #e7e5e4;
 }
 
 main {
@@ -346,6 +353,11 @@ main {
   display: grid;
   gap: 2rem;
   padding-block: 3rem;
+  background: #292524;
+  border-radius: 0.5rem;
+  border: 1px solid #44403c;
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.12);
+  color: #f5f5f4;
 }
 
 .tonic-stack {
@@ -382,7 +394,7 @@ main {
 .tonic-divider {
   width: 100%;
   height: 1px;
-  background: #e2e8f0;
+  background: #44403c;
   border: 0;
 }
 
@@ -412,9 +424,9 @@ main {
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.5;
-  background-color: #0f172a;
-  color: #ffffff;
-  border: 1px solid #0f172a;
+  background-color: #44403c;
+  color: #f5f5f4;
+  border: 1px solid #44403c;
   min-height: 2.5rem;
   transition: all 140ms cubic-bezier(0.2, 0, 0, 1);
   cursor: pointer;
@@ -422,18 +434,18 @@ main {
 }
 
 .tonic-button:hover {
-  background-color: #1e293b;
-  border-color: #1e293b;
+  background-color: #57534e;
+  border-color: #57534e;
 }
 
 .tonic-button:active {
-  background-color: #334155;
-  border-color: #334155;
+  background-color: #36302c;
+  border-color: #36302c;
 }
 
 .tonic-button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px rgba(79, 141, 255, 0.35);
+  box-shadow: 0 0 0 1px #1c1917, 0 0 0 3px rgba(222, 199, 151, 0.45);
 }
 
 .tonic-button[disabled],
@@ -446,67 +458,67 @@ main {
 }
 
 .tonic-button--primary {
-  background-color: #1e5be6;
-  border-color: #1e5be6;
-  color: #ffffff;
+  background-color: #dec797;
+  border-color: #dec797;
+  color: #13100e;
 }
 
 .tonic-button--primary:hover {
-  background-color: #4f8dff;
-  border-color: #4f8dff;
+  background-color: #e9d7b8;
+  border-color: #e9d7b8;
 }
 
 .tonic-button--primary:active {
-  background-color: #8cb9ff;
-  border-color: #8cb9ff;
+  background-color: #c6ae7a;
+  border-color: #c6ae7a;
 }
 
 .tonic-button--secondary {
-  background-color: #ffffff;
-  border-color: #cbd5e1;
-  color: #334155;
+  background-color: #292524;
+  border-color: #44403c;
+  color: #f5f5f4;
 }
 
 .tonic-button--secondary:hover {
-  border-color: #94a3b8;
-  color: #1e293b;
-  background-color: #f8fafc;
+  border-color: #57534e;
+  color: #f5f5f4;
+  background-color: #36302c;
 }
 
 .tonic-button--secondary:active {
-  border-color: #64748b;
-  color: #0f172a;
+  border-color: #44403c;
+  color: #f5f5f4;
 }
 
 .tonic-button--ghost {
   background-color: transparent;
-  color: #334155;
+  color: #d6d3d1;
   border-color: transparent;
 }
 
 .tonic-button--ghost:hover {
-  background-color: #f1f5f9;
-  color: #1e293b;
+  background-color: #292524;
+  color: #f5f5f4;
 }
 
 .tonic-button--ghost:active {
-  background-color: #e2e8f0;
+  background-color: #36302c;
 }
 
 .tonic-button--danger {
-  background-color: #d92d33;
-  border-color: #d92d33;
+  background-color: #f87171;
+  border-color: #f87171;
   color: #ffffff;
 }
 
 .tonic-button--danger:hover {
-  background-color: #f05c59;
-  border-color: #f05c59;
+  background-color: #fecaca;
+  border-color: #fecaca;
 }
 
 .tonic-button--danger:active {
-  background-color: #f68782;
-  border-color: #f68782;
+  background-color: #991b1b;
+  border-color: #991b1b;
 }
 
 .tonic-button--pill {
@@ -540,12 +552,12 @@ main {
 .tonic-field__label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #475569;
+  color: #e7e5e4;
 }
 
 .tonic-field__hint {
   font-size: 0.875rem;
-  color: #64748b;
+  color: #a8a29e;
 }
 
 .tonic-input,
@@ -557,9 +569,9 @@ select.tonic-input {
   padding-inline: 1.25rem;
   padding-block: 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid #cbd5e1;
-  background-color: #ffffff;
-  color: #1e293b;
+  border: 1px solid #44403c;
+  background-color: #292524;
+  color: #f5f5f4;
   transition: border-color 140ms cubic-bezier(0.2, 0, 0, 1);
   box-shadow: none;
 }
@@ -567,20 +579,20 @@ select.tonic-input {
 .tonic-input:hover,
 textarea.tonic-input:hover,
 select.tonic-input:hover {
-  border-color: #94a3b8;
+  border-color: #57534e;
 }
 
 .tonic-input:focus-visible,
 textarea.tonic-input:focus-visible,
 select.tonic-input:focus-visible {
-  border-color: #4f8dff;
+  border-color: #dec797;
   outline: none;
-  box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px rgba(79, 141, 255, 0.35);
+  box-shadow: 0 0 0 1px #1c1917, 0 0 0 3px rgba(222, 199, 151, 0.45);
 }
 
 .tonic-input::placeholder,
 textarea.tonic-input::placeholder {
-  color: #94a3b8;
+  color: #a8a29e;
 }
 
 .tonic-input[aria-invalid=true],
@@ -589,22 +601,22 @@ textarea.tonic-input[aria-invalid=true],
 textarea.tonic-input.is-invalid,
 select.tonic-input[aria-invalid=true],
 select.tonic-input.is-invalid {
-  border-color: #f05c59;
-  background-color: #fee7e6;
+  border-color: #f87171;
+  background-color: #fee2e2;
 }
 
 .tonic-field__error {
   font-size: 0.875rem;
-  color: #d92d33;
+  color: #fecaca;
 }
 
 .tonic-input:disabled,
 textarea.tonic-input:disabled,
 select.tonic-input:disabled {
-  background-color: #f1f5f9;
-  color: #64748b;
+  background-color: #36302c;
+  color: #a8a29e;
   cursor: not-allowed;
-  border-color: #e2e8f0;
+  border-color: #44403c;
 }
 
 textarea.tonic-input {
@@ -615,7 +627,7 @@ textarea.tonic-input {
 select.tonic-input {
   appearance: none;
   padding-right: 2rem;
-  background-image: linear-gradient(45deg, transparent 50%, #475569 50%), linear-gradient(135deg, #475569 50%, transparent 50%), linear-gradient(#e2e8f0, #e2e8f0);
+  background-image: linear-gradient(45deg, transparent 50%, #d6d3d1 50%), linear-gradient(135deg, #d6d3d1 50%, transparent 50%), linear-gradient(#44403c, #44403c);
   background-position: calc(100% - 1.25rem) center, calc(100% - 1.5rem) center, right 1.5rem center;
   background-size: 0.6rem 0.6rem, 0.6rem 0.6rem, 1px 100%;
   background-repeat: no-repeat;
@@ -647,8 +659,8 @@ input[type=radio].tonic-radio {
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 0.2rem;
-  border: 1px solid #cbd5e1;
-  background-color: #ffffff;
+  border: 1px solid #44403c;
+  background-color: #292524;
   display: inline-grid;
   place-content: center;
   cursor: pointer;
@@ -663,7 +675,7 @@ input[type=checkbox].tonic-checkbox::after {
   content: "";
   width: 0.55rem;
   height: 0.35rem;
-  border: 2px solid #ffffff;
+  border: 2px solid #13100e;
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg) scale(0);
@@ -676,27 +688,28 @@ input[type=radio].tonic-radio::after {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: #13100e;
   transform: scale(0);
   transition: transform 140ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 input[type=checkbox].tonic-checkbox:hover,
 input[type=radio].tonic-radio:hover {
-  border-color: #8cb9ff;
+  border-color: #dec797;
 }
 
 input[type=checkbox].tonic-checkbox:focus-visible,
 input[type=radio].tonic-radio:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px rgba(79, 141, 255, 0.35);
+  box-shadow: 0 0 0 1px #1c1917, 0 0 0 3px rgba(222, 199, 151, 0.45);
 }
 
 input[type=checkbox].tonic-checkbox:checked,
 input[type=checkbox].tonic-checkbox:indeterminate,
 input[type=radio].tonic-radio:checked {
-  background-color: #1e5be6;
-  border-color: #1e5be6;
+  background-color: #dec797;
+  border-color: #dec797;
+  color: #13100e;
 }
 
 input[type=checkbox].tonic-checkbox:checked::after {
@@ -707,7 +720,7 @@ input[type=checkbox].tonic-checkbox:indeterminate::after {
   width: 0.75rem;
   height: 0.125rem;
   border: 0;
-  background-color: #ffffff;
+  background-color: #13100e;
   transform: scale(1);
 }
 
@@ -718,20 +731,20 @@ input[type=radio].tonic-radio:checked::after {
 input[type=checkbox].tonic-checkbox:disabled,
 input[type=radio].tonic-radio:disabled {
   cursor: not-allowed;
-  background-color: #f1f5f9;
-  border-color: #e2e8f0;
+  background-color: #36302c;
+  border-color: #44403c;
   opacity: 0.7;
 }
 
 .tonic-check__label {
   font-size: 0.875rem;
-  color: #334155;
+  color: #e7e5e4;
 }
 
 .tonic-check__hint {
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: #64748b;
+  color: #a8a29e;
 }
 
 dialog {
@@ -739,15 +752,15 @@ dialog {
   border-radius: 0.75rem;
   padding: 2rem;
   box-shadow: 0 8px 16px rgba(15, 23, 42, 0.16);
-  background-color: #ffffff;
-  color: #1e293b;
+  background-color: #292524;
+  color: #f5f5f4;
   min-width: min(32rem, 90vw);
   max-width: 90vw;
   animation: tonic-scale-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 dialog::backdrop {
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(19, 16, 14, 0.7);
   backdrop-filter: blur(2px);
 }
 
@@ -762,14 +775,14 @@ dialog::backdrop {
 .tonic-dialog__title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #f5f5f4;
   margin: 0;
 }
 
 .tonic-dialog__body {
   display: grid;
   gap: 1rem;
-  color: #334155;
+  color: #e7e5e4;
 }
 
 .tonic-dialog__actions {
@@ -782,25 +795,25 @@ dialog::backdrop {
 .tonic-panel {
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #292524;
+  border: 1px solid #44403c;
   padding: 2rem;
   display: grid;
   gap: 1.5rem;
-  color: #1e293b;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.92));
+  color: #f5f5f4;
+  background-image: none;
 }
 
 .tonic-panel--primary {
-  border-left: 4px solid #4f8dff;
+  border-left: 4px solid #dec797;
 }
 
 .tonic-panel--success {
-  border-left: 4px solid #3ecf8e;
+  border-left: 4px solid #166534;
 }
 
 .tonic-panel--danger {
-  border-left: 4px solid #f05c59;
+  border-left: 4px solid #991b1b;
 }
 
 .tonic-panel__header {
@@ -813,12 +826,12 @@ dialog::backdrop {
 .tonic-panel__title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #f5f5f4;
   margin: 0;
 }
 
 .tonic-panel__body {
-  color: #334155;
+  color: #e7e5e4;
 }
 
 .tonic-panel__footer {
@@ -1189,16 +1202,17 @@ dialog::backdrop {
 }
 
 .u-text-muted {
-  color: #64748b !important;
+  color: #a8a29e !important;
 }
 
 .u-bg-surface {
-  background-color: #ffffff !important;
+  background-color: #292524 !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  border: 1px solid #44403c !important;
 }
 
 .u-border-subtle {
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid #44403c !important;
 }
 
 .u-radius {
@@ -1224,7 +1238,7 @@ dialog::backdrop {
   display: grid;
   grid-template-columns: 16rem 1fr;
   min-height: 100vh;
-  background: #f8fafc;
+  background: #1c1917;
 }
 
 .doc-nav {
@@ -1233,8 +1247,8 @@ dialog::backdrop {
   align-self: start;
   height: 100vh;
   padding: 2rem;
-  background: #ffffff;
-  border-right: 1px solid #e2e8f0;
+  background: #13100e;
+  border-right: 1px solid #36302c;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -1248,12 +1262,12 @@ dialog::backdrop {
 .doc-nav__title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #e9d7b8;
 }
 
 .doc-nav__subtitle {
   font-size: 0.875rem;
-  color: #64748b;
+  color: #a8a29e;
   margin: 0;
 }
 
@@ -1269,22 +1283,22 @@ dialog::backdrop {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #64748b;
+  color: #57534e;
 }
 
 .doc-nav__link {
   display: block;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  color: #475569;
+  color: #d6d3d1;
   text-decoration: none;
   transition: background-color 140ms cubic-bezier(0.2, 0, 0, 1), color 140ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .doc-nav__link:hover,
 .doc-nav__link:focus-visible {
-  background-color: #f1f5f9;
-  color: #1e293b;
+  background-color: #292524;
+  color: #e9d7b8;
   outline: none;
 }
 
@@ -1295,9 +1309,9 @@ dialog::backdrop {
 }
 
 .doc-section {
-  background: #ffffff;
+  background: #292524;
   border-radius: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #44403c;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
   padding: 2rem;
   display: grid;
@@ -1315,10 +1329,11 @@ dialog::backdrop {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
+  color: #f5f5f4;
 }
 
 .doc-section__description {
-  color: #475569;
+  color: #d6d3d1;
   font-size: 0.875rem;
   max-width: 40rem;
 }
@@ -1327,18 +1342,19 @@ dialog::backdrop {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
+  color: #e7e5e4;
 }
 
 .token-table thead {
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #64748b;
+  color: #a8a29e;
 }
 
 .token-table th,
 .token-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #44403c;
   text-align: left;
 }
 
@@ -1352,7 +1368,7 @@ dialog::backdrop {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #44403c;
   box-shadow: none;
 }
 
@@ -1366,17 +1382,17 @@ dialog::backdrop {
 }
 
 .preview-card {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #44403c;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background: #ffffff;
+  background: #292524;
   display: grid;
   gap: 1rem;
 }
 
 .preview-card__title {
   font-size: 0.875rem;
-  color: #475569;
+  color: #d6d3d1;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -1384,8 +1400,8 @@ dialog::backdrop {
 .sample-block {
   padding: 1.5rem;
   border-radius: 0.5rem;
-  background: #f1f5f9;
-  border: 1px dashed #e2e8f0;
+  background: #36302c;
+  border: 1px dashed #44403c;
 }
 
 .swatch-grid {
@@ -1396,9 +1412,9 @@ dialog::backdrop {
 
 .swatch-card {
   border-radius: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #44403c;
   overflow: hidden;
-  background: #ffffff;
+  background: #292524;
   display: grid;
   grid-template-rows: 5rem auto;
 }
@@ -1410,7 +1426,7 @@ dialog::backdrop {
 .swatch-card__meta {
   padding: 1rem;
   font-size: 0.875rem;
-  color: #475569;
+  color: #d6d3d1;
 }
 
 .form-grid {
@@ -1433,7 +1449,7 @@ dialog::backdrop {
     position: relative;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #36302c;
   }
   .doc-content {
     padding: 2rem;

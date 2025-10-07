@@ -1,11 +1,12 @@
+@use "sass:color";
 @use "./tokens";
 
 /// Apply a consistent outline/box-shadow focus affordance.
-@mixin focus-ring($color: tokens.color(blue, 300), $halo-alpha: 0.35, $width: 2px, $offset: 1px) {
+@mixin focus-ring($color: tokens.color(brand, 300), $halo-alpha: 0.45, $width: 2px, $offset: 1px) {
   outline: none;
   box-shadow:
-    0 0 0 $offset tokens.color(neutral, 000),
-    0 0 0 ($offset + $width) tokens.color(blue, 400, $halo-alpha);
+    0 0 0 $offset tokens.color(neutral, 800),
+    0 0 0 ($offset + $width) color.change($color, $alpha: $halo-alpha);
 }
 
 /// Normalize button-like elements by removing UA defaults.
@@ -26,7 +27,7 @@
 }
 
 /// Provide a consistent surface style made from tokens.
-@mixin surface($radius: "200", $shadow: "200", $background: tokens.color(neutral, 000), $border: tokens.color(neutral, 200)) {
+@mixin surface($radius: "200", $shadow: "200", $background: tokens.color(neutral, 700), $border: tokens.color(neutral, 500)) {
   border-radius: tokens.radius($radius);
   box-shadow: tokens.shadow($shadow);
   background: $background;

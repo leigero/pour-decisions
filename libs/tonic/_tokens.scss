@@ -7,46 +7,46 @@
 /// Provides palette, spacing, typography, motion, elevation, and z-index scales.
 
 $tonic-colors: (
-  "blue": (
-    "100": #e6f0ff,
-    "200": #c2daff,
-    "300": #8cb9ff,
-    "400": #4f8dff,
-    "500": #1e5be6
+  "brand": (
+    "100": #f3e8d0,
+    "200": #e9d7b8,
+    "300": #dec797,
+    "400": #c6ae7a,
+    "500": #9c875a
   ),
   "neutral": (
     "000": #ffffff,
-    "050": #f8fafc,
-    "100": #f1f5f9,
-    "200": #e2e8f0,
-    "300": #cbd5e1,
-    "400": #94a3b8,
-    "500": #64748b,
-    "600": #475569,
-    "700": #334155,
-    "800": #1e293b,
-    "900": #0f172a
+    "050": #f5f5f4,
+    "100": #e7e5e4,
+    "200": #d6d3d1,
+    "300": #a8a29e,
+    "400": #57534e,
+    "500": #44403c,
+    "600": #36302c,
+    "700": #292524,
+    "800": #1c1917,
+    "900": #13100e
   ),
   "green": (
-    "100": #e6fbf2,
-    "200": #b1f1d4,
-    "300": #7ce4b2,
-    "400": #3ecf8e,
-    "500": #1aab6c
+    "100": #dcfce7,
+    "200": #bbf7d0,
+    "300": #4ade80,
+    "400": #166534,
+    "500": #14532d
   ),
   "amber": (
-    "100": #fff4e6,
-    "200": #ffe0b2,
-    "300": #ffcc80,
-    "400": #ffb74d,
-    "500": #fb8c00
+    "100": #fef3c7,
+    "200": #fde68a,
+    "300": #fbbf24,
+    "400": #f59e0b,
+    "500": #d97706
   ),
   "red": (
-    "100": #fee7e6,
-    "200": #fbb8b4,
-    "300": #f68782,
-    "400": #f05c59,
-    "500": #d92d33
+    "100": #fee2e2,
+    "200": #fecaca,
+    "300": #f87171,
+    "400": #991b1b,
+    "500": #7f1d1d
   )
 );
 
@@ -84,7 +84,7 @@ $tonic-elevation: (
 );
 
 $tonic-font-stacks: (
-  "sans": "'Inter', 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif",
+  "sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
   "serif": "'Source Serif 4', 'Georgia', serif",
   "mono": "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
 );
@@ -110,7 +110,8 @@ $tonic-font-weights: (
   "regular": 400,
   "medium": 500,
   "semibold": 600,
-  "bold": 700
+  "bold": 700,
+  "heavy": 800
 );
 
 $tonic-durations: (
@@ -224,7 +225,7 @@ $tonic-z-scale: (
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --tonic-font-sans: #{font(sans)};
   --tonic-font-serif: #{font(serif)};
   --tonic-font-mono: #{font(mono)};
