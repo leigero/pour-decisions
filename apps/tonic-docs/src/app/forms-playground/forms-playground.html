@@ -1,0 +1,127 @@
+<section class="doc-section" id="text-fields">
+  <header class="doc-section__header">
+    <h1 class="doc-section__title">Text Fields</h1>
+    <p class="doc-section__description">
+      <code>.tonic-field</code> groups labels, inputs, and supporting text. Inputs inherit spacing, borders, and focus ring.
+    </p>
+  </header>
+
+  <form class="form-grid">
+    <label class="tonic-field">
+      <span class="tonic-field__label">Vineyard name</span>
+      <input class="tonic-input" type="text" name="vineyard" placeholder="Pour Decisions Vineyard" />
+      <span class="tonic-field__hint">Appears on customer-facing tasting notes.</span>
+    </label>
+
+    <label class="tonic-field">
+      <span class="tonic-field__label">Region</span>
+      <input class="tonic-input" type="text" name="region" placeholder="Willamette Valley" />
+    </label>
+
+    <label class="tonic-field">
+      <span class="tonic-field__label">Vintage</span>
+      <input class="tonic-input" type="number" name="vintage" min="1980" max="2025" value="2022" />
+    </label>
+
+    <label class="tonic-field">
+      <span class="tonic-field__label">Tasting notes</span>
+      <textarea class="tonic-input" name="notes" rows="4" placeholder="Black cherry, cedar, balanced acidity"></textarea>
+      <span class="tonic-field__hint">Markdown supported.</span>
+    </label>
+  </form>
+</section>
+
+<section class="doc-section" id="selects">
+  <header class="doc-section__header">
+    <h2 class="doc-section__title">Selects and Validation</h2>
+    <p class="doc-section__description">
+      Select inputs have custom indicators. Apply <code>aria-invalid="true"</code> or <code>.is-invalid</code> for error state.
+    </p>
+  </header>
+
+  <div class="preview-grid preview-grid--columns">
+    <label class="tonic-field">
+      <span class="tonic-field__label">Wine style</span>
+      <select class="tonic-input" name="style">
+        <option>Pinot Noir</option>
+        <option>Chardonnay</option>
+        <option>Cabernet Sauvignon</option>
+        <option>Syrah</option>
+      </select>
+    </label>
+
+    <label class="tonic-field">
+      <span class="tonic-field__label">Shipping status</span>
+      <select class="tonic-input is-invalid" aria-invalid="true" name="shipping">
+        <option selected>Choose status</option>
+        <option>Pending</option>
+        <option>In transit</option>
+        <option>Delivered</option>
+      </select>
+      <span class="tonic-field__error">Please select a valid shipping status.</span>
+    </label>
+  </div>
+</section>
+
+<section class="doc-section" id="checks">
+  <header class="doc-section__header">
+    <h2 class="doc-section__title">Checkboxes and Radios</h2>
+    <p class="doc-section__description">
+      Inputs use pure CSS to render checks and indeterminate states. Labels align with doc utilities.
+    </p>
+  </header>
+
+  <div class="preview-grid preview-grid--columns">
+    <fieldset class="tonic-panel">
+      <legend class="tonic-panel__title">Checkbox group</legend>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-checkbox" type="checkbox" name="options" checked />
+        </span>
+        <span>
+          <span class="tonic-check__label">Include tasting notes</span>
+          <span class="tonic-check__hint">Adds tasting notes to shipments.</span>
+        </span>
+      </label>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-checkbox" type="checkbox" name="options" />
+        </span>
+        <span>
+          <span class="tonic-check__label">Notify subscribers</span>
+        </span>
+      </label>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-checkbox" type="checkbox" name="options" disabled />
+        </span>
+        <span>
+          <span class="tonic-check__label">Archive after delivery</span>
+          <span class="tonic-check__hint">Unavailable while shipment is in transit.</span>
+        </span>
+      </label>
+    </fieldset>
+
+    <fieldset class="tonic-panel">
+      <legend class="tonic-panel__title">Radio group</legend>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-radio" type="radio" name="priority" checked />
+        </span>
+        <span class="tonic-check__label">Standard priority</span>
+      </label>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-radio" type="radio" name="priority" />
+        </span>
+        <span class="tonic-check__label">Elevated priority</span>
+      </label>
+      <label class="tonic-check">
+        <span class="tonic-check__control">
+          <input class="tonic-radio" type="radio" name="priority" disabled />
+        </span>
+        <span class="tonic-check__label">Manual review</span>
+      </label>
+    </fieldset>
+  </div>
+</section>

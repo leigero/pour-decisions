@@ -1,0 +1,48 @@
+@use "./tokens";
+@use "./mixins" as mix;
+
+.tonic-panel {
+  @include mix.surface("200", "100");
+  padding: tokens.space("200");
+  display: grid;
+  gap: tokens.space("150");
+  color: tokens.color(neutral, 050);
+  background-image: none;
+}
+
+.tonic-panel--primary {
+  border-left: 4px solid tokens.color(brand, 300);
+}
+
+.tonic-panel--success {
+  border-left: 4px solid tokens.color(green, 400);
+}
+
+.tonic-panel--danger {
+  border-left: 4px solid tokens.color(red, 400);
+}
+
+.tonic-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: tokens.space("100");
+}
+
+.tonic-panel__title {
+  font-size: tokens.type-size("lg");
+  font-weight: tokens.weight(semibold);
+  color: tokens.color(neutral, 050);
+  margin: 0;
+}
+
+.tonic-panel__body {
+  color: tokens.color(neutral, 100);
+}
+
+.tonic-panel__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: tokens.space("100");
+  justify-content: flex-end;
+}

@@ -1,0 +1,107 @@
+@use "./tokens";
+@use "./mixins" as mix;
+
+.tonic-check {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: tokens.space("075");
+}
+
+.tonic-check__control {
+  position: relative;
+  display: inline-grid;
+  place-content: center;
+}
+
+input[type="checkbox"].tonic-checkbox,
+input[type="radio"].tonic-radio {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: tokens.radius("075");
+  border: 1px solid tokens.color(neutral, 500);
+  background-color: tokens.color(neutral, 700);
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  @include mix.transition(all, fast);
+}
+
+input[type="radio"].tonic-radio {
+  border-radius: 999px;
+}
+
+input[type="checkbox"].tonic-checkbox::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.35rem;
+  border: 2px solid tokens.color(neutral, 900);
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg) scale(0);
+  transform-origin: center;
+  transition: transform tokens.duration(fast) tokens.easing(standard);
+}
+
+input[type="radio"].tonic-radio::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: tokens.color(neutral, 900);
+  transform: scale(0);
+  transition: transform tokens.duration(fast) tokens.easing(standard);
+}
+
+input[type="checkbox"].tonic-checkbox:hover,
+input[type="radio"].tonic-radio:hover {
+  border-color: tokens.color(brand, 300);
+}
+
+input[type="checkbox"].tonic-checkbox:focus-visible,
+input[type="radio"].tonic-radio:focus-visible {
+  @include mix.focus-ring();
+}
+
+input[type="checkbox"].tonic-checkbox:checked,
+input[type="checkbox"].tonic-checkbox:indeterminate,
+input[type="radio"].tonic-radio:checked {
+  background-color: tokens.color(brand, 300);
+  border-color: tokens.color(brand, 300);
+  color: tokens.color(neutral, 900);
+}
+
+input[type="checkbox"].tonic-checkbox:checked::after {
+  transform: rotate(45deg) scale(1);
+}
+
+input[type="checkbox"].tonic-checkbox:indeterminate::after {
+  width: 0.75rem;
+  height: 0.125rem;
+  border: 0;
+  background-color: tokens.color(neutral, 900);
+  transform: scale(1);
+}
+
+input[type="radio"].tonic-radio:checked::after {
+  transform: scale(1);
+}
+
+input[type="checkbox"].tonic-checkbox:disabled,
+input[type="radio"].tonic-radio:disabled {
+  cursor: not-allowed;
+  background-color: tokens.color(neutral, 600);
+  border-color: tokens.color(neutral, 500);
+  opacity: 0.7;
+}
+
+.tonic-check__label {
+  font-size: tokens.type-size("sm");
+  color: tokens.color(neutral, 100);
+}
+
+.tonic-check__hint {
+  margin-top: tokens.space("025");
+  font-size: tokens.type-size("sm");
+  color: tokens.color(neutral, 300);
+}

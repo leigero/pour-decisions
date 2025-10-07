@@ -28,6 +28,9 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/tonic-docs/tsconfig.app.json"
     }
   ]
 }

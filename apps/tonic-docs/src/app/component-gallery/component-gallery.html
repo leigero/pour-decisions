@@ -1,0 +1,104 @@
+<section class="doc-section" id="buttons">
+  <header class="doc-section__header">
+    <h1 class="doc-section__title">Buttons</h1>
+    <p class="doc-section__description">
+      Core <code>.tonic-button</code> with tone modifiers for primary, secondary, ghost, icon, and danger interactions.
+    </p>
+  </header>
+
+  <div class="preview-grid preview-grid--columns">
+    <article class="preview-card">
+      <span class="preview-card__title">Solid Variants</span>
+      <div class="tonic-cluster">
+        <button class="tonic-button tonic-button--primary">Primary</button>
+        <button class="tonic-button tonic-button--secondary">Secondary</button>
+        <button class="tonic-button tonic-button--danger">Danger</button>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <span class="preview-card__title">Ghost &amp; Icon</span>
+      <div class="tonic-cluster">
+        <button class="tonic-button tonic-button--ghost">Ghost</button>
+        <button class="tonic-button tonic-button--primary tonic-button--icon" aria-label="Refresh">
+          <span class="tonic-button__icon">&#x21bb;</span>
+        </button>
+        <button class="tonic-button tonic-button--primary tonic-button--pill">Pill</button>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <span class="preview-card__title">States</span>
+      <div class="tonic-stack tonic-stack--tight">
+        <button class="tonic-button tonic-button--primary" aria-busy="true">Loading...</button>
+        <button class="tonic-button tonic-button--secondary" disabled>Disabled</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="doc-section" id="panels">
+  <header class="doc-section__header">
+    <h2 class="doc-section__title">Panels</h2>
+    <p class="doc-section__description">
+      Elevated surfaces for grouping related content. Use modifiers to communicate tone.
+    </p>
+  </header>
+
+  <div class="preview-grid preview-grid--columns">
+    <article class="tonic-panel tonic-panel--primary">
+      <header class="tonic-panel__header">
+        <h3 class="tonic-panel__title">Primary Panel</h3>
+        <span class="u-text-muted">Intentional callout</span>
+      </header>
+      <p class="tonic-panel__body">
+        Panels inherit spacing, typography, and color tokens. Use them for dashboards, cards, and summaries.
+      </p>
+      <footer class="tonic-panel__footer">
+        <button class="tonic-button tonic-button--ghost">Dismiss</button>
+        <button class="tonic-button tonic-button--primary">Action</button>
+      </footer>
+    </article>
+
+    <article class="tonic-panel tonic-panel--success">
+      <header class="tonic-panel__header">
+        <h3 class="tonic-panel__title">Success Panel</h3>
+        <span class="u-text-muted">Positive signal</span>
+      </header>
+      <p class="tonic-panel__body">
+        Combine panels with utility classes like <code>u-gap-150</code> and <code>u-radius-pill</code> for quick layout adjustments.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="doc-section" id="dialogs">
+  <header class="doc-section__header">
+    <h2 class="doc-section__title">Dialogs</h2>
+    <p class="doc-section__description">
+      Native <code>&lt;dialog&gt;</code> element styling with animated entrance and accessible backdrop.
+    </p>
+  </header>
+
+  <div class="docs-dialog-preview">
+    <dialog open>
+      <header class="tonic-dialog__header">
+        <h3 class="tonic-dialog__title">Save changes?</h3>
+        <button class="tonic-button tonic-button--ghost tonic-button--icon" aria-label="Close dialog">
+          <span class="tonic-button__icon">&times;</span>
+        </button>
+      </header>
+      <div class="tonic-dialog__body">
+        <p>Your tasting notes have unsaved edits. Save them before closing to avoid losing work.</p>
+      </div>
+      <footer class="tonic-dialog__actions">
+        <button class="tonic-button tonic-button--ghost">Cancel</button>
+        <button class="tonic-button tonic-button--primary">Save</button>
+      </footer>
+    </dialog>
+
+    <p class="doc-section__description">
+      Dialogs use tokenized elevation, spacing, and focus treatments. Attach events in app code to open or close them.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+@use "./tokens";
+@use "./mixins" as mix;
+
+.tonic-field {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.space("050");
+}
+
+.tonic-field__label {
+  font-size: tokens.type-size("sm");
+  font-weight: tokens.weight(medium);
+  color: tokens.color(neutral, 100);
+}
+
+.tonic-field__hint {
+  font-size: tokens.type-size("sm");
+  color: tokens.color(neutral, 300);
+}
+
+.tonic-input,
+textarea.tonic-input,
+select.tonic-input {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding-inline: tokens.space("125");
+  padding-block: tokens.space("075");
+  border-radius: tokens.radius("200");
+  border: 1px solid tokens.color(neutral, 500);
+  background-color: tokens.color(neutral, 700);
+  color: tokens.color(neutral, 050);
+  @include mix.transition(border-color, fast);
+  box-shadow: tokens.shadow("000");
+}
+
+.tonic-input:hover,
+textarea.tonic-input:hover,
+select.tonic-input:hover {
+  border-color: tokens.color(neutral, 400);
+}
+
+.tonic-input:focus-visible,
+textarea.tonic-input:focus-visible,
+select.tonic-input:focus-visible {
+  border-color: tokens.color(brand, 300);
+  @include mix.focus-ring();
+}
+
+.tonic-input::placeholder,
+textarea.tonic-input::placeholder {
+  color: tokens.color(neutral, 300);
+}
+
+.tonic-input[aria-invalid="true"],
+.tonic-input.is-invalid,
+textarea.tonic-input[aria-invalid="true"],
+textarea.tonic-input.is-invalid,
+select.tonic-input[aria-invalid="true"],
+select.tonic-input.is-invalid {
+  border-color: tokens.color(red, 300);
+  background-color: tokens.color(red, 100);
+}
+
+.tonic-field__error {
+  font-size: tokens.type-size("sm");
+  color: tokens.color(red, 200);
+}
+
+.tonic-input:disabled,
+textarea.tonic-input:disabled,
+select.tonic-input:disabled {
+  background-color: tokens.color(neutral, 600);
+  color: tokens.color(neutral, 300);
+  cursor: not-allowed;
+  border-color: tokens.color(neutral, 500);
+}
+
+textarea.tonic-input {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+select.tonic-input {
+  appearance: none;
+  padding-right: tokens.space("200");
+  background-image:
+    linear-gradient(45deg, transparent 50%, tokens.color(neutral, 200) 50%),
+    linear-gradient(135deg, tokens.color(neutral, 200) 50%, transparent 50%),
+    linear-gradient(tokens.color(neutral, 500), tokens.color(neutral, 500));
+  background-position:
+    calc(100% - tokens.space("125")) center,
+    calc(100% - tokens.space("150")) center,
+    right tokens.space("150") center;
+  background-size:
+    0.6rem 0.6rem,
+    0.6rem 0.6rem,
+    1px 100%;
+  background-repeat: no-repeat;
+}
+
+.tonic-input[type="search"] {
+  appearance: none;
+}
+
+.tonic-input[type="file"] {
+  padding: tokens.space("050");
+}

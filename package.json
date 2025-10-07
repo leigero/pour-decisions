@@ -4,9 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:app": "npm run docs:build && npm run start",
+    "start:docs": "ng serve tonic-docs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "docs:build": "ng build tonic-docs"
   },
   "prettier": {
     "overrides": [
@@ -45,6 +48,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "3.6.2",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "sass": "^1.79.5"
   }
 }

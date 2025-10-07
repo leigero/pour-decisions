@@ -1,0 +1,262 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+
+/// Central design-token registry for the Tonic design system.
+/// Provides palette, spacing, typography, motion, elevation, and z-index scales.
+
+$tonic-colors: (
+  "brand": (
+    "100": #f3e8d0,
+    "200": #e9d7b8,
+    "300": #dec797,
+    "400": #c6ae7a,
+    "500": #9c875a
+  ),
+  "neutral": (
+    "000": #ffffff,
+    "050": #f5f5f4,
+    "100": #e7e5e4,
+    "200": #d6d3d1,
+    "300": #a8a29e,
+    "400": #57534e,
+    "500": #44403c,
+    "600": #36302c,
+    "700": #292524,
+    "800": #1c1917,
+    "900": #13100e
+  ),
+  "green": (
+    "100": #dcfce7,
+    "200": #bbf7d0,
+    "300": #4ade80,
+    "400": #166534,
+    "500": #14532d
+  ),
+  "amber": (
+    "100": #fef3c7,
+    "200": #fde68a,
+    "300": #fbbf24,
+    "400": #f59e0b,
+    "500": #d97706
+  ),
+  "red": (
+    "100": #fee2e2,
+    "200": #fecaca,
+    "300": #f87171,
+    "400": #991b1b,
+    "500": #7f1d1d
+  )
+);
+
+$tonic-spacing: (
+  "000": 0,
+  "025": 0.25rem,
+  "050": 0.5rem,
+  "075": 0.75rem,
+  "100": 1rem,
+  "125": 1.25rem,
+  "150": 1.5rem,
+  "200": 2rem,
+  "300": 3rem,
+  "400": 4rem,
+  "500": 5rem
+);
+
+$tonic-radii: (
+  "000": 0,
+  "050": 0.125rem,
+  "075": 0.2rem,
+  "100": 0.25rem,
+  "200": 0.5rem,
+  "300": 0.75rem,
+  "400": 1rem,
+  "pill": 9999px
+);
+
+$tonic-elevation: (
+  "000": none,
+  "100": 0 1px 2px rgba(15, 23, 42, 0.08),
+  "200": 0 4px 8px rgba(15, 23, 42, 0.12),
+  "300": 0 8px 16px rgba(15, 23, 42, 0.16),
+  "400": 0 16px 24px rgba(15, 23, 42, 0.2)
+);
+
+$tonic-font-stacks: (
+  "sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+  "serif": "'Source Serif 4', 'Georgia', serif",
+  "mono": "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
+);
+
+$tonic-type-scale: (
+  "xs": 0.75rem,
+  "sm": 0.875rem,
+  "base": 1rem,
+  "lg": 1.125rem,
+  "xl": 1.25rem,
+  "2xl": 1.5rem,
+  "3xl": 1.875rem,
+  "4xl": 2.25rem
+);
+
+$tonic-line-heights: (
+  "tight": 1.25,
+  "base": 1.5,
+  "relaxed": 1.7
+);
+
+$tonic-font-weights: (
+  "regular": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700,
+  "heavy": 800
+);
+
+$tonic-durations: (
+  "instant": 90ms,
+  "fast": 140ms,
+  "base": 200ms,
+  "slow": 320ms
+);
+
+$tonic-easings: (
+  "standard": cubic-bezier(0.2, 0, 0, 1),
+  "entrance": cubic-bezier(0.16, 1, 0.3, 1),
+  "exit": cubic-bezier(0.7, 0, 0.84, 0)
+);
+
+$tonic-z-scale: (
+  "base": 0,
+  "dropdown": 400,
+  "overlay": 800,
+  "modal": 1200,
+  "toast": 1600
+);
+
+@function _tonic-normalize-key($value) {
+  $type: meta.type-of($value);
+
+  @if $type == string {
+    @return $value;
+  }
+
+  @if $type == number and math.is-unitless($value) {
+    $digits: meta.inspect($value);
+
+    @if $value < 10 {
+      @return "00#{$digits}";
+    }
+
+    @if $value < 100 {
+      @return "0#{$digits}";
+    }
+
+    @return $digits;
+  }
+
+  @return meta.inspect($value);
+}
+
+@function _tonic-ensure-map($map, $keys...) {
+  $cursor: $map;
+
+  @each $key in $keys {
+    $normalized-key: _tonic-normalize-key($key);
+
+    @if $cursor == null or not map.has-key($cursor, $normalized-key) {
+      @error "Tonic token `#{meta.inspect($keys)}` is not defined.";
+    }
+    $cursor: map.get($cursor, $normalized-key);
+  }
+
+  @return $cursor;
+}
+
+@function color($family, $tone: 500, $alpha: 1) {
+  $base: _tonic-ensure-map($tonic-colors, _tonic-normalize-key($family), _tonic-normalize-key($tone));
+
+  @if $alpha == 1 {
+    @return $base;
+  }
+
+  @return color.change($base, $alpha: $alpha);
+}
+
+@function space($token) {
+  @return _tonic-ensure-map($tonic-spacing, _tonic-normalize-key($token));
+}
+
+@function radius($token: "100") {
+  @return _tonic-ensure-map($tonic-radii, _tonic-normalize-key($token));
+}
+
+@function shadow($token: "200") {
+  @return _tonic-ensure-map($tonic-elevation, _tonic-normalize-key($token));
+}
+
+@function font($family: sans) {
+  @return _tonic-ensure-map($tonic-font-stacks, _tonic-normalize-key($family));
+}
+
+@function type-size($step: "base") {
+  @return _tonic-ensure-map($tonic-type-scale, _tonic-normalize-key($step));
+}
+
+@function line-height($token: base) {
+  @return _tonic-ensure-map($tonic-line-heights, _tonic-normalize-key($token));
+}
+
+@function weight($token: regular) {
+  @return _tonic-ensure-map($tonic-font-weights, _tonic-normalize-key($token));
+}
+
+@function duration($token: base) {
+  @return _tonic-ensure-map($tonic-durations, _tonic-normalize-key($token));
+}
+
+@function easing($token: standard) {
+  @return _tonic-ensure-map($tonic-easings, _tonic-normalize-key($token));
+}
+
+@function z($token: base) {
+  @return _tonic-ensure-map($tonic-z-scale, _tonic-normalize-key($token));
+}
+
+:root {
+  color-scheme: dark;
+  --tonic-font-sans: #{font(sans)};
+  --tonic-font-serif: #{font(serif)};
+  --tonic-font-mono: #{font(mono)};
+
+  @each $family, $palette in $tonic-colors {
+    @each $tone, $value in $palette {
+      --tonic-#{$family}-#{$tone}: #{$value};
+    }
+  }
+
+  @each $step, $value in $tonic-spacing {
+    --tonic-space-#{$step}: #{$value};
+  }
+
+  @each $radius, $value in $tonic-radii {
+    --tonic-radius-#{$radius}: #{$value};
+  }
+
+  @each $step, $value in $tonic-type-scale {
+    --tonic-type-#{$step}: #{$value};
+  }
+
+  @each $key, $shadow in $tonic-elevation {
+    --tonic-shadow-#{$key}: #{$shadow};
+  }
+
+  @each $speed, $value in $tonic-durations {
+    --tonic-duration-#{$speed}: #{$value};
+  }
+
+  @each $curve, $value in $tonic-easings {
+    --tonic-ease-#{$curve}: #{$value};
+  }
+}

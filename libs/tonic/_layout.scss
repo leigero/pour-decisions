@@ -1,0 +1,77 @@
+@use "./tokens";
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: tokens.color(neutral, 800);
+  color: tokens.color(neutral, 100);
+}
+
+main {
+  flex: 1;
+}
+
+.tonic-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: clamp(tokens.space("100"), 4vw, tokens.space("300"));
+  padding-block: tokens.space("200");
+}
+
+.tonic-section {
+  display: grid;
+  gap: tokens.space("200");
+  padding-block: tokens.space("300");
+  background: tokens.color(neutral, 700);
+  border-radius: tokens.radius("200");
+  border: 1px solid tokens.color(neutral, 500);
+  box-shadow: tokens.shadow("200");
+  color: tokens.color(neutral, 050);
+}
+
+.tonic-stack {
+  display: flex;
+  flex-direction: column;
+  gap: tokens.space("150");
+}
+
+.tonic-stack--tight {
+  gap: tokens.space("100");
+}
+
+.tonic-stack--loose {
+  gap: tokens.space("200");
+}
+
+.tonic-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: tokens.space("100");
+}
+
+.tonic-grid {
+  display: grid;
+  gap: tokens.space("150");
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.tonic-grid--dense {
+  gap: tokens.space("100");
+}
+
+.tonic-divider {
+  width: 100%;
+  height: 1px;
+  background: tokens.color(neutral, 500);
+  border: 0;
+}
+
+.tonic-hero {
+  display: grid;
+  gap: tokens.space("150");
+  text-align: center;
+  padding-block: tokens.space("300");
+}

@@ -1,0 +1,96 @@
+@use "./tokens";
+@use "./mixins" as mix;
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: tokens.font(sans);
+  font-size: tokens.type-size("base");
+  line-height: tokens.line-height(base);
+  color: tokens.color(neutral, 050);
+  background-color: tokens.color(neutral, 800);
+  font-variant-ligatures: contextual;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: tokens.font(sans);
+  font-weight: tokens.weight(semibold);
+  color: tokens.color(neutral, 900);
+  margin: 0;
+}
+
+h1 {
+  @include mix.text-style("4xl", tight, heavy, -0.02em);
+  color: tokens.color(neutral, 050);
+}
+
+h2 {
+  @include mix.text-style("3xl", tight, heavy, -0.015em);
+  color: tokens.color(neutral, 050);
+}
+
+h3 {
+  @include mix.text-style("2xl", tight, semibold, -0.01em);
+  color: tokens.color(neutral, 050);
+}
+
+h4 {
+  @include mix.text-style("xl", base, semibold);
+  color: tokens.color(neutral, 050);
+}
+
+h5 {
+  @include mix.text-style("lg", base, medium);
+  color: tokens.color(neutral, 100);
+}
+
+h6 {
+  @include mix.text-style("sm", base, medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: tokens.color(neutral, 200);
+}
+
+p {
+  @include mix.text-style("base", base, regular, normal);
+  margin-block: 0;
+  color: tokens.color(neutral, 100);
+}
+
+small {
+  @include mix.text-style("sm", base, regular);
+  color: tokens.color(neutral, 200);
+}
+
+strong {
+  font-weight: tokens.weight(semibold);
+}
+
+em {
+  font-style: italic;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: tokens.font(mono);
+  font-size: 0.95em;
+}
+
+a[href]:hover,
+a[href]:focus-visible {
+  color: tokens.color(brand, 200);
+}
+
+::selection {
+  background-color: tokens.color(brand, 300);
+  color: tokens.color(neutral, 900);
+}
