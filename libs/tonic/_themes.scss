@@ -1,0 +1,53 @@
+// Theme overrides for Tonic via CSS Custom Properties.
+// Usage: set `data-theme="dark|light|modern"` on the <html> element.
+
+// Dark theme (default). We only set color-scheme here since :root
+// already defines the dark palette tokens.
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+// Light theme: remap the neutral scale to light surfaces and dark text.
+// Brand remains the same as default.
+[data-theme="light"] {
+  color-scheme: light;
+
+  // Invert neutral ladder to produce light UI surfaces.
+  --tonic-neutral-000: #ffffff;
+  --tonic-neutral-050: #13100e; // was dark 900 -> used for text in dark
+  --tonic-neutral-100: #1c1917; // 800
+  --tonic-neutral-200: #292524; // 700
+  --tonic-neutral-300: #36302c; // 600
+  --tonic-neutral-400: #44403c; // 500
+  --tonic-neutral-500: #57534e; // 400
+  --tonic-neutral-600: #a8a29e; // 300
+  --tonic-neutral-700: #d6d3d1; // 200
+  --tonic-neutral-800: #e7e5e4; // 100
+  --tonic-neutral-900: #f5f5f4; // 050
+}
+
+// Modern theme: cooler neutrals and a teal brand for a fresh look.
+[data-theme="modern"] {
+  color-scheme: light;
+
+  // Cooler gray/slate neutrals
+  --tonic-neutral-000: #ffffff;
+  --tonic-neutral-050: #f8fafc; // slate-50
+  --tonic-neutral-100: #e2e8f0; // slate-200
+  --tonic-neutral-200: #cbd5e1; // slate-300
+  --tonic-neutral-300: #94a3b8; // slate-400
+  --tonic-neutral-400: #64748b; // slate-500
+  --tonic-neutral-500: #475569; // slate-600
+  --tonic-neutral-600: #334155; // slate-700
+  --tonic-neutral-700: #1f2937; // gray-800
+  --tonic-neutral-800: #0f172a; // slate-900
+  --tonic-neutral-900: #0b1220; // deep canvas
+
+  // Teal brand scale
+  --tonic-brand-100: #d1fae5;
+  --tonic-brand-200: #a7f3d0;
+  --tonic-brand-300: #34d399;
+  --tonic-brand-400: #059669;
+  --tonic-brand-500: #047857;
+}
+

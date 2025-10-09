@@ -1,12 +1,25 @@
 @use "sass:color";
+@use "sass:meta";
+@use "sass:math";
 @use "./tokens";
 
 /// Apply a consistent outline/box-shadow focus affordance.
 @mixin focus-ring($color: tokens.color(brand, 300), $halo-alpha: 0.45, $width: 2px, $offset: 1px) {
   outline: none;
+
+  // Build a halo that works with CSS variables or Sass colors.
+  $halo: null;
+  @if meta.type-of($color) == color {
+    $halo: color.change($color, $alpha: $halo-alpha);
+  } @else {
+    // Assume $color is a CSS value (e.g., var(--...)). Use color-mix with transparency.
+    $pct: math.percentage($halo-alpha);
+    $halo: unquote("color-mix(in srgb, #{$color} #{$pct}, transparent)");
+  }
+
   box-shadow:
     0 0 0 $offset tokens.color(neutral, 800),
-    0 0 0 ($offset + $width) color.change($color, $alpha: $halo-alpha);
+    0 0 0 ($offset + $width) #{$halo};
 }
 
 /// Normalize button-like elements by removing UA defaults.

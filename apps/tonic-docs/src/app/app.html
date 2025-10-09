@@ -3,6 +3,12 @@
     <div class="doc-nav__group">
       <span class="doc-nav__title">Tonic Docs</span>
       <p class="doc-nav__subtitle">Design system foundations</p>
+      <label class="tonic-field">
+        <span class="tonic-field__label">Theme</span>
+        <select class="tonic-input" [value]="currentTheme" (change)="setTheme($any($event.target).value)">
+          <option *ngFor="let t of themes" [value]="t.value">{{ t.label }}</option>
+        </select>
+      </label>
     </div>
 
     <div class="doc-nav__group">

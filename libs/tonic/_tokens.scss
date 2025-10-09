@@ -175,12 +175,17 @@ $tonic-z-scale: (
 }
 
 @function color($family, $tone: 500, $alpha: 1) {
-  $base: _tonic-ensure-map($tonic-colors, _tonic-normalize-key($family), _tonic-normalize-key($tone));
+  $normalized-family: _tonic-normalize-key($family);
+  $normalized-tone: _tonic-normalize-key($tone);
+  $base: _tonic-ensure-map($tonic-colors, $normalized-family, $normalized-tone);
 
+  // Prefer CSS variables for theming (runtime), but fall back to a static
+  // color when alpha blending is needed.
   @if $alpha == 1 {
-    @return $base;
+    @return var(--tonic-#{$normalized-family}-#{$normalized-tone});
   }
 
+  // Fallback path for alpha: use computed color value (not themable at runtime).
   @return color.change($base, $alpha: $alpha);
 }
 
