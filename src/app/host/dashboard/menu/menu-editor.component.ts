@@ -1,4 +1,11 @@
-import { Component, OnInit, signal, inject, input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  inject,
+  input,
+  computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuService } from '../../../services/supabase/menu.service';
 import { Drink, Room } from '../../../services/supabase/models';
@@ -27,6 +34,18 @@ export class MenuEditorComponent implements OnInit {
 
   // NEW: Signal to track the ID of the currently expanded drink
   public readonly expandedDrinkId = signal<string | null>(null);
+
+  // NEW: Signal for the search term
+  public readonly searchTerm = signal('');
+
+  // NEW: Computed signal to filter drinks based on the search term
+  public readonly filteredDrinks = computed(() => {
+    const term = this.searchTerm().toLowerCase();
+    if (!term) return this.drinks();
+    return this.drinks().filter((drink) =>
+      drink.name.toLowerCase().includes(term),
+    );
+  });
 
   async ngOnInit() {
     this.isLoading.set(true);

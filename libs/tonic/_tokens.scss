@@ -12,7 +12,7 @@ $tonic-colors: (
     "200": #e9d7b8,
     "300": #dec797,
     "400": #c6ae7a,
-    "500": #9c875a
+    "500": #9c875a,
   ),
   "neutral": (
     "000": #ffffff,
@@ -25,29 +25,29 @@ $tonic-colors: (
     "600": #36302c,
     "700": #292524,
     "800": #1c1917,
-    "900": #13100e
+    "900": #13100e,
   ),
   "green": (
     "100": #dcfce7,
     "200": #bbf7d0,
     "300": #4ade80,
     "400": #166534,
-    "500": #14532d
+    "500": #14532d,
   ),
   "amber": (
     "100": #fef3c7,
     "200": #fde68a,
     "300": #fbbf24,
     "400": #f59e0b,
-    "500": #d97706
+    "500": #d97706,
   ),
   "red": (
     "100": #fee2e2,
     "200": #fecaca,
     "300": #f87171,
     "400": #991b1b,
-    "500": #7f1d1d
-  )
+    "500": #7f1d1d,
+  ),
 );
 
 $tonic-spacing: (
@@ -61,7 +61,7 @@ $tonic-spacing: (
   "200": 2rem,
   "300": 3rem,
   "400": 4rem,
-  "500": 5rem
+  "500": 5rem,
 );
 
 $tonic-radii: (
@@ -72,7 +72,7 @@ $tonic-radii: (
   "200": 0.5rem,
   "300": 0.75rem,
   "400": 1rem,
-  "pill": 9999px
+  "pill": 9999px,
 );
 
 $tonic-elevation: (
@@ -80,13 +80,34 @@ $tonic-elevation: (
   "100": 0 1px 2px rgba(15, 23, 42, 0.08),
   "200": 0 4px 8px rgba(15, 23, 42, 0.12),
   "300": 0 8px 16px rgba(15, 23, 42, 0.16),
-  "400": 0 16px 24px rgba(15, 23, 42, 0.2)
+  "400": 0 16px 24px rgba(15, 23, 42, 0.2),
 );
 
 $tonic-font-stacks: (
-  "sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-  "serif": "'Source Serif 4', 'Georgia', serif",
-  "mono": "'Fira Code', 'SFMono-Regular', Menlo, Consolas, monospace"
+  "sans": (
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+  ),
+  "serif": (
+    "Source Serif 4",
+    Georgia,
+    serif,
+  ),
+  "mono": (
+    "Fria Code",
+    "SFMono-Regular",
+    Menlo,
+    Consolas,
+    monospace,
+  ),
 );
 
 $tonic-type-scale: (
@@ -97,13 +118,13 @@ $tonic-type-scale: (
   "xl": 1.25rem,
   "2xl": 1.5rem,
   "3xl": 1.875rem,
-  "4xl": 2.25rem
+  "4xl": 2.25rem,
 );
 
 $tonic-line-heights: (
   "tight": 1.25,
   "base": 1.5,
-  "relaxed": 1.7
+  "relaxed": 1.7,
 );
 
 $tonic-font-weights: (
@@ -111,20 +132,20 @@ $tonic-font-weights: (
   "medium": 500,
   "semibold": 600,
   "bold": 700,
-  "heavy": 800
+  "heavy": 800,
 );
 
 $tonic-durations: (
   "instant": 90ms,
   "fast": 140ms,
   "base": 200ms,
-  "slow": 320ms
+  "slow": 320ms,
 );
 
 $tonic-easings: (
   "standard": cubic-bezier(0.2, 0, 0, 1),
   "entrance": cubic-bezier(0.16, 1, 0.3, 1),
-  "exit": cubic-bezier(0.7, 0, 0.84, 0)
+  "exit": cubic-bezier(0.7, 0, 0.84, 0),
 );
 
 $tonic-z-scale: (
@@ -132,7 +153,7 @@ $tonic-z-scale: (
   "dropdown": 400,
   "overlay": 800,
   "modal": 1200,
-  "toast": 1600
+  "toast": 1600,
 );
 
 @function _tonic-normalize-key($value) {

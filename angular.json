@@ -33,7 +33,7 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "libs"]
             },
             "styles": ["src/styles/reset.scss", "src/styles/styles.scss"]
           },

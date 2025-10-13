@@ -2,13 +2,25 @@
   <h2>Manage Room Menu</h2>
 </header>
 
+<!-- NEW: Search Bar -->
+<div class="search-container">
+  <input
+    type="text"
+    class="tonic-input"
+    placeholder="Search for a drink..."
+    [ngModel]="searchTerm()"
+    (ngModelChange)="searchTerm.set($event)"
+  />
+</div>
+
 @if (isLoading()) {
   <div class="loading-state">Loading drinks...</div>
 } @else if (hasError()) {
   <div class="error-message">An error occurred while fetching the drinks.</div>
 } @else {
+  <!-- UPDATED: Use filteredDrinks() instead of drinks() -->
   <div id="menu-grid" class="menu-grid">
-    @for (drink of drinks(); track drink.id) {
+    @for (drink of filteredDrinks(); track drink.id) {
       <div
         class="drink-card"
         [class.is-expanded]="expandedDrinkId() === drink.id"
@@ -52,6 +64,11 @@
         [class.is-open]="expandedDrinkId() === drink.id"
       >
         <pd-drink-details [drink]="drink"></pd-drink-details>
+      </div>
+    } @empty {
+      <!-- NEW: Empty state for when no drinks match the search -->
+      <div class="empty-search-results">
+        <p>No drinks found for "{{ searchTerm() }}".</p>
       </div>
     }
   </div>

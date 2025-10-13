@@ -168,3 +168,17 @@ input[type="checkbox"] {
   color: colors.$pd-error-color;
   font-style: normal;
 }
+
+/* --- Search Bar & Empty State Styles --- */
+.search-container {
+  padding-block: 0.5rem;
+}
+
+.empty-search-results {
+  padding: 2rem;
+  text-align: center;
+  color: colors.$pd-subtle-text-color;
+  background-color: colors.$pd-background-color-alt;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+}
