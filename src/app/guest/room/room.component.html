@@ -10,42 +10,7 @@
 <div class="room-container">
   @if (room() && guest()) {
     <!-- Room and User Info Card (no changes) -->
-    <div class="main-info-card">
-      <div class="header">
-        <h1 class="section-title">
-          {{ room()?.name || "Loading..." }}
-        </h1>
-        <div class="user-profile">
-          <img
-            [src]="guest()!.profile_picture"
-            [alt]="guest()!.display_name + 's profile photo'"
-            class="profile-photo"
-          />
-          <span class="user-name">{{ guest()?.display_name }}</span>
-          <button class="edit-button" (click)="openEditProfileModal()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-              <path d="m15 5 4 4" />
-            </svg>
-          </button>
-        </div>
-      </div>
-      <p class="section-description">{{ room()?.description || "" }}</p>
-      <div class="room-code-container">
-        <span class="room-code-label">Room Code:</span>
-        <p class="room-code">{{ room()?.code || "Loading..." }}</p>
-      </div>
-    </div>
+    <pd-room-header [room]="room()!" [guest]="guest()!"></pd-room-header>
 
     <!-- Main content area for lobby/menu -->
     <div class="content">
@@ -103,11 +68,4 @@
       </button>
     </div>
   </pd-modal>
-}
-
-@if (showEditProfileModal()) {
-  <pd-edit-profile-modal
-    [guest]="guest()!"
-    (close)="closeEditProfileModal()"
-  ></pd-edit-profile-modal>
 }
