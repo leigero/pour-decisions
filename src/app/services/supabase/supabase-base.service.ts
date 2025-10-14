@@ -22,4 +22,8 @@ export class SupabaseBaseService {
   public removeSubscription(channel: RealtimeChannel) {
     this.supabase.removeChannel(channel);
   }
+
+  public getPublicUrl(bucket: string, path: string): string | null {
+    return this.supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl;
+  }
 }

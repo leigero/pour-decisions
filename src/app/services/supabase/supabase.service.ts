@@ -10,6 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 /** @deprecated Please use domain-specific services like RoomService, OrderService, or MenuService instead. */
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
+  supabase: any;
   // IMAGES
   async getImage(image_path: string, width: number, height: number) {
     // Check if image_path exists before trying to get the URL

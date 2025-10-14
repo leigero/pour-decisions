@@ -4,14 +4,19 @@ import { Guest } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class GuestService extends SupabaseBaseService {
-  async updateGuest(guest: Guest) {
-    console.log('updating guest', guest);
+  async updateGuest(guestId: string, updates: Partial<Guest>): Promise<Guest> {
+    console.log('updating guest', guestId, updates);
     const { data, error } = await this.supabase
       .from('guests')
-      .update({ display_name: guest.display_name })
-      .eq('id', guest.id);
+      .update(updates)
+      .eq('id', guestId)
+      .select()
+      .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error updating guest profile:', error);
+      throw error;
+    }
 
     return data;
   }
