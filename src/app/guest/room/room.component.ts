@@ -257,4 +257,11 @@ export class RoomComponent implements OnInit, OnDestroy {
       queryParamsHandling: 'merge',
     });
   }
+
+  /**
+   * Updates the guest signal with the new data from the child component.
+   */
+  handleGuestUpdate(updatedGuest: Guest): void {
+    this.guest.set(updatedGuest);
+  }
 }

@@ -39,5 +39,6 @@
   <pd-edit-profile-modal
     [guest]="guest()!"
     (close)="closeEditProfileModal()"
+    (profileUpdated)="handleProfileUpdate($event)"
   ></pd-edit-profile-modal>
 }

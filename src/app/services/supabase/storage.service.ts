@@ -12,7 +12,6 @@ export class StorageService extends SupabaseBaseService {
    * @returns The public URL of the uploaded image.
    */
   async uploadProfileImage(file: File, guestId: string): Promise<string> {
-    console.log('Inside uploader', file);
     const fileExtension = file.name.split('.').pop();
     const filePath = `${guestId}/${Date.now()}.${fileExtension}`;
 
@@ -25,6 +24,14 @@ export class StorageService extends SupabaseBaseService {
       throw error;
     }
 
-    return filePath;
+    const { data } = this.supabase.storage
+      .from('user-profile-images')
+      .getPublicUrl(filePath);
+
+    if (!data?.publicUrl) {
+      throw new Error('Could not get public URL for uploaded image.');
+    }
+
+    return data.publicUrl;
   }
 }

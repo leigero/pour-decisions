@@ -2,10 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseBaseService } from './supabase-base.service';
 import { Room, Guest } from './models';
 import { RoomCodeService } from '../roomCode.service';
+import { GuestService } from './guest.service';
 
 @Injectable({ providedIn: 'root' })
 export class RoomService extends SupabaseBaseService {
   private roomCodeService = inject(RoomCodeService);
+  private guestService = inject(GuestService);
 
   async getRooms(): Promise<Room[]> {
     const { data, error } = await this.supabase.from('rooms').select();
@@ -63,19 +65,8 @@ export class RoomService extends SupabaseBaseService {
   async joinRoom(roomCode: string, guestName: string): Promise<Guest> {
     const room = await this.getRoomByCode(roomCode);
     if (!room) throw new Error(`Room with code ${roomCode} not found.`);
-
-    const { data, error } = await this.supabase
-      .from('guests')
-      .insert({
-        display_name: guestName,
-        room_id: room.id,
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    return data as Guest;
+    // Delegate guest creation to the GuestService
+    return this.guestService.createGuest(guestName, room.id);
   }
 
   async getGuestById(guestId: string): Promise<Guest> {

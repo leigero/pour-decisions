@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
+  private readonly isSharing = signal(false);
 
   public readonly activeOrders = computed(() => {
     const nonActiveStatuses = ['served', 'cancelled'];
@@ -167,27 +168,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   // copy the guest invite link to the clipboard or share in mobile
-  public async copyInviteLink(): Promise<void> {
+  public copyInviteLink(): void {
+    // Prevent multiple share dialogs from opening at once.
+    if (this.isSharing()) return;
+
     const roomCode = this.room()?.code;
     if (!roomCode) return;
 
-    // Construct the full URL for the guest page
     const guestUrl = `${window.location.origin}/room/${roomCode}`;
     const shareData = {
       title: 'Join my Pour Decisions room!',
-      text: 'Join my Pour Decisions room with code: ${roomCode}',
+      text: `Join my Pour Decisions room with code: ${roomCode}`,
       url: guestUrl,
     };
 
     if (navigator.share) {
-      try {
-        // Use the native share menu
-        await navigator.share(shareData);
-        // You could add feedback here if needed, but the native UI is usually enough
-      } catch (err) {
-        // This can happen if the user cancels the share dialog
-        console.log('User cancelled sharing', err);
-      }
+      this.isSharing.set(true);
+      // Call navigator.share() synchronously and handle the promise it returns.
+      // This preserves the "user-initiated" context required by the browser.
+      navigator
+        .share(shareData)
+        .catch((err) => {
+          // This can happen if the user cancels the share dialog.
+          if (err.name !== 'AbortError') {
+            console.error('Error sharing:', err);
+          }
+        })
+        .finally(() => {
+          this.isSharing.set(false);
+        });
     } else {
       navigator.clipboard
         .writeText(guestUrl)

@@ -10,7 +10,11 @@
 <div class="room-container">
   @if (room() && guest()) {
     <!-- Room and User Info Card (no changes) -->
-    <pd-room-header [room]="room()!" [guest]="guest()!"></pd-room-header>
+    <pd-room-header
+      [room]="room()!"
+      [guest]="guest()!"
+      (guestUpdated)="handleGuestUpdate($event)"
+    ></pd-room-header>
 
     <!-- Main content area for lobby/menu -->
     <div class="content">

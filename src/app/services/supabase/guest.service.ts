@@ -4,6 +4,32 @@ import { Guest } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class GuestService extends SupabaseBaseService {
+  async createGuest(guestName: string, roomId: string): Promise<Guest> {
+    await this.initializePromise; // Ensure auth is initialized
+
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+    if (!user) throw new Error('User is not authenticated.');
+
+    const { data, error } = await this.supabase
+      .from('guests')
+      .insert({
+        id: user.id, // Use the authenticated user's ID
+        display_name: guestName,
+        room_id: roomId,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating guest:', error);
+      throw error;
+    }
+
+    return data;
+  }
+
   async updateGuest(guestId: string, updates: Partial<Guest>): Promise<Guest> {
     console.log('updating guest', guestId, updates);
     const { data, error } = await this.supabase
