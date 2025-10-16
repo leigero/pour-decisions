@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Room, Order, Guest, Drink } from '../../services/supabase/models';
-import { OrderService, RoomService } from '../../services/supabase';
+import {
+  OrderService,
+  RoomService,
+  StorageService,
+} from '../../services/supabase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LobbyComponent } from './lobby/lobby.component';
 import { MenuComponent } from './menu/menu.component';
@@ -50,6 +54,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private orderService = inject(OrderService);
   private roomService = inject(RoomService);
+  private storageService = inject(StorageService);
   private route = inject(ActivatedRoute);
 
   public readonly view = signal<GuestDashboardView>('main');
@@ -168,8 +173,14 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page
       this.saveGuestIdToStorage(guestId);
-      this.guest()!.profile_picture =
-        'https://ui-avatars.com/api/?name=' + this.guest()!.display_name;
+      const guest = this.guest();
+      if (guest.profile_picture) {
+        guest.profile_picture = this.storageService.getPublicImageUrl(
+          guest.profile_picture,
+        );
+      } else {
+        guest.profile_picture = `https://ui-avatars.com/api/?name=${guest.display_name}`;
+      }
       await this.fetchOrders();
       // After fetching initial orders, set up the real-time subscription
       this.orderSubscription = this.orderService.onGuestOrderChanges(
@@ -262,6 +273,15 @@ export class RoomComponent implements OnInit, OnDestroy {
    * Updates the guest signal with the new data from the child component.
    */
   handleGuestUpdate(updatedGuest: Guest): void {
-    this.guest.set(updatedGuest);
+    // The updatedGuest object from the database contains the image *path*.
+    // We need to convert it to a full public URL before updating the signal
+    // so the <img> tag can display it.
+    if (updatedGuest.profile_picture) {
+      updatedGuest.profile_picture = this.storageService.getPublicImageUrl(
+        updatedGuest.profile_picture,
+      );
+    }
+
+    this.guest.set(updatedGuest); // Now update the signal with the correct URL
   }
 }

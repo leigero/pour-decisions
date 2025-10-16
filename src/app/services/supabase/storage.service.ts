@@ -12,26 +12,37 @@ export class StorageService extends SupabaseBaseService {
    * @returns The public URL of the uploaded image.
    */
   async uploadProfileImage(file: File, guestId: string): Promise<string> {
+    const storageBucket = 'user-profile-images';
     const fileExtension = file.name.split('.').pop();
     const filePath = `${guestId}/${Date.now()}.${fileExtension}`;
 
-    const { error } = await this.supabase.storage
-      .from('user-profile-images')
+    const { data, error } = await this.supabase.storage
+      .from(storageBucket)
       .upload(filePath, file);
 
     if (error) {
       console.error('Error uploading image:', error);
       throw error;
+    } else {
+      console.log('Storeage succeeded.');
     }
 
-    const { data } = this.supabase.storage
-      .from('user-profile-images')
-      .getPublicUrl(filePath);
+    return data.fullPath;
+  }
 
-    if (!data?.publicUrl) {
-      throw new Error('Could not get public URL for uploaded image.');
-    }
-
-    return data.publicUrl;
+  /**
+   * Gets the public URL for a file from its full path.
+   * @param fullPath The full path of the file (e.g., 'user-profile-images/image.png').
+   * @returns The public URL for the file.
+   */
+  getPublicImageUrl(fullPath: string): string {
+    const [bucketName, ...pathParts] = fullPath.split('/');
+    const publicURL = this.supabase.storage
+      .from(bucketName)
+      .getPublicUrl(pathParts.join('/'), {
+        transform: { width: 300, height: 300 },
+      }).data.publicUrl;
+    console.log('get public image: ', publicURL);
+    return publicURL;
   }
 }
