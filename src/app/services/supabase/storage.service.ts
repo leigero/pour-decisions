@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseBaseService } from './supabase-base.service';
+import { TransformOptions } from '@supabase/storage-js/dist/module/lib/types';
 
 @Injectable({
   providedIn: 'root',
@@ -33,16 +34,26 @@ export class StorageService extends SupabaseBaseService {
   /**
    * Gets the public URL for a file from its full path.
    * @param fullPath The full path of the file (e.g., 'user-profile-images/image.png').
+   * @param options Optional transformation options for the image.
    * @returns The public URL for the file.
    */
-  getPublicImageUrl(fullPath: string): string {
+  getPublicImageUrl(
+    fullPath: string,
+    options?: { transform: TransformOptions },
+  ): string {
     const [bucketName, ...pathParts] = fullPath.split('/');
-    const publicURL = this.supabase.storage
+    const path = pathParts.join('/');
+
+    console.log('***************');
+    console.log(bucketName);
+    console.log(pathParts);
+    console.log(path);
+
+    const { data } = this.supabase.storage
       .from(bucketName)
-      .getPublicUrl(pathParts.join('/'), {
-        transform: { width: 300, height: 300 },
-      }).data.publicUrl;
-    console.log('get public image: ', publicURL);
-    return publicURL;
+      .getPublicUrl(path, options);
+    console.log(data.publicUrl);
+    console.log('***************');
+    return data.publicUrl;
   }
 }

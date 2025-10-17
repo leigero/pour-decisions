@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SupabaseBaseService } from './supabase-base.service';
 import { Drink } from './models';
+import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService extends SupabaseBaseService {
+  private storageService = inject(StorageService);
+  constructor() {
+    super();
+  }
+
   async getDrinksForRoom(roomId: string): Promise<Drink[]> {
     const { data, error } = await this.supabase
       .from('drink_room')
@@ -28,13 +34,10 @@ export class MenuService extends SupabaseBaseService {
   public populateDrinkImages(drinks: Drink[]): Drink[] {
     return drinks.map((drink) => {
       if (drink.image_path) {
-        const urlParts = drink.image_path.split('/');
-        const { data } = this.supabase.storage
-          .from(urlParts[0])
-          .getPublicUrl(urlParts[1], {
-            transform: { width: 300, height: 300 },
-          });
-        return { ...drink, image_url: data.publicUrl };
+        const imageUrl = this.storageService.getPublicImageUrl(
+          drink.image_path,
+        );
+        return { ...drink, image_url: imageUrl };
       }
       return drink;
     });
