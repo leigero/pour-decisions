@@ -109,6 +109,10 @@ export class RoomComponent implements OnInit, OnDestroy {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
     }
+
+    // Initial data load and subscription setup
+    await this.refreshDataAndSubscription();
+
     document.addEventListener('visibilitychange', this.pageFocusHandler);
     window.addEventListener('pageshow', this.pageFocusHandler);
   }
@@ -128,9 +132,21 @@ export class RoomComponent implements OnInit, OnDestroy {
     // This check works for both events because when `pageshow` fires,
     // the document will be visible.
     if (document.visibilityState === 'visible' && this.guestId) {
-      console.log('Guest view is in focus, re-activating subscription.');
-      this.setupSubscription(this.guestId);
+      this.refreshDataAndSubscription();
     }
+  }
+
+  private async refreshDataAndSubscription(): Promise<void> {
+    if (!this.room()?.id) return; // Guard clause
+
+    console.log('Refreshing data and re-activating subscription...');
+
+    // 1. Re-fetch all orders to sync the current state immediately
+    const orders = await this.orderService.getOrdersForRoom(this.room().id);
+    this.orders.set(orders);
+
+    // 2. Re-establish the real-time subscription for future updates
+    this.setupSubscription(this.guestId);
   }
 
   private setupSubscription(guestId: string): void {

@@ -74,8 +74,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const orders = await this.orderService.getOrdersForRoom(this.room().id);
     this.orders.set(orders);
 
-    // Set up the real-time subscription
-    this.setupSubscription();
+    // Initial data load and subscription setup
+    await this.refreshDataAndSubscription();
 
     // Add the event listener to handle re-subscribing on tab focus
     document.addEventListener('visibilitychange', this.pageFocusHandler);
@@ -89,6 +89,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // Clean up the event listener to prevent memory leaks
     document.removeEventListener('visibilitychange', this.pageFocusHandler);
     window.removeEventListener('pageshow', this.pageFocusHandler);
+  }
+
+  private handlePageFocus(): void {
+    // We only care about when the page becomes visible.
+    // The `pageshow` event doesn't have a state, it just fires, so we don't need a check for it.
+    if (document.visibilityState === 'visible') {
+      this.refreshDataAndSubscription();
+    }
+  }
+
+  private async refreshDataAndSubscription(): Promise<void> {
+    if (!this.room()?.id) return; // Guard clause
+
+    console.log('Refreshing data and re-activating subscription...');
+
+    // 1. Re-fetch all orders to sync the current state immediately
+    const orders = await this.orderService.getOrdersForRoom(this.room().id);
+    this.orders.set(orders);
+
+    // 2. Re-establish the real-time subscription for future updates
+    this.setupSubscription();
   }
 
   private setupSubscription(): void {
@@ -143,15 +164,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       },
     );
-  }
-
-  private handlePageFocus(): void {
-    // We only care about when the page becomes visible.
-    // The `pageshow` event doesn't have a state, it just fires, so we don't need a check for it.
-    if (document.visibilityState === 'visible') {
-      console.log('Page is in focus, re-activating subscription.');
-      this.setupSubscription();
-    }
   }
 
   /** Opens the modal and sets the selected order. */
