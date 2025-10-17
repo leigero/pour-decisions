@@ -24,6 +24,9 @@ export class RoomHeader {
 
   @Output() guestUpdated = new EventEmitter<Guest>();
 
+  public readonly copyButtonText = signal('Share');
+  private readonly isSharing = signal(false);
+
   public readonly showEditProfileModal = signal<boolean>(false);
 
   closeEditProfileModal() {
@@ -40,5 +43,43 @@ export class RoomHeader {
   handleProfileUpdate(updatedGuest: Guest): void {
     this.guestUpdated.emit(updatedGuest);
     this.closeEditProfileModal();
+  }
+
+  /**
+   * Handles sharing the room invite link.
+   * Uses the Web Share API if available, otherwise copies to clipboard.
+   */
+  public copyInviteLink(): void {
+    // Prevent multiple share dialogs from opening at once.
+    if (this.isSharing()) return;
+
+    const roomCode = this.room()?.code;
+    if (!roomCode) return;
+
+    const guestUrl = `${window.location.origin}/room/${roomCode}`;
+    const shareData = {
+      title: 'Join my Pour Decisions room!',
+      text: `Join my Pour Decisions room with code: ${roomCode}`,
+      url: guestUrl,
+    };
+
+    if (navigator.share) {
+      this.isSharing.set(true);
+      navigator
+        .share(shareData)
+        .catch((err) => {
+          if (err.name !== 'AbortError') {
+            console.error('Error sharing:', err);
+          }
+        })
+        .finally(() => {
+          this.isSharing.set(false);
+        });
+    } else {
+      navigator.clipboard.writeText(guestUrl).then(() => {
+        this.copyButtonText.set('Copied!');
+        setTimeout(() => this.copyButtonText.set('Share'), 2000);
+      });
+    }
   }
 }
