@@ -1,32 +1,18 @@
 <!-- Current Orders Card -->
-<div class="card">
-  <h2 class="section-title">Your Orders</h2>
-  <p class="section-description">Track the status of your drinks.</p>
-  <ul class="order-list">
-    @for (order of orders(); track order.id) {
-      <!-- Add [ngClass] here to enable the colored dot -->
-      <li class="order-item" (click)="viewOrder.emit(order)">
-        <span class="order-name">{{ order.drink.name }}</span>
-        <!-- Keep this [ngClass] for the badge itself -->
-        <span class="order-status" [ngClass]="'status-' + order.status">
-          {{ order.status }}
-        </span>
-      </li>
-    } @empty {
-      <p>No orders placed yet. Time to get a drink!</p>
-    }
-  </ul>
-</div>
-<!-- Menu and Orders Section -->
-<div class="secondary-card-container">
-  <!-- Room Menu Card -->
-  <div class="card">
-    <h2 class="section-title text-green-400">Room Menu</h2>
-    <p class="section-description">
-      Explore all available drinks for this room.
-    </p>
-    <button class="pd-button secondary" (click)="openMenu.emit()">
-      Open Menu
-    </button>
-  </div>
-</div>
+
+<h2 class="section-title">Your Orders</h2>
+<p class="section-description">Track the status of your drinks.</p>
+<ul class="order-list">
+  @for (order of orders(); track order.id) {
+    <!-- Add [ngClass] here to enable the colored dot -->
+    <li class="order-item" (click)="viewOrder.emit(order)">
+      <span class="order-name">{{ order.drink.name }}</span>
+      <!-- Keep this [ngClass] for the badge itself -->
+      <span class="order-status" [ngClass]="'status-' + order.status">
+        {{ order.status }}
+      </span>
+    </li>
+  } @empty {
+    <p>No orders placed yet. Time to get a drink!</p>
+  }
+</ul>

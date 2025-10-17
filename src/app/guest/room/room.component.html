@@ -18,24 +18,42 @@
 
     <!-- Main content area for lobby/menu -->
     <div class="content">
-      @switch (view()) {
-        @case ("main") {
-          <pd-lobby
-            [room]="room()!"
-            [orders]="orders()"
-            (openMenu)="navigate('menu')"
-            (viewOrder)="viewOrderDetails($event)"
-          ></pd-lobby>
+      <div class="tabs">
+        <button
+          class="tab-button"
+          [class.active]="view() === 'menu'"
+          (click)="navigate('menu')"
+        >
+          Menu
+        </button>
+        <button
+          class="tab-button"
+          [class.active]="view() === 'orders'"
+          (click)="navigate('orders')"
+        >
+          Live Orders
+        </button>
+      </div>
+      <div class="tab-content">
+        @switch (view()) {
+          @case ("orders") {
+            <pd-lobby
+              [room]="room()!"
+              [orders]="orders()"
+              (openMenu)="navigate('menu')"
+              (viewOrder)="viewOrderDetails($event)"
+            ></pd-lobby>
+          }
+          @case ("menu") {
+            <pd-menu
+              [room]="room()!"
+              (toLobby)="navigate('menu')"
+              (orderDrink)="orderDrink($event)"
+              (viewDrink)="viewDrinkDetails($event)"
+            ></pd-menu>
+          }
         }
-        @case ("menu") {
-          <pd-menu
-            [room]="room()!"
-            (toLobby)="navigate('main')"
-            (orderDrink)="orderDrink($event)"
-            (viewDrink)="viewDrinkDetails($event)"
-          ></pd-menu>
-        }
-      }
+      </div>
     </div>
   } @else if (!showJoinModal()) {
     <!-- Loading state -->

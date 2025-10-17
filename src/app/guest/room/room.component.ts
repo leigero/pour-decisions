@@ -27,7 +27,7 @@ import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-mod
 import { DrinkDetailsComponent } from '../../shared/drink/drink-details/drink-details.component';
 import { RoomHeader } from './room-header/room-header';
 
-type GuestDashboardView = 'main' | 'menu' | 'orders';
+type GuestDashboardView = 'menu' | 'orders';
 
 @Component({
   selector: 'pd-room',
@@ -57,7 +57,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   private storageService = inject(StorageService);
   private route = inject(ActivatedRoute);
 
-  public readonly view = signal<GuestDashboardView>('main');
+  public readonly view = signal<GuestDashboardView>('menu');
   private roomCode: string;
   private guestId: string | null;
 
@@ -92,7 +92,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       return;
     }
     this.room.set(room);
-
     const savedGuestId = this.getGuestIdFromStorage();
 
     if (savedGuestId) {
@@ -220,7 +219,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       );
       await this.fetchOrders();
       this.closeDrinkModal();
-      this.navigate('main');
+      this.navigate('orders');
     } catch (error) {
       console.error('Failed to place order:', error);
     }
