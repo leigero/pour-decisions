@@ -47,6 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly view = signal<DashboardView>('orders');
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
 
+  // visibility handler for re-activating db subscription
+  private visibilityChangeHandler = this.handleVisibilityChange.bind(this);
+
   // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
   private readonly isSharing = signal(false);
@@ -71,12 +74,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const orders = await this.orderService.getOrdersForRoom(this.room().id);
     this.orders.set(orders);
 
-    // Set up the real-time subscription for ALL order changes.
+    // Set up the real-time subscription
+    this.setupSubscription();
+
+    // Add the event listener to handle re-subscribing on tab focus
+    document.addEventListener('visibilitychange', this.visibilityChangeHandler);
+  }
+
+  ngOnDestroy(): void {
+    if (this.orderSubscription) {
+      this.orderService.removeSubscription(this.orderSubscription);
+    }
+    // Clean up the event listener to prevent memory leaks
+    document.removeEventListener(
+      'visibilitychange',
+      this.visibilityChangeHandler,
+    );
+  }
+
+  private setupSubscription(): void {
+    // If a subscription already exists, remove it first to ensure a clean state
+    if (this.orderSubscription) {
+      this.orderService.removeSubscription(this.orderSubscription);
+    }
+
+    // Create the new subscription for all order changes in the room
     this.orderSubscription = this.orderService.onOrderChanges(
       this.room().id,
       (payload) => {
-        console.log('Realtime event received!', payload);
-
         switch (payload.eventType) {
           case 'INSERT':
             // A new order was created. Fetch its details and add it to our signal.
@@ -121,6 +146,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Re-establishes the real-time subscription when the user returns to the tab.
+   */
+  private handleVisibilityChange(): void {
+    if (document.visibilityState === 'visible') {
+      console.log('Dashboard is visible again, re-activating subscription.');
+      this.setupSubscription();
+    }
+  }
+
   /** Opens the modal and sets the selected order. */
   public viewOrderDetails(order: OrderWithDetails): void {
     this.selectedOrder.set(order);
@@ -154,12 +189,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Failed to update order status:', error);
       // Optional: Add logic here to revert the optimistic update on failure
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.orderSubscription) {
-      this.orderService.removeSubscription(this.orderSubscription);
     }
   }
 

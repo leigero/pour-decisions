@@ -85,6 +85,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
   }
 
+  private visibilityChangeHandler = this.handleVisibilityChange.bind(this);
+
   async ngOnInit() {
     const room = await this.roomService.getRoomByCode(this.roomCode);
     if (!room) {
@@ -107,12 +109,49 @@ export class RoomComponent implements OnInit, OnDestroy {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
     }
+    document.addEventListener('visibilitychange', this.visibilityChangeHandler);
   }
 
   ngOnDestroy(): void {
     if (this.orderSubscription) {
       this.orderService.removeSubscription(this.orderSubscription);
     }
+    document.removeEventListener(
+      'visibilitychange',
+      this.visibilityChangeHandler,
+    );
+  }
+
+  private handleVisibilityChange(): void {
+    // When the page becomes visible again and we have a guest...
+    if (document.visibilityState === 'visible' && this.guestId) {
+      console.log('Page is visible again, re-activating subscription.');
+      // Re-run the subscription setup
+      this.setupSubscription(this.guestId);
+    }
+  }
+
+  private setupSubscription(guestId: string): void {
+    // If a subscription already exists, remove it to prevent duplicates
+    if (this.orderSubscription) {
+      this.orderService.removeSubscription(this.orderSubscription);
+    }
+
+    // Create the new subscription
+    this.orderSubscription = this.orderService.onGuestOrderChanges(
+      guestId,
+      (payload) => {
+        console.log('Guest order update received!', payload);
+        const updatedOrder = payload.new as Order;
+        this.orders.update((currentOrders) =>
+          currentOrders.map((order) =>
+            order.id === updatedOrder.id
+              ? { ...order, status: updatedOrder.status }
+              : order,
+          ),
+        );
+      },
+    );
   }
 
   public viewDrinkDetails(drink: Drink): void {
@@ -184,22 +223,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       }
       await this.fetchOrders();
       // After fetching initial orders, set up the real-time subscription
-      this.orderSubscription = this.orderService.onGuestOrderChanges(
-        guestId,
-        (payload) => {
-          console.log('Guest order update received!', payload);
-
-          // Since we only listen for UPDATES, we can process the payload directly.
-          const updatedOrder = payload.new as Order;
-          this.orders.update((currentOrders) =>
-            currentOrders.map((order) =>
-              order.id === updatedOrder.id
-                ? { ...order, status: updatedOrder.status } // Update status
-                : order,
-            ),
-          );
-        },
-      );
+      this.setupSubscription(guestId);
     } else {
       // If guest is not found (e.g., deleted), clear storage and show modal
       this.clearGuestIdFromStorage();
