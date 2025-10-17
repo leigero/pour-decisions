@@ -43,17 +43,9 @@ export class StorageService extends SupabaseBaseService {
   ): string {
     const [bucketName, ...pathParts] = fullPath.split('/');
     const path = pathParts.join('/');
-
-    console.log('***************');
-    console.log(bucketName);
-    console.log(pathParts);
-    console.log(path);
-
     const { data } = this.supabase.storage
       .from(bucketName)
       .getPublicUrl(path, options);
-    console.log(data.publicUrl);
-    console.log('***************');
     return data.publicUrl;
   }
 }

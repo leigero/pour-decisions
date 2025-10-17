@@ -92,16 +92,16 @@ export class RoomComponent implements OnInit, OnDestroy {
       return;
     }
     this.room.set(room);
+
+    // Prioritize guestId from URL, then from local storage.
+    const guestIdFromUrl = this.route.snapshot.queryParamMap.get('guestId');
     const savedGuestId = this.getGuestIdFromStorage();
 
-    if (savedGuestId) {
-      this.guestId = savedGuestId;
-      // Update URL just in case it was missing the guestId
-      this.updateUrlWithGuestId(this.guestId);
-      await this.loadGuestData(this.guestId);
-    } else if (this.guestId) {
-      console.log('guestID from URL', this.guestId);
-      // If no saved guest, but guestId is in the URL (from welcome page)
+    const guestIdToLoad = guestIdFromUrl || savedGuestId;
+
+    if (guestIdToLoad) {
+      this.guestId = guestIdToLoad;
+      this.updateUrlWithGuestId(this.guestId); // Ensure URL is consistent
       await this.loadGuestData(this.guestId);
     } else {
       // If no guest found anywhere, show the modal
@@ -169,6 +169,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   private async loadGuestData(guestId: string) {
     console.log('loading guest data ', guestId);
     this.guest.set(await this.roomService.getGuestById(guestId));
+    console.log(this.guest());
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page
       this.saveGuestIdToStorage(guestId);
