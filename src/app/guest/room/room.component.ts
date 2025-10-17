@@ -127,12 +127,18 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   /**
    * Re-establishes the real-time subscription when the user returns to the tab or app.
+   * Now also re-fetches all orders to sync the state.
    */
-  private handlePageFocus(): void {
-    // This check works for both events because when `pageshow` fires,
-    // the document will be visible.
+  private async handlePageFocus(): Promise<void> {
+    // <-- Make the method async
     if (document.visibilityState === 'visible' && this.guestId) {
-      this.refreshDataAndSubscription();
+      console.log('Guest view is in focus, refreshing data and subscription.');
+
+      // 1. First, re-fetch all orders to get the latest data immediately.
+      await this.fetchOrders();
+
+      // 2. Then, re-establish the subscription for future real-time updates.
+      this.setupSubscription(this.guestId);
     }
   }
 
