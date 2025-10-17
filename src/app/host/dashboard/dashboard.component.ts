@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // visibility handler for re-activating db subscription
   private visibilityChangeHandler = this.handleVisibilityChange.bind(this);
+  private pageFocusHandler = this.handlePageFocus.bind(this);
 
   // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
@@ -79,6 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     // Add the event listener to handle re-subscribing on tab focus
     document.addEventListener('visibilitychange', this.visibilityChangeHandler);
+    window.addEventListener('pageshow', this.pageFocusHandler);
   }
 
   ngOnDestroy(): void {
@@ -90,6 +92,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       'visibilitychange',
       this.visibilityChangeHandler,
     );
+    window.removeEventListener('pageshow', this.pageFocusHandler);
   }
 
   private setupSubscription(): void {
@@ -148,10 +151,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   /**
    * Re-establishes the real-time subscription when the user returns to the tab.
+   * handleVisibilityChanges() - desktop
+   * handlePageFocus() - mobile
    */
   private handleVisibilityChange(): void {
     if (document.visibilityState === 'visible') {
       console.log('Dashboard is visible again, re-activating subscription.');
+      this.setupSubscription();
+    }
+  }
+
+  private handlePageFocus(): void {
+    // We only care about when the page becomes visible.
+    // The `pageshow` event doesn't have a state, it just fires, so we don't need a check for it.
+    if (document.visibilityState === 'visible') {
+      console.log('Page is in focus, re-activating subscription.');
       this.setupSubscription();
     }
   }

@@ -85,7 +85,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  private visibilityChangeHandler = this.handleVisibilityChange.bind(this);
+  private pageFocusHandler = this.handlePageFocus.bind(this);
 
   async ngOnInit() {
     const room = await this.roomService.getRoomByCode(this.roomCode);
@@ -109,24 +109,26 @@ export class RoomComponent implements OnInit, OnDestroy {
       // If no guest found anywhere, show the modal
       this.showJoinModal.set(true);
     }
-    document.addEventListener('visibilitychange', this.visibilityChangeHandler);
+    document.addEventListener('visibilitychange', this.pageFocusHandler);
+    window.addEventListener('pageshow', this.pageFocusHandler);
   }
 
   ngOnDestroy(): void {
     if (this.orderSubscription) {
       this.orderService.removeSubscription(this.orderSubscription);
     }
-    document.removeEventListener(
-      'visibilitychange',
-      this.visibilityChangeHandler,
-    );
+    document.removeEventListener('visibilitychange', this.pageFocusHandler);
+    window.removeEventListener('pageshow', this.pageFocusHandler);
   }
 
-  private handleVisibilityChange(): void {
-    // When the page becomes visible again and we have a guest...
+  /**
+   * Re-establishes the real-time subscription when the user returns to the tab or app.
+   */
+  private handlePageFocus(): void {
+    // This check works for both events because when `pageshow` fires,
+    // the document will be visible.
     if (document.visibilityState === 'visible' && this.guestId) {
-      console.log('Page is visible again, re-activating subscription.');
-      // Re-run the subscription setup
+      console.log('Guest view is in focus, re-activating subscription.');
       this.setupSubscription(this.guestId);
     }
   }
