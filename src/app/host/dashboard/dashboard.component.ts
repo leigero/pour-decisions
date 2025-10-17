@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
 
   // visibility handler for re-activating db subscription
-  private visibilityChangeHandler = this.handleVisibilityChange.bind(this);
   private pageFocusHandler = this.handlePageFocus.bind(this);
 
   // Signal to manage the text of the copy button for user feedback
@@ -79,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.setupSubscription();
 
     // Add the event listener to handle re-subscribing on tab focus
-    document.addEventListener('visibilitychange', this.visibilityChangeHandler);
+    document.addEventListener('visibilitychange', this.pageFocusHandler);
     window.addEventListener('pageshow', this.pageFocusHandler);
   }
 
@@ -88,10 +87,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.orderService.removeSubscription(this.orderSubscription);
     }
     // Clean up the event listener to prevent memory leaks
-    document.removeEventListener(
-      'visibilitychange',
-      this.visibilityChangeHandler,
-    );
+    document.removeEventListener('visibilitychange', this.pageFocusHandler);
     window.removeEventListener('pageshow', this.pageFocusHandler);
   }
 
@@ -147,18 +143,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       },
     );
-  }
-
-  /**
-   * Re-establishes the real-time subscription when the user returns to the tab.
-   * handleVisibilityChanges() - desktop
-   * handlePageFocus() - mobile
-   */
-  private handleVisibilityChange(): void {
-    if (document.visibilityState === 'visible') {
-      console.log('Dashboard is visible again, re-activating subscription.');
-      this.setupSubscription();
-    }
   }
 
   private handlePageFocus(): void {
