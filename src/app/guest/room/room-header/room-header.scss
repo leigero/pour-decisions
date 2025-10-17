@@ -60,7 +60,21 @@
   position: relative;
 }
 
-.profile-photo {
+.profile-photo-button {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 0; /* Prevents extra space around the img */
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.profile-photo-button .profile-photo {
   width: 3rem;
   height: 3rem;
   border-radius: 9999px;
@@ -69,11 +83,6 @@
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease-in-out;
-}
-
-.user-profile:hover .profile-photo {
-  transform: scale(1.1);
 }
 
 .user-name {
@@ -86,25 +95,6 @@
   .user-name {
     display: inline;
   }
-}
-
-.edit-button {
-  position: absolute;
-  top: -0.25rem;
-  right: -0.25rem;
-  background-color: colors.$pd-background-color;
-  color: colors.$pd-subtle-text-color;
-  border-radius: 9999px;
-  padding: 0.25rem;
-  border: 1px solid colors.$pd-element-background-color;
-  transition: all 0.3s ease-in-out;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.user-profile:hover .edit-button {
-  opacity: 1;
-  transform: scale(1.1);
 }
 
 .share-button {
