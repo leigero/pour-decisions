@@ -36,8 +36,7 @@
 .title-and-share {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-end;
 }
 
 .section-title {
@@ -114,7 +113,7 @@
     border-color: colors.$pd-subtle-text-color;
   }
   svg {
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
