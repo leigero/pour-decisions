@@ -173,6 +173,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page
       this.saveGuestIdToStorage(guestId);
+
       const guest = this.guest();
       if (guest.profile_picture) {
         guest.profile_picture = this.storageService.getPublicImageUrl(
@@ -281,6 +282,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         updatedGuest.profile_picture,
       );
     }
+    console.log('guestupdated', updatedGuest);
 
     this.guest.set(updatedGuest); // Now update the signal with the correct URL
   }
