@@ -110,9 +110,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.showJoinModal.set(true);
     }
 
-    // Initial data load and subscription setup
-    await this.refreshDataAndSubscription();
-
     document.addEventListener('visibilitychange', this.pageFocusHandler);
     window.addEventListener('pageshow', this.pageFocusHandler);
   }
@@ -130,29 +127,11 @@ export class RoomComponent implements OnInit, OnDestroy {
    * Now also re-fetches all orders to sync the state.
    */
   private async handlePageFocus(): Promise<void> {
-    // <-- Make the method async
     if (document.visibilityState === 'visible' && this.guestId) {
-      console.log('Guest view is in focus, refreshing data and subscription.');
-
-      // 1. First, re-fetch all orders to get the latest data immediately.
-      await this.fetchOrders();
-
-      // 2. Then, re-establish the subscription for future real-time updates.
-      this.setupSubscription(this.guestId);
+      console.log('Guest view is in focus, reloading guest data.');
+      // Reuse your existing, correct method to refresh everything
+      await this.loadGuestData(this.guestId);
     }
-  }
-
-  private async refreshDataAndSubscription(): Promise<void> {
-    if (!this.room()?.id) return; // Guard clause
-
-    console.log('Refreshing data and re-activating subscription...');
-
-    // 1. Re-fetch all orders to sync the current state immediately
-    const orders = await this.orderService.getOrdersForRoom(this.room().id);
-    this.orders.set(orders);
-
-    // 2. Re-establish the real-time subscription for future updates
-    this.setupSubscription(this.guestId);
   }
 
   private setupSubscription(guestId: string): void {
