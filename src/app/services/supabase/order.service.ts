@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   RealtimeChannel,
   RealtimePostgresChangesPayload,
@@ -6,23 +6,24 @@ import {
 import { SupabaseBaseService } from './supabase-base.service';
 import { Drink, OrderWithDetails } from './models';
 import { RoomService } from './room.service';
+import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends SupabaseBaseService {
-  constructor(private roomService: RoomService) {
+  private storageService = inject(StorageService);
+  private roomService = inject(RoomService);
+  
+  constructor() {
     super();
   }
 
   public populateDrinkImages(drinks: Drink[]): Drink[] {
     return drinks.map((drink) => {
       if (drink.image_path) {
-        const urlParts = drink.image_path.split('/');
-        const { data } = this.supabase.storage
-          .from(urlParts[0])
-          .getPublicUrl(urlParts[1], {
-            transform: { width: 300, height: 300 },
-          });
-        return { ...drink, image_url: data.publicUrl };
+       const imageUrl = this.storageService.getPublicImageUrl(
+          drink.image_path,
+        );
+        return { ...drink, image_url: imageUrl };
       }
       return drink;
     });
