@@ -5,7 +5,7 @@ Tonic is a lightweight SCSS design system that centralizes Pour Decisions’ vis
 ## Structure
 
 ```
-libs/tonic
+libs/tonic/styles
 ├── README.md
 ├── tonic.scss          # Primary entry point – @use this file from consuming stylesheets
 ├── _tokens.scss        # Design tokens (color, spacing, typography, elevation, motion)
@@ -28,18 +28,18 @@ libs/tonic
 2. Import the entry point wherever you need shared styles:
 
    ```scss
-   @use '../../../libs/tonic/tonic' as tonic;
+   @use "../../../libs/tonic/tonic" as tonic;
    ```
 
 3. Consume tokens or mixins that `tonic.scss` forwards:
 
    ```scss
-   @use '../../../libs/tonic/tonic' as tonic;
+   @use "../../../libs/tonic/tonic" as tonic;
 
    .cta {
-     padding-inline: tonic.space('200');
-     color: tonic.color('neutral', '050');
-     background: tonic.color('brand', '300');
+     padding-inline: tonic.space("200");
+     color: tonic.color("neutral", "050");
+     background: tonic.color("brand", "300");
      @include tonic.focus-ring();
    }
    ```

@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+/libs/tonic/icons/dist
 
 # Node
 /node_modules

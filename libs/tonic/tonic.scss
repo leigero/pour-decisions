@@ -1,14 +1,14 @@
-@forward "./tokens";
-@forward "./mixins";
+@forward "./styles/tokens";
+@forward "./styles/mixins";
 
-@use "./reset";
-@use "./fonts";
-@use "./animations";
-@use "./layout";
-@use "./buttons";
-@use "./inputs";
-@use "./checkboxes";
-@use "./dialogs";
-@use "./panels";
-@use "./utilities";
-@use "./themes";
+@use "./styles/reset";
+@use "./styles/fonts";
+@use "./styles/animations";
+@use "./styles/layout";
+@use "./styles/buttons";
+@use "./styles/inputs";
+@use "./styles/checkboxes";
+@use "./styles/dialogs";
+@use "./styles/panels";
+@use "./styles/utilities";
+@use "./styles/themes";

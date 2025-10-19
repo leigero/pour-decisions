@@ -139,6 +139,11 @@
                 "input": "apps/tonic-docs/public"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "libs/tonic/styles"
+              ]
+            },
             "styles": ["apps/tonic-docs/src/styles.scss"]
           },
           "configurations": {

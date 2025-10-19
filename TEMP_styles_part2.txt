@@ -1,0 +1,33 @@
+  padding: tonic.space("100");
+  font-size: tonic.type-size("sm");
+  color: tonic.color("neutral", "200");
+}
+
+.form-grid {
+  display: grid;
+  gap: tonic.space("150");
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.docs-dialog-preview {
+  display: grid;
+  justify-items: start;
+  gap: tonic.space("100");
+}
+
+@media (max-width: 960px) {
+  .doc-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-nav {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid tonic.color("neutral", "600");
+  }
+
+  .doc-content {
+    padding: tonic.space("200");
+  }
+}

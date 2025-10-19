@@ -20,6 +20,10 @@ import {
 } from '../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
+
+import { TonicIcon } from '@pour-decisions/tonic/icons';
+import { Share } from '@pour-decisions/tonic/icons/svgs';
+
 import { MenuEditorComponent } from './menu/menu-editor.component';
 
 type DashboardView = 'orders' | 'menu';
@@ -27,7 +31,7 @@ type DashboardView = 'orders' | 'menu';
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, MenuEditorComponent],
+  imports: [CommonModule, TonicIcon, MenuEditorComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -60,6 +64,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       (order) => !nonActiveStatuses.includes(order.status),
     );
   });
+
+  protected icons = { Share };
   constructor() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
   }
