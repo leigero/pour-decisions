@@ -3,8 +3,6 @@ import { RoomComponent } from './guest/room/room.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DashboardComponent } from './host/dashboard/dashboard.component';
 import { MenuEditorComponent } from './host/dashboard/menu/menu-editor.component';
-import { MenuComponent } from './guest/room/menu/menu.component';
-import { LobbyComponent } from './guest/room/lobby/lobby.component';
 
 export const routes: Routes = [
   // A route for the main page of your application.

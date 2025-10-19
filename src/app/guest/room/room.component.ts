@@ -95,15 +95,17 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
     this.room.set(room);
 
-    // Prioritize guestId from URL, then from local storage.
+    // Prefer local storage; if URL contains guestId, save it then strip from URL
     const guestIdFromUrl = this.route.snapshot.queryParamMap.get('guestId');
     const savedGuestId = this.getGuestIdFromStorage();
 
-    const guestIdToLoad = guestIdFromUrl || savedGuestId;
-
-    if (guestIdToLoad) {
-      this.guestId = guestIdToLoad;
-      this.updateUrlWithGuestId(this.guestId); // Ensure URL is consistent
+    if (guestIdFromUrl) {
+      this.guestId = guestIdFromUrl;
+      this.saveGuestIdToStorage(this.guestId);
+      this.removeGuestIdFromUrl();
+      await this.loadGuestData(this.guestId);
+    } else if (savedGuestId) {
+      this.guestId = savedGuestId;
       await this.loadGuestData(this.guestId);
     } else {
       // If no guest found anywhere, show the modal
@@ -198,8 +200,9 @@ export class RoomComponent implements OnInit, OnDestroy {
       );
       if (newGuest) {
         this.guestId = newGuest.id;
-        this.saveGuestIdToStorage(this.guestId); // --- NEW: Save to localStorage ---
-        this.updateUrlWithGuestId(this.guestId);
+        this.saveGuestIdToStorage(this.guestId);
+        // Ensure URL is clean (no guestId)
+        this.removeGuestIdFromUrl();
         await this.loadGuestData(this.guestId);
         this.showJoinModal.set(false);
       }
@@ -289,11 +292,12 @@ export class RoomComponent implements OnInit, OnDestroy {
     localStorage.removeItem(this.getStorageKey());
   }
 
-  private updateUrlWithGuestId(guestId: string): void {
+  private removeGuestIdFromUrl(): void {
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { guestId: guestId },
+      queryParams: { guestId: null },
       queryParamsHandling: 'merge',
+      replaceUrl: true,
     });
   }
 

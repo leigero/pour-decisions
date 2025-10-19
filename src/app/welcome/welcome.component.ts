@@ -35,9 +35,11 @@ export class WelcomeComponent {
       return;
     }
     const guest = await this.sbRoomService.joinRoom(roomCode, guestName);
-    this.router.navigate(['/room', roomCode], {
-      queryParams: { guestId: guest.id },
-    });
+    // Persist guest on this device for this room (no guestId in URL)
+    try {
+      localStorage.setItem(`pd-guest-${roomCode}`, guest.id);
+    } catch {}
+    this.router.navigate(['/room', roomCode]);
   }
 
   /*
