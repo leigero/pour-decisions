@@ -1,6 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderVM } from '../../models/vm.models';
+
+import { OrderWithDetails } from '@pour-decisions/services/supabase';
+
 import { DrinkDetailsComponent } from '../../drink/drink-details/drink-details.component';
 import { ModalComponent } from '../modal.component';
 
@@ -13,7 +15,7 @@ import { ModalComponent } from '../modal.component';
 })
 export class OrderDetailsModalComponent {
   // INPUT: The data this component needs to display.
-  public readonly order = input.required<OrderVM>();
+  public readonly order = input.required<OrderWithDetails>();
 
   // OUTPUTS: Events this component sends back to the parent.
   public readonly close = output<void>();

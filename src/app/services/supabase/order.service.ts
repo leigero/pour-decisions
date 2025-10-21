@@ -8,6 +8,8 @@ import { Drink, OrderWithDetails } from './models';
 import { RoomService } from './room.service';
 import { StorageService } from './storage.service';
 
+
+
 @Injectable({ providedIn: 'root' })
 export class OrderService extends SupabaseBaseService {
   private storageService = inject(StorageService);
@@ -55,7 +57,7 @@ export class OrderService extends SupabaseBaseService {
   async getOrdersForGuest(
     roomCode: string,
     guestId: string,
-  ): Promise<(OrderWithDetails & { drinks: Drink })[]> {
+  ): Promise<OrderWithDetails[]> {
     const room = await this.roomService.getRoomByCode(roomCode);
     if (!room) return [];
     const { data, error } = await this.supabase

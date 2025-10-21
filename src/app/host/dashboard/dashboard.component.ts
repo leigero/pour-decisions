@@ -7,17 +7,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  RoomService,
-  MenuService,
-  OrderService,
-} from '../../services/supabase';
-import {
-  Room,
-  OrderWithDetails,
-  Drink,
-  OrderStatus,
-} from '../../services/supabase/models';
 import { ActivatedRoute } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
@@ -25,6 +14,15 @@ import { TonicIcon } from '@pour-decisions/tonic/icons';
 import { Share } from '@pour-decisions/tonic/icons/svgs';
 
 import { MenuEditorComponent } from './menu/menu-editor.component';
+import {
+   Drink,
+   MenuService,
+   OrderService,
+   OrderStatus,
+   OrderWithDetails,
+   Room,
+   RoomService
+} from '@pour-decisions/services/supabase';
 
 type DashboardView = 'orders' | 'menu';
 

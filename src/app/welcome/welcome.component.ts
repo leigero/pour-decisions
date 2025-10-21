@@ -2,7 +2,9 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RoomService } from '../services/supabase/room.service';
+
+import { RoomService } from '@pour-decisions/services/supabase';
+
 import {
   CreateRoomModalComponent,
   CreateRoomPayload,

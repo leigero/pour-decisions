@@ -7,10 +7,10 @@ import {
   computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuService } from '../../../services/supabase/menu.service';
-import { Drink, Room } from '../../../services/supabase/models';
 import { FormsModule } from '@angular/forms';
-import { DrinkDetailsComponent } from '../../../shared/drink/drink-details/drink-details.component';
+
+import { Drink, MenuService, Room } from '@pour-decisions/services/supabase';
+import { DrinkDetailsComponent } from '@pour-decisions/shared';
 
 export interface DrinkVM extends Drink {
   isSelected: boolean;

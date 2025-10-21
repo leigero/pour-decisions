@@ -11,10 +11,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalComponent } from '../../../shared/modals/modal.component';
-import { Guest } from '../../../services/supabase/models';
-import { GuestService } from '../../../services/supabase';
-import { StorageService } from '../../../services/supabase/storage.service';
+
+import { Guest, GuestService, StorageService } from '@pour-decisions/services/supabase';
+import { ModalComponent } from '@pour-decisions/shared';
 
 @Component({
   selector: 'pd-edit-profile-modal',

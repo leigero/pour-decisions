@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@pour-decisions/tonic/icons": ["libs/tonic/icons/src/public-api.ts"],
-      "@pour-decisions/tonic/icons/svgs": ["libs/tonic/icons/dist/svgs/index.ts"]
+      "@pour-decisions/tonic/icons/svgs": ["libs/tonic/icons/dist/svgs/index.ts"],
+      "@pour-decisions/services/supabase": ["src/app/services/supabase/index.ts"],
+      "@pour-decisions/shared": ["src/app/shared/index.ts"]
     }
   },
   "angularCompilerOptions": {

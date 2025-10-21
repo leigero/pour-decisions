@@ -9,9 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { MenuService } from '../../../services/supabase';
-import { Drink, Room } from '../../../services/supabase/models';
-import { DrinkSummaryComponent } from '../../../shared/drink/drink-summary/drink-summary.component';
+import { Drink, MenuService, Room } from '@pour-decisions/services/supabase';
+import { DrinkSummaryComponent } from '@pour-decisions/shared';
 
 @Component({
   selector: 'pd-menu',

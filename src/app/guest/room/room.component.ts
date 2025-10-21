@@ -9,23 +9,26 @@ import {
   HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Room, Order, Guest, Drink } from '../../services/supabase/models';
+import { FormsModule } from '@angular/forms'; 
+import { ActivatedRoute, Router } from '@angular/router';
+import { RealtimeChannel } from '@supabase/supabase-js';
+
 import {
-  OrderService,
+  OrderService,  
   RoomService,
   StorageService,
-} from '../../services/supabase';
-import { ActivatedRoute, Router } from '@angular/router';
+  Room, Order, Guest, Drink, 
+  OrderWithDetails
+} from '@pour-decisions/services/supabase';
+import { 
+  DrinkDetailsComponent,
+  JoinRoomModalComponent,
+  ModalComponent,
+  OrderDetailsModalComponent
+} from '@pour-decisions/shared';
+
 import { OrderView } from './order-view/order.view';
 import { MenuComponent } from './menu/menu.component';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
-import { OrderVM } from '../../shared/models/vm.models';
-import { RealtimeChannel } from '@supabase/supabase-js';
-import { OrderDetailsModalComponent } from '../../shared/modals/order-details-modal/order-details-modal.component';
-import { JoinRoomModalComponent } from '../../shared/modals/join-room-modal/join-room-modal.component';
-import { ModalComponent } from '../../shared/modals/modal.component';
-import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
-import { DrinkDetailsComponent } from '../../shared/drink/drink-details/drink-details.component';
 import { RoomHeader } from './room-header/room-header';
 
 type GuestDashboardView = 'menu' | 'orders';
@@ -50,7 +53,7 @@ type GuestDashboardView = 'menu' | 'orders';
 export class RoomComponent implements OnInit, OnDestroy {
   public readonly room = signal<Room | null>(null);
   public readonly guest = signal<Guest | undefined>(undefined);
-  public readonly orders = signal<OrderVM[]>([]);
+  public readonly orders = signal<OrderWithDetails[]>([]);
 
   private router = inject(Router);
   private orderService = inject(OrderService);
@@ -66,7 +69,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public readonly showJoinModal = signal(false);
 
   // Signal for order detail view modal
-  public readonly selectedOrder = signal<OrderVM | null>(null);
+  public readonly selectedOrder = signal<OrderWithDetails | null>(null);
   public readonly selectedDrink = signal<Drink | null>(null);
 
   private orderSubscription: RealtimeChannel;
@@ -133,6 +136,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
   }
 
+  //TODO: this seems like should live in the order service. The only thing this component uses is a handle on the subscription 
   private setupSubscription(guestId: string): void {
     // If a subscription already exists, remove it to prevent duplicates
     if (this.orderSubscription) {
@@ -164,7 +168,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.selectedDrink.set(null);
   }
 
-  public viewOrderDetails(order: OrderVM): void {
+  public viewOrderDetails(order: OrderWithDetails): void {
     this.selectedOrder.set(order);
   }
 
@@ -260,15 +264,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.roomCode,
       this.guest()!.id,
     );
-    const vmOrders: OrderVM[] = orders.map((o: any) => ({
-      id: o.id,
-      guest_id: o.guest_id,
-      room_id: o.room_id,
-      status: o.status,
-      created_at: o.created_at,
-      drink: o.drinks, // Assign the nested object to the 'drink' property
-    }));
-    this.orders.set(vmOrders);
+    this.orders.set(orders);
     console.log('just set: ', this.orders());
   }
 

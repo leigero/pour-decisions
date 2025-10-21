@@ -1,8 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Room } from '../../../services/supabase/models';
-import { OrderVM } from '../../../shared/models/vm.models';
+import { OrderWithDetails, Room } from '@pour-decisions/services/supabase';
 
 @Component({
   selector: 'pd-order-view',
@@ -13,7 +12,7 @@ import { OrderVM } from '../../../shared/models/vm.models';
 })
 export class OrderView {
   public readonly room = input.required<Room>();
-  public readonly orders = input.required<OrderVM[]>();
+  public readonly orders = input.required<OrderWithDetails[]>();
   
-  public viewOrder = output<OrderVM>();
+  public viewOrder = output<OrderWithDetails>();
 }
