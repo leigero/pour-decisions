@@ -10,10 +10,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
-import { TonicIcon } from '@pour-decisions/tonic/icons';
-import { Share } from '@pour-decisions/tonic/icons/svgs';
-
-import { MenuEditorComponent } from './menu/menu-editor.component';
 import {
    Drink,
    MenuService,
@@ -23,6 +19,10 @@ import {
    Room,
    RoomService
 } from '@pour-decisions/services/supabase';
+import { TonicIcon } from '@pour-decisions/tonic/icons';
+import { Share } from '@pour-decisions/tonic/icons/svgs';
+
+import { MenuEditorComponent } from './menu/menu-editor.component';
 
 type DashboardView = 'orders' | 'menu';
 
