@@ -6,6 +6,7 @@ import {
   OnInit,
   Renderer2,
   signal,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Room, Order, Guest, Drink } from '../../services/supabase/models';
@@ -85,8 +86,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  private pageFocusHandler = this.handlePageFocus.bind(this);
-
   async ngOnInit() {
     const room = await this.roomService.getRoomByCode(this.roomCode);
     if (!room) {
@@ -95,16 +94,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
     this.room.set(room);
 
-    // Prefer local storage; if URL contains guestId, save it then strip from URL
-    const guestIdFromUrl = this.route.snapshot.queryParamMap.get('guestId');
     const savedGuestId = this.getGuestIdFromStorage();
-
-    if (guestIdFromUrl) {
-      this.guestId = guestIdFromUrl;
-      this.saveGuestIdToStorage(this.guestId);
-      this.removeGuestIdFromUrl();
-      await this.loadGuestData(this.guestId);
-    } else if (savedGuestId) {
+     if (savedGuestId) {
       this.guestId = savedGuestId;
       await this.loadGuestData(this.guestId);
     } else {
@@ -112,18 +103,24 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.showJoinModal.set(true);
     }
 
-    document.addEventListener('visibilitychange', this.pageFocusHandler);
-    window.addEventListener('pageshow', this.pageFocusHandler);
+    // Event handling moved to @HostListener bindings for Angular-friendly approach
   }
 
   ngOnDestroy(): void {
     if (this.orderSubscription) {
       this.orderService.removeSubscription(this.orderSubscription);
     }
-    document.removeEventListener('visibilitychange', this.pageFocusHandler);
-    window.removeEventListener('pageshow', this.pageFocusHandler);
   }
 
+  @HostListener('document:visibilitychange')
+  async onDocumentVisibilityChange(): Promise<void> {
+    await this.handlePageFocus();
+  }
+
+  @HostListener('window:pageshow')
+  async onWindowPageShow(): Promise<void> {
+    await this.handlePageFocus();
+  }
   /**
    * Re-establishes the real-time subscription when the user returns to the tab or app.
    * Now also re-fetches all orders to sync the state.
