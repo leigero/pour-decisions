@@ -20,16 +20,17 @@ import {
    RoomService
 } from '@pour-decisions/services/supabase';
 import { TonicIcon } from '@pour-decisions/tonic/icons';
+import { TonicQrCode } from '@pour-decisions/tonic/fundamentals';
 import { Share } from '@pour-decisions/tonic/icons/svgs';
 
 import { MenuEditorComponent } from './menu/menu-editor.component';
 
-type DashboardView = 'orders' | 'menu';
+type DashboardView = 'orders' | 'menu' | 'share';
 
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, TonicIcon, MenuEditorComponent],
+  imports: [CommonModule, TonicIcon, TonicQrCode, MenuEditorComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -55,6 +56,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // Signal to manage the text of the copy button for user feedback
   public readonly copyButtonText = signal('Share');
   private readonly isSharing = signal(false);
+
+  // Computed guest URL and QR image URL for the Share tab
+  public readonly guestUrl = computed(() => {
+    const code = this.room()?.code;
+    return code ? `${window.location.origin}/room/${code}` : '';
+  });
+
+  // QR image now generated locally via TonicQrCode component
 
   public readonly activeOrders = computed(() => {
     const nonActiveStatuses = ['served', 'cancelled'];

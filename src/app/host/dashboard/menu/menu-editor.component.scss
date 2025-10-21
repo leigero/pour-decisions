@@ -1,17 +1,5 @@
 @use "colors";
 
-.header-section {
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.description {
-  font-size: 1rem;
-  color: colors.$pd-subtle-text-color;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
 .menu-grid {
   display: flex;
   flex-direction: column;

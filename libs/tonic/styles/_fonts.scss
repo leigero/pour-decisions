@@ -27,12 +27,12 @@ h6 {
 }
 
 h1 {
-  @include mix.text-style("4xl", tight, heavy, -0.02em);
+  @include mix.text-style("4xl", tight, bold, -0.02em);
   color: tokens.color(neutral, 050);
 }
 
 h2 {
-  @include mix.text-style("3xl", tight, heavy, -0.015em);
+  @include mix.text-style("3xl", tight, bold, -0.015em);
   color: tokens.color(neutral, 050);
 }
 

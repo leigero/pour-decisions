@@ -10,17 +10,10 @@
       <p class="room-description">
         Manage your room, edit the menu, and view incoming orders.
       </p>
-
-      <div class="room-code-display">
-        <span class="room-code-label">Guest Link:</span>
-        <span class="room-code">{{ rm?.code }}</span>
-        <button class="share-button" (click)="copyInviteLink()">
-          <span>{{ copyButtonText() }}</span>
-          
-          <tonic-icon [icon]="icons.Share"></tonic-icon>
-
-        </button>
-      </div>
+    </div>
+    <div class="room-code-display">
+      <span class="room-code-label">Code:</span>
+      <span class="room-code">{{ rm?.code }}</span>
     </div>
   </header>
 
@@ -39,6 +32,13 @@
       (click)="navigate('menu')"
     >
       Menu
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="currentView === 'share'"
+      (click)="navigate('share')"
+    >
+      Share
     </button>
   </div>
 
@@ -65,6 +65,23 @@
     }
     @if (currentView === "menu") {
       <pd-menu-editor [room]="room()"></pd-menu-editor>
+    }
+    @if (currentView === "share") {
+      <div class="share-tab">
+        <div class="guest-link">
+          <span class="room-code-label">Guest Link: </span>
+          <a [href]="guestUrl()" target="_blank" rel="noopener">{{ guestUrl() }}</a>
+        </div>
+        <div class="qr-section">
+          <tonic-qr-code [value]="guestUrl()" [size]="320" [level]="'M'"></tonic-qr-code>
+        </div>
+        
+          <button class="share-button" (click)="copyInviteLink()">
+            <tonic-icon [icon]="icons.Share"></tonic-icon>
+            <span>{{ copyButtonText() }}</span>            
+          </button>
+        
+      </div>
     }
   </div>
 </div>
