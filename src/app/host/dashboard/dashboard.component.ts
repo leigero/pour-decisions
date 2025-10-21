@@ -24,13 +24,14 @@ import { TonicQrCode } from '@pour-decisions/tonic/fundamentals';
 import { Share } from '@pour-decisions/tonic/icons/svgs';
 
 import { MenuEditorComponent } from './menu/menu-editor.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 type DashboardView = 'orders' | 'menu' | 'share';
 
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, TonicIcon, TonicQrCode, MenuEditorComponent],
+  imports: [CommonModule, TonicIcon, TonicQrCode, MenuEditorComponent, OrderListComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })

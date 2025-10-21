@@ -1,0 +1,15 @@
+<ul class="order-list">
+  @for (order of orders(); track order.id) {
+    <li class="order-item" (click)="select.emit(order)">
+      <div class="order-details">
+        <span class="order-drink-name">{{ order.drink.name }}</span>
+        <span class="order-guest-name">for {{ order.guest.display_name }}</span>
+      </div>
+      <span class="order-status" [ngClass]="'status-' + order.status">
+        {{ order.status }}
+      </span>
+    </li>
+  } @empty {
+    <div class="empty-orders">No active orders right now.</div>
+  }
+</ul>

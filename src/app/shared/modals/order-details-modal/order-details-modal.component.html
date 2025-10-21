@@ -1,5 +1,5 @@
 <pd-modal class="modal-contents" (close)="close.emit()">
-  <pd-drink-details [drink]="order().drink"></pd-drink-details>
+  <pd-drink-details [drink]="order().drinks"></pd-drink-details>
   <div class="modal-actions">
     <button class="pd-button secondary" (click)="close.emit()">Close</button>
     @if (order().status === "queued") {

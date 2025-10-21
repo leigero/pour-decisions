@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Order } from '../../../services/supabase/models';
+import { OrderWithDetails } from '@pour-decisions/services/supabase';
 
 @Component({
   selector: 'app-order-list',
@@ -10,10 +10,6 @@ import { Order } from '../../../services/supabase/models';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent {
-  @Input() orders: Order[] = [];
-  @Output() markComplete = new EventEmitter<string>();
-
-  completeOrder(id: string) {
-    this.markComplete.emit(id);
-  }
+  public orders = input.required<OrderWithDetails[]>();
+  public select = output<OrderWithDetails>();
 }

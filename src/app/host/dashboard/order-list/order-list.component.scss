@@ -1,0 +1,92 @@
+@use "colors";
+
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: colors.$pd-card-background-color;
+  border: 1px solid colors.$pd-element-background-color;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: colors.$pd-element-background-color;
+  }
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.order-drink-name {
+  font-weight: 600;
+  color: colors.$pd-text-color;
+}
+
+.order-guest-name {
+  font-size: 0.875rem;
+  color: colors.$pd-subtle-text-color;
+}
+
+.order-status {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 110px;
+}
+
+.status-queued {
+  background-color: colors.$pd-element-background-color;
+  color: colors.$pd-subtle-text-color-alt;
+}
+
+.status-in-progress {
+  background-color: colors.$pd-status-inprogress-bg;
+  color: colors.$pd-status-inprogress-text;
+}
+
+.status-ready {
+  background-color: colors.$pd-status-ready-bg;
+  color: colors.$pd-status-ready-text;
+}
+
+.status-served {
+  background-color: colors.$pd-primary-amber;
+  color: colors.$pd-status-served-text;
+}
+
+.status-cancelled {
+  background-color: colors.$pd-status-cancelled-bg;
+  color: colors.$pd-status-cancelled-text;
+}
+
+.empty-orders {
+  text-align: center;
+  color: colors.$pd-subtle-text-color;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  font-style: italic;
+  padding: 1rem;
+  background-color: colors.$pd-card-background-color;
+  border-radius: 0.5rem;
+}

@@ -45,23 +45,7 @@
   <!-- Tab Content -->
   <div class="content">
     @if (currentView === "orders") {
-      <ul class="order-list">
-        @for (order of activeOrders(); track order.id) {
-          <li class="order-item" (click)="viewOrderDetails(order)">
-            <div class="order-details">
-              <span class="order-drink-name">{{ order.drink.name }}</span>
-              <span class="order-guest-name"
-                >for {{ order.guest.display_name }}</span
-              >
-            </div>
-            <span class="order-status" [ngClass]="'status-' + order.status">{{
-              order.status
-            }}</span>
-          </li>
-        } @empty {
-          <div class="empty-orders">No active orders right now.</div>
-        }
-      </ul>
+      <app-order-list [orders]="activeOrders()" (select)="viewOrderDetails($event)"></app-order-list>
     }
     @if (currentView === "menu") {
       <pd-menu-editor [room]="room()"></pd-menu-editor>
@@ -89,7 +73,7 @@
   <div class="modal-backdrop" (click)="closeOrderModal()">
     <div class="modal-panel" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title">{{ order.drink.name }}</h3>
+        <h3 class="modal-title">{{ order.drinks.name }}</h3>
         <span class="order-status" [ngClass]="'status-' + order.status">{{
           order.status
         }}</span>
