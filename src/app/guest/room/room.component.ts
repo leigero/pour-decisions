@@ -15,7 +15,7 @@ import {
   StorageService,
 } from '../../services/supabase';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LobbyComponent } from './lobby/lobby.component';
+import { OrderView } from './order-view/order.view';
 import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { OrderVM } from '../../shared/models/vm.models';
@@ -34,7 +34,7 @@ type GuestDashboardView = 'menu' | 'orders';
   standalone: true,
   imports: [
     CommonModule,
-    LobbyComponent,
+    OrderView,
     MenuComponent,
     FormsModule,
     OrderDetailsModalComponent,

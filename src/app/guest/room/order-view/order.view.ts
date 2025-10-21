@@ -1,20 +1,19 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Order, Room } from '../../../services/supabase/models';
+import { Room } from '../../../services/supabase/models';
 import { OrderVM } from '../../../shared/models/vm.models';
 
 @Component({
-  selector: 'pd-lobby',
+  selector: 'pd-order-view',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './lobby.component.html',
-  styleUrls: ['./lobby.component.scss'],
+  templateUrl: './order-view.html',
+  styleUrls: ['./order-view.scss'],
 })
-export class LobbyComponent {
+export class OrderView {
   public readonly room = input.required<Room>();
   public readonly orders = input.required<OrderVM[]>();
-
-  public openMenu = output();
+  
   public viewOrder = output<OrderVM>();
 }

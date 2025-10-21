@@ -37,12 +37,12 @@
       <div class="tab-content">
         @switch (view()) {
           @case ("orders") {
-            <pd-lobby
+            <pd-order-view
               [room]="room()!"
               [orders]="orders()"
               (openMenu)="navigate('menu')"
               (viewOrder)="viewOrderDetails($event)"
-            ></pd-lobby>
+            ></pd-order-view>
           }
           @case ("menu") {
             <pd-menu
