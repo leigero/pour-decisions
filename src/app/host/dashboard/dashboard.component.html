@@ -72,8 +72,8 @@
 @if (selectedOrder(); as order) {
   <div class="modal-backdrop" (click)="closeOrderModal()">
     <div class="modal-panel" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h3 class="modal-title">{{ order.drinks.name }}</h3>
+      <div class="modal-header">        
+        <h3 class="modal-title">{{ order.drink.name }}</h3>
         <span class="order-status" [ngClass]="'status-' + order.status">{{
           order.status
         }}</span>

@@ -18,5 +18,5 @@ export interface Order {
 
 export interface OrderWithDetails extends Order {
   guest: Pick<Guest, 'display_name'>;
-  drinks: Drink;
+  drink: Drink;
 }

@@ -2,7 +2,7 @@
 <ul class="order-list">
   @for (order of orders(); track order.id) {    
     <li class="order-item" (click)="viewOrder.emit(order)">
-      <span class="order-name">{{ order.drinks.name }}</span>      
+      <span class="order-name">{{ order.drink.name }}</span>      
       <span class="order-status" [ngClass]="'status-' + order.status">
         {{ order.status }}
       </span>

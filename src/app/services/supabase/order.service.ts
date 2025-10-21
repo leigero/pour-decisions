@@ -31,27 +31,52 @@ export class OrderService extends SupabaseBaseService {
     });
   }
 
+  /** Base select used for all order queries to keep fields consistent */
+  private baseOrdersSelect() {
+    return '*, guest:guest_id(display_name), drink:drink_id(*)';
+  }
+
+  /**
+   * Ensures any drink objects on orders have populated image_url and
+   * normalizes both `drink` and `drinks` properties for compatibility.
+   */
+  private populateOrderDrinkImages(orders: any[]): OrderWithDetails[] {
+    if (!orders?.length) return [] as OrderWithDetails[];
+
+    const drinks: Drink[] = orders
+      .map((o) => o.drink)
+      .filter(Boolean);
+
+    const populated = this.populateDrinkImages(drinks);
+
+    return orders.map((o) => {
+      const originalDrink = o.drink;
+      if (!originalDrink) return o as OrderWithDetails;
+      const withImg = populated.find((d) => d.id === originalDrink.id) || originalDrink;
+      return { ...(o as any), drink: withImg } as OrderWithDetails as any;
+    });
+  }
+
   async getOrdersForRoom(roomId: string): Promise<OrderWithDetails[]> {
     const { data, error } = await this.supabase
       .from('orders')
-      .select('*, guest:guest_id(display_name), drink:drink_id(*)')
+      .select(this.baseOrdersSelect())
       .eq('room_id', roomId)
       .order('created_at');
 
     if (error) throw error;
-    return data || [];
+    return this.populateOrderDrinkImages(data || []);
   }
 
   async getSingleOrderForRoom(orderId: string): Promise<OrderWithDetails> {
     const { data, error } = await this.supabase
       .from('orders')
-      .select('*, guest:guest_id(display_name), drink:drink_id(*)')
+      .select(this.baseOrdersSelect())
       .eq('id', orderId)
       .single();
 
     if (error) throw error;
-
-    return data;
+    return this.populateOrderDrinkImages([data])[0];
   }
 
   async getOrdersForGuest(
@@ -62,30 +87,13 @@ export class OrderService extends SupabaseBaseService {
     if (!room) return [];
     const { data, error } = await this.supabase
       .from('orders')
-      .select('*, drinks(*)')
+      .select(this.baseOrdersSelect())
       .eq('room_id', room.id)
       .eq('guest_id', guestId)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-
-    const orders = data || [];
-
-    // 1. Extract all the 'drinks' objects from the orders
-    const drinksToPopulate = orders
-      .map((order) => order.drinks)
-      .filter(Boolean) as Drink[];
-
-    // 2. Populate their images in a single call
-    const populatedDrinks = this.populateDrinkImages(drinksToPopulate);
-
-    // 3. Map the populated drinks back to their original orders
-    return orders.map((order) => {
-      const matchingDrink = populatedDrinks.find(
-        (d) => d.id === order.drinks?.id,
-      );
-      return { ...order, drinks: matchingDrink || order.drinks };
-    });
+    return this.populateOrderDrinkImages(data || []);
   }
 
   async placeOrder(
