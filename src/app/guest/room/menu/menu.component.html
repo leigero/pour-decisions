@@ -22,15 +22,4 @@
       }
     </div>
   }
-
-  <footer class="footer-section">
-    <button
-      id="save-button"
-      class="save-button"
-      [disabled]="isSaving()"
-      (click)="toLobby.emit()"
-    >
-      {{ isSaving() ? "Saving..." : "Back to Lobby" }}
-    </button>
-  </footer>
 </div>

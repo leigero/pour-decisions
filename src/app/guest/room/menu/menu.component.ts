@@ -7,12 +7,11 @@ import {
   output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { MenuService } from '../../../services/supabase';
 import { Drink, Room } from '../../../services/supabase/models';
-import { FormsModule } from '@angular/forms';
 import { DrinkSummaryComponent } from '../../../shared/drink/drink-summary/drink-summary.component';
-
-type GuestDashboardView = 'main' | 'menu' | 'orders';
 
 @Component({
   selector: 'pd-menu',
@@ -30,7 +29,6 @@ export class MenuComponent implements OnInit {
 
   public readonly isLoading = signal(false);
   public readonly hasError = signal(false);
-  public readonly isSaving = signal(false);
 
   public toLobby = output();
   public orderDrink = output<string>();
