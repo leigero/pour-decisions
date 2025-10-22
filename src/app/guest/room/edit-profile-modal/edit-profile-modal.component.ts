@@ -12,7 +12,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Guest, GuestService, StorageService } from '@pour-decisions/services/supabase';
+import { Guest, GuestService } from '@pour-decisions/services/supabase';
 import { ModalComponent } from '@pour-decisions/shared';
 
 @Component({
@@ -35,7 +35,6 @@ export class EditProfileModalComponent implements OnInit {
   private selectedFile: File | null = null;
 
   private guestService = inject(GuestService);
-  private storageService = inject(StorageService);
 
   ngOnInit(): void {
     this.displayName = this.guest.display_name;
@@ -50,26 +49,19 @@ export class EditProfileModalComponent implements OnInit {
       let needsUpdate = false;
 
       if (
-        this.displayName.trim() &&
-        this.displayName !== this.guest.display_name
+        (this.displayName.trim() &&
+          this.displayName !== this.guest.display_name) ||
+        this.selectedFile
       ) {
-        updates.display_name = this.displayName.trim();
         needsUpdate = true;
       }
-
-      if (this.selectedFile) {
-        const newImageUrl = await this.storageService.uploadProfileImage(
-          this.selectedFile,
-          this.guest.id,
-        );
-        updates.profile_picture = newImageUrl;
-        needsUpdate = true;
-      }
+      updates.display_name = this.displayName.trim();
 
       if (needsUpdate) {
         const updatedGuest = await this.guestService.updateGuest(
           this.guest.id,
           updates,
+          this.selectedFile,
         );
         this.profileUpdated.emit(updatedGuest);
         this.close.emit();
@@ -85,7 +77,7 @@ export class EditProfileModalComponent implements OnInit {
     }
   }
 
-  triggerFileInput(captureMode?: 'user' | 'environment') {
+  triggerFileInput(captureMode?: 'user') {
     if (captureMode) {
       this.fileInput.nativeElement.setAttribute('capture', captureMode);
     } else {

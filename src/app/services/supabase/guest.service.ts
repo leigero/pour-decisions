@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SupabaseBaseService } from './supabase-base.service';
 import { Guest } from './models';
+import { StorageService } from '.';
 
 @Injectable({ providedIn: 'root' })
 export class GuestService extends SupabaseBaseService {
+  private storageService = inject(StorageService);
   async createGuest(guestName: string, roomId: string): Promise<Guest> {
     await this.initializePromise; // Ensure auth is initialized
 
@@ -31,8 +33,17 @@ export class GuestService extends SupabaseBaseService {
     return data;
   }
 
-  async updateGuest(guestId: string, updates: Partial<Guest>): Promise<Guest> {
-    console.log('updating guest', guestId, updates);
+  async updateGuest(
+    guestId: string,
+    updates: Partial<Guest>,
+    profilePicture: File | null = null,
+  ): Promise<Guest> {
+    const newImageUrl = await this.storageService.uploadProfileImage(
+      profilePicture,
+      guestId,
+    );
+    updates.profile_picture = newImageUrl;
+
     const { data, error } = await this.supabase
       .from('guests')
       .update(updates)
