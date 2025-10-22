@@ -23,9 +23,9 @@ import {
 import { 
   DrinkDetailsComponent,
   JoinRoomModalComponent,
-  ModalComponent,
   OrderDetailsModalComponent
 } from '@pour-decisions/shared';
+import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
 import { OrderView } from './order-view/order.view';
 import { MenuComponent } from './menu/menu.component';
@@ -43,7 +43,7 @@ type GuestDashboardView = 'menu' | 'orders';
     FormsModule,
     OrderDetailsModalComponent,
     JoinRoomModalComponent,
-    ModalComponent,
+    TonicModal,
     DrinkDetailsComponent,
     RoomHeader,
   ], // Add FormsModule here

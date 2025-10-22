@@ -72,7 +72,7 @@
 }
 
 @if (selectedDrink(); as drink) {
-  <pd-modal class="modal-contents" (close)="closeDrinkModal()">
+  <tonic-modal class="modal-contents" (close)="closeDrinkModal()">
     <pd-drink-details [drink]="drink"></pd-drink-details>
     <label for="orderNotes">Special Requests</label>
     <textarea
@@ -89,5 +89,5 @@
         Order Drink
       </button>
     </div>
-  </pd-modal>
+  </tonic-modal>
 }

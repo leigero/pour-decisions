@@ -1,4 +1,4 @@
-<pd-modal class="modal-contents" (close)="close.emit()">  
+<tonic-modal class="modal-contents" (close)="close.emit()">  
   <pd-drink-details [drink]="order().drink"></pd-drink-details>
   <div class="modal-actions">
     <button class="pd-button secondary" (click)="close.emit()">Close</button>
@@ -8,4 +8,4 @@
       </button>
     }
   </div>
-</pd-modal>
+</tonic-modal>
