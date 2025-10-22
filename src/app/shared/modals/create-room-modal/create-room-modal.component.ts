@@ -1,7 +1,7 @@
 import { Component, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalComponent } from '../modal.component';
+import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
 export interface CreateRoomPayload {
   name: string;
@@ -11,7 +11,7 @@ export interface CreateRoomPayload {
 @Component({
   selector: 'pd-create-room-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalComponent],
+  imports: [CommonModule, FormsModule, TonicModal],
   templateUrl: './create-room-modal.component.html',
 })
 export class CreateRoomModalComponent {

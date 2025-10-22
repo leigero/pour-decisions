@@ -13,12 +13,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Guest, GuestService } from '@pour-decisions/services/supabase';
-import { ModalComponent } from '@pour-decisions/shared';
+import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
 @Component({
   selector: 'pd-edit-profile-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalComponent],
+  imports: [CommonModule, FormsModule, TonicModal],
   templateUrl: './edit-profile-modal.component.html',
   styleUrls: ['./edit-profile-modal.component.scss'],
 })

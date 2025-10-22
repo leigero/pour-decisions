@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { OrderWithDetails } from '@pour-decisions/services/supabase';
 
 import { DrinkDetailsComponent } from '../../drink/drink-details/drink-details.component';
-import { ModalComponent } from '../modal.component';
+import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
 @Component({
   selector: 'pd-order-details-modal',
   standalone: true,
-  imports: [CommonModule, DrinkDetailsComponent, ModalComponent],
+  imports: [CommonModule, DrinkDetailsComponent, TonicModal],
   templateUrl: './order-details-modal.component.html',
   styleUrls: ['./order-details-modal.component.scss'],
 })
