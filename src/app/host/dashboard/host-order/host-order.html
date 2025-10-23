@@ -1,0 +1,74 @@
+<tonic-modal (close)="close.emit()">
+  <div class="modal-header">
+    <h3 class="modal-title">{{ order().drink.name }}</h3>
+    <span class="order-status" [ngClass]="'status-' + order().status">{{
+      order().status
+    }}</span>
+  </div>
+
+  <div class="modal-body order-details">
+    <div class="order-info">
+      <img
+        [src]="order().guest.profile_picture"
+        alt="{{ order().guest.display_name }}"
+        class="guest-profile-pic"
+      />
+      <p>
+        Order for <strong>{{ order().guest.display_name }}</strong> placed at
+        <strong>{{ order().created_at | date: "shortTime" }}</strong
+        >.
+      </p>
+    </div>
+    @if (order().notes) {
+      <p class="order-notes"><strong>Notes:</strong> {{ order().notes }}</p>
+    }
+  </div>
+
+  <div class="modal-actions">
+    <button class="pd-button secondary" (click)="close.emit()">Close</button>
+    @if (!showConfirmCancel()) {
+      @if (order().status !== "served" && order().status !== "cancelled") {
+        <button class="pd-button danger" (click)="requestCancelOrder()">
+          Cancel Order
+        </button>
+      }
+      @if (order().status === "queued") {
+        <button
+          class="pd-button in-progress"
+          (click)="updateOrderStatus(order().id, 'in-progress')"
+        >
+          Start
+        </button>
+      }
+      @if (order().status === "in-progress") {
+        <button
+          class="pd-button ready"
+          (click)="updateOrderStatus(order().id, 'ready')"
+        >
+          Ready
+        </button>
+      }
+      @if (order().status === "ready") {
+        <button
+          class="pd-button served"
+          (click)="updateOrderStatus(order().id, 'served')"
+        >
+          Served
+        </button>
+      }
+    } @else {
+      <button
+        class="pd-button secondary"
+        (click)="showConfirmCancel.set(false)"
+      >
+        No, Keep It
+      </button>
+      <button
+        class="pd-button danger"
+        (click)="updateOrderStatus(order().id, 'cancelled')"
+      >
+        Yes, Cancel Order
+      </button>
+    }
+  </div>
+</tonic-modal>

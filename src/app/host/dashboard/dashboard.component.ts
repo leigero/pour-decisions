@@ -25,6 +25,7 @@ import { Share } from '@pour-decisions/tonic/icons/svgs';
 
 import { MenuEditorComponent } from './menu/menu-editor.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { HostOrder } from 'src/app/host/dashboard/host-order/host-order';
 
 type DashboardView = 'orders' | 'menu' | 'share';
 
@@ -37,6 +38,7 @@ type DashboardView = 'orders' | 'menu' | 'share';
     TonicQrCode,
     MenuEditorComponent,
     OrderListComponent,
+    HostOrder,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
@@ -45,7 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private roomService = inject(RoomService);
   private menuService = inject(MenuService);
   private orderService = inject(OrderService);
-
+  public readonly selectedOrder = signal<OrderWithDetails | null>(null);
   private route = inject(ActivatedRoute);
 
   private readonly roomId: string;
@@ -55,8 +57,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly drinks = signal<Drink[]>([]);
   public readonly orders = signal<OrderWithDetails[]>([]);
   public readonly view = signal<DashboardView>('orders');
-  public readonly selectedOrder = signal<OrderWithDetails | null>(null);
-  public readonly orderToCancel = signal<OrderWithDetails | null>(null);
 
   // visibility handler for re-activating db subscription
   private pageFocusHandler = this.handlePageFocus.bind(this);
@@ -187,61 +187,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  public onOrderUpdated(updatedOrder: OrderWithDetails) {
+    this.orders.update((currentOrders) =>
+      currentOrders.map((order) =>
+        order.id === updatedOrder.id ? updatedOrder : order,
+      ),
+    );
+  }
+
   /** Opens the modal and sets the selected order. */
   public viewOrderDetails(order: OrderWithDetails): void {
     this.selectedOrder.set(order);
-    console.log(this.selectedOrder());
-  }
-
-  /** Closes the modal by clearing the selected order. */
-  public closeOrderModal(): void {
-    this.selectedOrder.set(null);
-  }
-
-  /** Opens the cancel confirmation modal. */
-  public requestCancelOrder(order: OrderWithDetails): void {
-    this.orderToCancel.set(order);
-  }
-
-  /** Closes the cancel confirmation modal. */
-  public closeCancelConfirmModal(): void {
-    this.orderToCancel.set(null);
-  }
-
-  /** Confirms the cancellation, updates status, and closes the modal. */
-  public confirmCancelOrder(): void {
-    const order = this.orderToCancel();
-    if (order) {
-      this.updateOrderStatus(order.id, 'cancelled');
-      // The main order modal is closed by updateOrderStatus, so we just need to close this one.
-      this.closeCancelConfirmModal();
-    }
-  }
-
-  /** Updates an order's status and provides immediate UI feedback. */
-  public async updateOrderStatus(
-    orderId: string,
-    status: OrderStatus,
-  ): Promise<void> {
-    // Optimistically update the local 'orders' signal for a snappy UX
-    this.orders.update((currentOrders) =>
-      currentOrders.map((o) =>
-        o.id === orderId ? { ...o, status: status } : o,
-      ),
-    );
-
-    // If the order being updated is the one in the modal, close the modal
-    if (this.selectedOrder()?.id === orderId) {
-      this.closeOrderModal();
-    }
-
-    try {
-      // Make the actual call to the backend
-      await this.orderService.updateOrderStatus(orderId, status);
-    } catch (error) {
-      console.error('Failed to update order status:', error);
-      // Optional: Add logic here to revert the optimistic update on failure
-    }
   }
 
   public navigate(view: DashboardView) {
