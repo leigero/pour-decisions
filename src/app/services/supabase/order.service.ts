@@ -4,17 +4,15 @@ import {
   RealtimePostgresChangesPayload,
 } from '@supabase/supabase-js';
 import { SupabaseBaseService } from './supabase-base.service';
-import { Drink, OrderWithDetails } from './models';
+import { Drink, Order, OrderWithDetails } from './models';
 import { RoomService } from './room.service';
 import { StorageService } from './storage.service';
-
-
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends SupabaseBaseService {
   private storageService = inject(StorageService);
   private roomService = inject(RoomService);
-  
+
   constructor() {
     super();
   }
@@ -22,7 +20,7 @@ export class OrderService extends SupabaseBaseService {
   public populateDrinkImages(drinks: Drink[]): Drink[] {
     return drinks.map((drink) => {
       if (drink.image_path) {
-       const imageUrl = this.storageService.getPublicImageUrl(
+        const imageUrl = this.storageService.getPublicImageUrl(
           drink.image_path,
         );
         return { ...drink, image_url: imageUrl };
@@ -33,7 +31,7 @@ export class OrderService extends SupabaseBaseService {
 
   /** Base select used for all order queries to keep fields consistent */
   private baseOrdersSelect() {
-    return '*, guest:guest_id(display_name), drink:drink_id(*)';
+    return '*, guest:guest_id(display_name, profile_picture), drink:drink_id(*)';
   }
 
   /**
@@ -43,18 +41,30 @@ export class OrderService extends SupabaseBaseService {
   private populateOrderDrinkImages(orders: any[]): OrderWithDetails[] {
     if (!orders?.length) return [] as OrderWithDetails[];
 
-    const drinks: Drink[] = orders
-      .map((o) => o.drink)
-      .filter(Boolean);
-
-    const populated = this.populateDrinkImages(drinks);
+    const drinks: Drink[] = orders.map((o) => o.drink).filter(Boolean); // Extract drinks
+    const populatedDrinks = this.populateDrinkImages(drinks); // Populate drink images
 
     return orders.map((o) => {
-      const originalDrink = o.drink;
-      if (!originalDrink) return o as OrderWithDetails;
-      const withImg = populated.find((d) => d.id === originalDrink.id) || originalDrink;
-      return { ...(o as any), drink: withImg } as OrderWithDetails as any;
-    });
+      // Populate drink image
+      if (o.drink) {
+        const populatedDrink =
+          populatedDrinks.find((d) => d.id === o.drink.id) || o.drink;
+        o.drink = populatedDrink;
+      }
+
+      // Populate guest profile picture
+      if (o.guest) {
+        if (o.guest.profile_picture) {
+          o.guest.profile_picture = this.storageService.getPublicImageUrl(
+            o.guest.profile_picture,
+          );
+        } else {
+          // Fallback to UI Avatars if no picture is set
+          o.guest.profile_picture = `https://ui-avatars.com/api/?name=${o.guest.display_name}`;
+        }
+      }
+      return o as OrderWithDetails;
+    }) as OrderWithDetails[];
   }
 
   async getOrdersForRoom(roomId: string): Promise<OrderWithDetails[]> {
@@ -96,14 +106,8 @@ export class OrderService extends SupabaseBaseService {
     return this.populateOrderDrinkImages(data || []);
   }
 
-  async placeOrder(
-    drinkId: string,
-    roomId: string,
-    guestId: string,
-  ): Promise<void> {
-    const { error } = await this.supabase
-      .from('orders')
-      .insert({ drink_id: drinkId, room_id: roomId, guest_id: guestId });
+  async placeOrder(order: Partial<Order>): Promise<void> {
+    const { error } = await this.supabase.from('orders').insert(order);
 
     if (error) throw error;
   }

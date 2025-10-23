@@ -47,8 +47,7 @@
           @case ("menu") {
             <pd-menu
               [room]="room()!"
-              (toLobby)="navigate('menu')"
-              (orderDrink)="orderDrink($event)"
+              (orderDrink)="orderDrink($event.drinkId, $event.notes)"
               (viewDrink)="viewDrinkDetails($event)"
             ></pd-menu>
           }
@@ -77,6 +76,7 @@
     <label for="orderNotes">Special Requests</label>
     <textarea
       id="orderNotes"
+      #orderNotes
       class="pd-textarea"
       placeholder="Optional"
     ></textarea>
@@ -85,7 +85,10 @@
       <button class="pd-button secondary" (click)="closeDrinkModal()">
         Close
       </button>
-      <button class="pd-button" (click)="orderDrink(drink.id)">
+      <button
+        class="pd-button"
+        (click)="orderDrink(drink.id, orderNotes.value); closeDrinkModal()"
+      >
         Order Drink
       </button>
     </div>

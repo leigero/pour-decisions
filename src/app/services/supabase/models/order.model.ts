@@ -14,9 +14,10 @@ export interface Order {
   room_id: string;
   status: OrderStatus;
   created_at: string;
+  notes: string;
 }
 
 export interface OrderWithDetails extends Order {
-  guest: Pick<Guest, 'display_name'>;
+  guest: Pick<Guest, 'display_name' | 'profile_picture'>;
   drink: Drink;
 }

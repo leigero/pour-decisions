@@ -9,21 +9,24 @@ import {
   HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 import {
-  OrderService,  
+  OrderService,
   RoomService,
   StorageService,
-  Room, Order, Guest, Drink, 
-  OrderWithDetails
+  Room,
+  Order,
+  Guest,
+  Drink,
+  OrderWithDetails,
 } from '@pour-decisions/services/supabase';
-import { 
+import {
   DrinkDetailsComponent,
   JoinRoomModalComponent,
-  OrderDetailsModalComponent
+  OrderDetailsModalComponent,
 } from '@pour-decisions/shared';
 import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
@@ -98,7 +101,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.room.set(room);
 
     const savedGuestId = this.getGuestIdFromStorage();
-     if (savedGuestId) {
+    if (savedGuestId) {
       this.guestId = savedGuestId;
       await this.loadGuestData(this.guestId);
     } else {
@@ -136,7 +139,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
   }
 
-  //TODO: this seems like should live in the order service. The only thing this component uses is a handle on the subscription 
+  //TODO: this seems like should live in the order service. The only thing this component uses is a handle on the subscription
   private setupSubscription(guestId: string): void {
     // If a subscription already exists, remove it to prevent duplicates
     if (this.orderSubscription) {
@@ -242,14 +245,16 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.view.set(view);
   }
 
-  public async orderDrink(drinkId: string) {
+  public async orderDrink(drinkId: string, notes: string) {
     if (!this.room() || !this.guest()) return;
+
+    const order: Partial<Order> = {};
+    order.drink_id = drinkId;
+    order.notes = notes;
+    order.room_id = this.room()!.id;
+    order.guest_id = this.guest()!.id;
     try {
-      await this.orderService.placeOrder(
-        drinkId,
-        this.room()!.id,
-        this.guest()!.id,
-      );
+      await this.orderService.placeOrder(order);
       await this.fetchOrders();
       this.closeDrinkModal();
       this.navigate('orders');

@@ -45,7 +45,10 @@
   <!-- Tab Content -->
   <div class="content">
     @if (currentView === "orders") {
-      <app-order-list [orders]="activeOrders()" (select)="viewOrderDetails($event)"></app-order-list>
+      <app-order-list
+        [orders]="activeOrders()"
+        (select)="viewOrderDetails($event)"
+      ></app-order-list>
     }
     @if (currentView === "menu") {
       <pd-menu-editor [room]="room()"></pd-menu-editor>
@@ -54,17 +57,22 @@
       <div class="share-tab">
         <div class="guest-link">
           <span class="room-code-label">Guest Link: </span>
-          <a [href]="guestUrl()" target="_blank" rel="noopener">{{ guestUrl() }}</a>
+          <a [href]="guestUrl()" target="_blank" rel="noopener">{{
+            guestUrl()
+          }}</a>
         </div>
         <div class="qr-section">
-          <tonic-qr-code [value]="guestUrl()" [size]="320" [level]="'M'"></tonic-qr-code>
+          <tonic-qr-code
+            [value]="guestUrl()"
+            [size]="320"
+            [level]="'M'"
+          ></tonic-qr-code>
         </div>
-        
-          <button class="share-button" (click)="copyInviteLink()">
-            <tonic-icon [icon]="icons.Share"></tonic-icon>
-            <span>{{ copyButtonText() }}</span>            
-          </button>
-        
+
+        <button class="share-button" (click)="copyInviteLink()">
+          <tonic-icon [icon]="icons.Share"></tonic-icon>
+          <span>{{ copyButtonText() }}</span>
+        </button>
       </div>
     }
   </div>
@@ -72,19 +80,29 @@
 @if (selectedOrder(); as order) {
   <div class="modal-backdrop" (click)="closeOrderModal()">
     <div class="modal-panel" (click)="$event.stopPropagation()">
-      <div class="modal-header">        
+      <div class="modal-header">
         <h3 class="modal-title">{{ order.drink.name }}</h3>
         <span class="order-status" [ngClass]="'status-' + order.status">{{
           order.status
         }}</span>
       </div>
 
-      <div class="modal-body">
-        <p>
-          Order for <strong>{{ order.guest.display_name }}</strong> placed at
-          <strong>{{ order.created_at | date: "shortTime" }}</strong
-          >.
-        </p>
+      <div class="modal-body order-details">
+        <div class="order-info">
+          <img
+            [src]="order.guest.profile_picture"
+            alt="{{ order.guest.display_name }}"
+            class="guest-profile-pic"
+          />
+          <p>
+            Order for <strong>{{ order.guest.display_name }}</strong> placed at
+            <strong>{{ order.created_at | date: "shortTime" }}</strong
+            >.
+          </p>
+        </div>
+        @if (order.notes) {
+          <p class="order-notes"><strong>Notes:</strong> {{ order.notes }}</p>
+        }
       </div>
 
       <div class="modal-actions">
@@ -92,12 +110,17 @@
           Close
         </button>
 
+        @if (order.status !== "served" && order.status !== "cancelled") {
+          <button class="pd-button danger" (click)="requestCancelOrder(order)">
+            Cancel Order
+          </button>
+        }
         @if (order.status === "queued") {
           <button
             class="pd-button in-progress"
             (click)="updateOrderStatus(order.id, 'in-progress')"
           >
-            Start Progress
+            Start Order
           </button>
         }
         @if (order.status === "in-progress") {
@@ -116,6 +139,35 @@
             Mark as Served
           </button>
         }
+      </div>
+    </div>
+  </div>
+}
+
+@if (orderToCancel(); as orderToConfirm) {
+  <div class="modal-backdrop" (click)="closeCancelConfirmModal()">
+    <div
+      class="modal-panel confirmation-modal"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="modal-header">
+        <h3 class="modal-title">Cancel Order?</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to cancel the order for
+          <strong>{{ orderToConfirm.drink.name }}</strong> for
+          <strong>{{ orderToConfirm.guest.display_name }}</strong
+          >? This cannot be undone.
+        </p>
+      </div>
+      <div class="modal-actions">
+        <button class="pd-button secondary" (click)="closeCancelConfirmModal()">
+          No, Keep It
+        </button>
+        <button class="pd-button danger" (click)="confirmCancelOrder()">
+          Yes, Cancel Order
+        </button>
       </div>
     </div>
   </div>

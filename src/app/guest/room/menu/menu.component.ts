@@ -30,14 +30,14 @@ export class MenuComponent implements OnInit {
   public readonly hasError = signal(false);
 
   public toLobby = output();
-  public orderDrink = output<string>();
+  public orderDrink = output<{ drinkId: string; notes: string }>();
 
   public viewDrink = output<Drink>();
 
   async ngOnInit() {
     this.isLoading.set(true);
     try {
-      // Step 1: Fetch the full list of available drinks
+      // Fetch the full list of available drinks
       this.drinks.set(await this.menuService.getDrinksForRoom(this.room().id));
     } catch (error) {
       this.hasError.set(true);

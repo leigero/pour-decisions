@@ -77,7 +77,7 @@ export class EditProfileModalComponent implements OnInit {
     }
   }
 
-  triggerFileInput(captureMode?: 'user') {
+  triggerFileInput(captureMode?: 'photo') {
     if (captureMode) {
       this.fileInput.nativeElement.setAttribute('capture', captureMode);
     } else {

@@ -3,7 +3,6 @@
     <h2 class="title">Drink Menu</h2>
     <p class="description">Select the drink you would like to order</p>
   </header>
-  <!-- Loading and error states, you can bind these to your signals -->
   @if (isLoading()) {
     <div class="loading-state">
       <span class="loading-text">Loading drinks...</span>
@@ -14,7 +13,7 @@
     </div>
   } @else {
     <div id="menu-grid" class="menu-grid">
-      <!-- Drink cards will be rendered here by JavaScript -->
+      <!-- Drink cards will be rendered here -->
       @for (drink of drinks(); track drink.id) {
         <div class="menu-item" (click)="onViewDetailsClick(drink)">
           <pd-drink-summary [drink]="drink"> </pd-drink-summary>

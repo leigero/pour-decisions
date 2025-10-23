@@ -11,13 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 import {
-   Drink,
-   MenuService,
-   OrderService,
-   OrderStatus,
-   OrderWithDetails,
-   Room,
-   RoomService
+  Drink,
+  MenuService,
+  OrderService,
+  OrderStatus,
+  OrderWithDetails,
+  Room,
+  RoomService,
 } from '@pour-decisions/services/supabase';
 import { TonicIcon } from '@pour-decisions/tonic/icons';
 import { TonicQrCode } from '@pour-decisions/tonic/fundamentals';
@@ -31,7 +31,13 @@ type DashboardView = 'orders' | 'menu' | 'share';
 @Component({
   selector: 'pd-dashboard',
   standalone: true,
-  imports: [CommonModule, TonicIcon, TonicQrCode, MenuEditorComponent, OrderListComponent],
+  imports: [
+    CommonModule,
+    TonicIcon,
+    TonicQrCode,
+    MenuEditorComponent,
+    OrderListComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -50,6 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly orders = signal<OrderWithDetails[]>([]);
   public readonly view = signal<DashboardView>('orders');
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
+  public readonly orderToCancel = signal<OrderWithDetails | null>(null);
 
   // visibility handler for re-activating db subscription
   private pageFocusHandler = this.handlePageFocus.bind(this);
@@ -138,15 +145,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       (payload) => {
         switch (payload.eventType) {
           case 'INSERT':
-            // A new order was created. Fetch its details and add it to our signal.
+            // A new order was created. Fetch its full details to include guest/drink info.
             this.orderService
               .getSingleOrderForRoom(payload.new['id'])
               .then((newOrder) => {
                 if (newOrder) {
-                  this.orders.update((currentOrders) => [
-                    ...currentOrders,
-                    newOrder,
-                  ]);
+                  this.orders.update((currentOrders) =>
+                    // Add to the start of the array for most recent first
+                    [newOrder, ...currentOrders],
+                  );
                 }
               });
             break;
@@ -183,11 +190,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
   /** Opens the modal and sets the selected order. */
   public viewOrderDetails(order: OrderWithDetails): void {
     this.selectedOrder.set(order);
+    console.log(this.selectedOrder());
   }
 
   /** Closes the modal by clearing the selected order. */
   public closeOrderModal(): void {
     this.selectedOrder.set(null);
+  }
+
+  /** Opens the cancel confirmation modal. */
+  public requestCancelOrder(order: OrderWithDetails): void {
+    this.orderToCancel.set(order);
+  }
+
+  /** Closes the cancel confirmation modal. */
+  public closeCancelConfirmModal(): void {
+    this.orderToCancel.set(null);
+  }
+
+  /** Confirms the cancellation, updates status, and closes the modal. */
+  public confirmCancelOrder(): void {
+    const order = this.orderToCancel();
+    if (order) {
+      this.updateOrderStatus(order.id, 'cancelled');
+      // The main order modal is closed by updateOrderStatus, so we just need to close this one.
+      this.closeCancelConfirmModal();
+    }
   }
 
   /** Updates an order's status and provides immediate UI feedback. */
