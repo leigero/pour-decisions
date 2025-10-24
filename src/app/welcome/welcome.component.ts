@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { RoomService } from '@pour-decisions/services/supabase';
+import { RoomService } from '@pour-decisions/supabase';
 
 import {
   CreateRoomModalComponent,

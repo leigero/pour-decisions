@@ -4,7 +4,8 @@ import {
   SupabaseClient,
   RealtimeChannel,
 } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+
+import { environment } from "@pour-decisions/environment";
 
 @Injectable({
   providedIn: 'root',
