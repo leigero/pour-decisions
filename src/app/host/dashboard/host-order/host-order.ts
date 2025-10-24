@@ -4,7 +4,7 @@ import {
   OrderService,
   OrderStatus,
   OrderWithDetails,
-} from '@pour-decisions/services/supabase';
+} from '@pour-decisions/supabase';
 import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
 @Component({
