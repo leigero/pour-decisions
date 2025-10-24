@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Drink } from '../../../services/supabase/models';
+
+import { Drink } from '@pour-decisions/supabase';
 
 @Component({
   selector: 'pd-drink-summary',

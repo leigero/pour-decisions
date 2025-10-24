@@ -1,12 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseBaseService } from './supabase-base.service';
 import { Room, Guest } from './models';
-import { RoomCodeService } from '../roomCode.service';
 import { GuestService } from './guest.service';
 
 @Injectable({ providedIn: 'root' })
-export class RoomService extends SupabaseBaseService {
-  private roomCodeService = inject(RoomCodeService);
+export class RoomService extends SupabaseBaseService {  
   private guestService = inject(GuestService);
 
   async getRooms(): Promise<Room[]> {
@@ -45,7 +43,7 @@ export class RoomService extends SupabaseBaseService {
   }
 
   async createRoom(roomName: string, description: string): Promise<Room> {
-    const roomCode = this.roomCodeService.generateRoomcode();
+    const roomCode = this.generateRoomcode();
     const { data, error } = await this.supabase
       .from('rooms')
       .insert({
@@ -81,4 +79,14 @@ export class RoomService extends SupabaseBaseService {
     }
     return data as Guest;
   }
+
+  private generateRoomcode(){
+        const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // No I, O, 1, 0
+        const length = 5;
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    }
 }

@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { OrderWithDetails, Room } from '@pour-decisions/services/supabase';
+import { OrderWithDetails, Room } from '@pour-decisions/supabase';
 
 @Component({
   selector: 'pd-order-view',

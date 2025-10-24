@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Drink, MenuService, Room } from '@pour-decisions/services/supabase';
+import { Drink, MenuService, Room } from '@pour-decisions/supabase';
 import { DrinkDetailsComponent } from '@pour-decisions/shared';
 
 export interface DrinkVM extends Drink {

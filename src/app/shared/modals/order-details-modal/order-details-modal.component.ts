@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { OrderWithDetails } from '@pour-decisions/services/supabase';
+import { OrderWithDetails } from '@pour-decisions/supabase';
 
 import { DrinkDetailsComponent } from '../../drink/drink-details/drink-details.component';
 import { TonicModal } from '@pour-decisions/tonic/fundamentals';

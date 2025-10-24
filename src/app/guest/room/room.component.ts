@@ -22,7 +22,7 @@ import {
   Guest,
   Drink,
   OrderWithDetails,
-} from '@pour-decisions/services/supabase';
+} from '@pour-decisions/supabase';
 import {
   DrinkDetailsComponent,
   JoinRoomModalComponent,

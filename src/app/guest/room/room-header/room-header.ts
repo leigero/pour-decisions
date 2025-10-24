@@ -1,9 +1,9 @@
 import { Component, input, signal, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
-import { DrinkSummaryComponent } from '../../../shared/drink/drink-summary/drink-summary.component';
-import { Guest, Room } from '../../../services/supabase/models';
+
+import { Guest, Room } from '@pour-decisions/supabase';
+
 import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-modal.component';
 
 @Component({
@@ -11,8 +11,7 @@ import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-mo
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    DrinkSummaryComponent,
+    FormsModule,    
     EditProfileModalComponent,
   ],
   templateUrl: './room-header.html',

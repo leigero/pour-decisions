@@ -12,8 +12,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Guest, GuestService } from '@pour-decisions/services/supabase';
 import { TonicModal } from '@pour-decisions/tonic/fundamentals';
+import { Guest, GuestService } from '@pour-decisions/supabase';
 
 @Component({
   selector: 'pd-edit-profile-modal',

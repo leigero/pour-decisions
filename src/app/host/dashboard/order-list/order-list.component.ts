@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderWithDetails } from '@pour-decisions/services/supabase';
+import { OrderWithDetails } from '@pour-decisions/supabase';
 
 @Component({
   selector: 'app-order-list',

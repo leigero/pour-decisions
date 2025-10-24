@@ -14,11 +14,10 @@ import {
   Drink,
   MenuService,
   OrderService,
-  OrderStatus,
   OrderWithDetails,
   Room,
   RoomService,
-} from '@pour-decisions/services/supabase';
+} from '@pour-decisions/supabase';
 import { TonicIcon } from '@pour-decisions/tonic/icons';
 import { TonicQrCode } from '@pour-decisions/tonic/fundamentals';
 import { Share } from '@pour-decisions/tonic/icons/svgs';
