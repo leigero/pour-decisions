@@ -4,7 +4,12 @@
 @use "./tokens";
 
 /// Apply a consistent outline/box-shadow focus affordance.
-@mixin focus-ring($color: tokens.color(brand, 300), $halo-alpha: 0.45, $width: 2px, $offset: 1px) {
+@mixin focus-ring(
+  $color: tokens.color(brand, 300),
+  $halo-alpha: 0.45,
+  $width: 2px,
+  $offset: 1px
+) {
   outline: none;
 
   // Build a halo that works with CSS variables or Sass colors.
@@ -40,7 +45,12 @@
 }
 
 /// Provide a consistent surface style made from tokens.
-@mixin surface($radius: "200", $shadow: "200", $background: tokens.color(neutral, 700), $border: tokens.color(neutral, 500)) {
+@mixin surface(
+  $radius: "200",
+  $shadow: "200",
+  $background: tokens.color(neutral, 700),
+  $border: tokens.color(neutral, 500)
+) {
   border-radius: tokens.radius($radius);
   box-shadow: tokens.shadow($shadow);
   background: $background;
@@ -60,7 +70,12 @@
 }
 
 /// Simple typography helper.
-@mixin text-style($size: "base", $line-height: base, $weight: regular, $letter-spacing: normal) {
+@mixin text-style(
+  $size: "base",
+  $line-height: base,
+  $weight: regular,
+  $letter-spacing: normal
+) {
   font-size: tokens.type-size($size);
   line-height: tokens.line-height($line-height);
   font-weight: tokens.weight($weight);

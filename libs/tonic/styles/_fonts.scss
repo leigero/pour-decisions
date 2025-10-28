@@ -6,9 +6,9 @@ html {
 }
 
 body {
-  font-family: tokens.font(sans);
-  font-size: tokens.type-size("base");
-  line-height: tokens.line-height(base);
+  font-family: tokens.$font-sans;
+  font-size: tokens.$type-base;
+  line-height: tokens.$line-height-base;
   color: tokens.color(neutral, 050);
   background-color: tokens.color(neutral, 800);
   font-variant-ligatures: contextual;
@@ -20,8 +20,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: tokens.font(sans);
-  font-weight: tokens.weight(semibold);
+  font-family: tokens.$font-sans;
+  font-weight: tokens.$weight-semibold;
   color: tokens.color(neutral, 900);
   margin: 0;
 }
@@ -70,7 +70,7 @@ small {
 }
 
 strong {
-  font-weight: tokens.weight(semibold);
+  font-weight: tokens.$weight-semibold;
 }
 
 em {

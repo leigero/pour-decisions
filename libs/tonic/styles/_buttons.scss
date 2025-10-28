@@ -7,12 +7,12 @@
   align-items: center;
   justify-content: center;
   gap: tokens.space("050");
-  padding-inline: tokens.space("150");
-  padding-block: tokens.space("075");
-  border-radius: tokens.radius("200");
-  font-weight: tokens.weight(medium);
-  font-size: tokens.type-size("sm");
-  line-height: tokens.line-height(base);
+  padding-inline: tokens.$space-150;
+  padding-block: tokens.$space-075;
+  border-radius: tokens.$radii-200;
+  font-weight: tokens.$weight-medium;
+  font-size: tokens.$type-sm;
+  line-height: tokens.$line-height-base;
   background-color: tokens.color(neutral, 500);
   color: tokens.color(neutral, 050);
   border: 1px solid tokens.color(neutral, 500);
@@ -110,12 +110,12 @@
 }
 
 .tonic-button--pill {
-  border-radius: tokens.radius("pill");
-  padding-inline: tokens.space("200");
+  border-radius: tokens.$radii-pill;
+  padding-inline: tokens.$space-200;
 }
 
 .tonic-button--icon {
-  padding-inline: tokens.space("075");
+  padding-inline: tokens.$space-075;
   min-width: 2.5rem;
   aspect-ratio: 1 / 1;
 }
@@ -128,5 +128,5 @@
 .tonic-button__label {
   display: inline-flex;
   align-items: center;
-  gap: tokens.space("050");
+  gap: tokens.$space-050;
 }

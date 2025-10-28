@@ -156,6 +156,83 @@ $tonic-z-scale: (
   "toast": 1600,
 );
 
+/* Static defined values when functions are not necessary */
+$space-000: 0;
+$space-025: 0.25rem;
+$space-050: 0.5rem;
+$space-075: 0.75rem;
+$space-100: 1rem;
+$space-125: 1.25rem;
+$space-150: 1.5rem;
+$space-200: 2rem;
+$space-300: 3rem;
+$space-400: 4rem;
+$space-500: 5rem;
+
+$radii-000: 0;
+$radii-050: 0.125rem;
+$radii-075: 0.2rem;
+$radii-100: 0.25rem;
+$radii-200: 0.5rem;
+$radii-300: 0.75rem;
+$radii-400: 1rem;
+$radii-pill: 9999px;
+
+$shadow-000: none;
+$shadow-100: 0 1px 2px rgba(15, 23, 42, 0.08);
+$shadow-200: 0 4px 8px rgba(15, 23, 42, 0.12);
+$shadow-300: 0 8px 16px rgba(15, 23, 42, 0.16);
+$shadow-400: 0 16px 24px rgba(15, 23, 42, 0.2);
+
+$font-sans: (
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  Roboto,
+  Helvetica,
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol"
+);
+$font-serif: ("Source Serif 4", Georgia, serif);
+$font-mono: ("Fria Code", "SFMono-Regular", Menlo, Consolas, monospace);
+
+$type-xs: 0.75rem;
+$type-sm: 0.875rem;
+$type-base: 1rem;
+$type-lg: 1.125rem;
+$type-xl: 1.25rem;
+$type-2xl: 1.5rem;
+$type-3xl: 1.875rem;
+$type-4xl: 2.25rem;
+
+$line-height-tight: 1.25;
+$line-height-base: 1.5;
+$line-height-relaxed: 1.7;
+
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+$weight-heavy: 800;
+
+$duration-instant: 90ms;
+$duration-fast: 140ms;
+$duration-base: 200ms;
+$duration-slow: 320ms;
+
+$ease-standard: cubic-bezier(0.2, 0, 0, 1);
+$ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+
+$z-base: 0;
+$z-dropdown: 400;
+$z-overlay: 800;
+$z-modal: 1200;
+$z-toast: 1600;
+
 @function _tonic-normalize-key($value) {
   $type: meta.type-of($value);
 
