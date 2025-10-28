@@ -1,17 +1,20 @@
 <tonic-modal (close)="close.emit()">
-  <h2 class="modal-title">Edit Profile</h2>
+  <h2 class="tonic-dialog__title">Edit Profile</h2>
 
   <div class="profile-picture-section">
     <img
       [src]="previewUrl || guest.profile_picture"
-      alt="Profile preview"
-      class="profile-preview"
+      alt="Profile picture"
+      class="profile-picture"
     />
-    <div class="upload-actions">
-      <button class="pd-button secondary" (click)="triggerFileInput('photo')">
+    <div class="tonic-dialog__actions">
+      <button
+        class="tonic-button--secondary"
+        (click)="triggerFileInput('photo')"
+      >
         Take Photo
       </button>
-      <button class="pd-button secondary" (click)="triggerFileInput()">
+      <button class="tonic-button--secondary" (click)="triggerFileInput()">
         Upload Photo
       </button>
     </div>
@@ -37,11 +40,19 @@
         required
       />
     </div>
-    <div class="modal-actions">
-      <button type="button" class="pd-button secondary" (click)="close.emit()">
+    <div class="tonic-dialog__actions">
+      <button
+        type="button"
+        class="tonic-button--secondary"
+        (click)="close.emit()"
+      >
         Cancel
       </button>
-      <button type="submit" class="pd-button" [disabled]="isSaving()">
+      <button
+        type="submit"
+        class="tonic-button--primary"
+        [disabled]="isSaving()"
+      >
         {{ isSaving() ? "Saving..." : "Save" }}
       </button>
     </div>
