@@ -12,10 +12,10 @@ export class StorageService extends SupabaseBaseService {
    * @param guestId The ID of the guest to associate the image with.
    * @returns The public URL of the uploaded image.
    */
-  async uploadProfileImage(file: File, guestId: string): Promise<string> {
+  async uploadProfileImage(file: File, authId: string): Promise<string> {
     const storageBucket = 'user-profile-images';
     const fileExtension = file.name.split('.').pop();
-    const filePath = `${guestId}/${Date.now()}.${fileExtension}`;
+    const filePath = `${authId}/${Date.now()}.${fileExtension}`;
 
     const { data, error } = await this.supabase.storage
       .from(storageBucket)

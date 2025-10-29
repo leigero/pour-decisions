@@ -5,7 +5,7 @@ import {
   RealtimeChannel,
 } from '@supabase/supabase-js';
 
-import { environment } from "@pour-decisions/environment";
+import { environment } from '@pour-decisions/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,21 +19,7 @@ export class SupabaseBaseService {
       environment.supabaseUrl,
       environment.supabaseAnonKey,
     );
-    this.initializeSession();
     this.initializePromise = this.supabase.auth.initialize();
-  }
-
-  private async initializeSession(): Promise<void> {
-    const {
-      data: { session },
-    } = await this.supabase.auth.getSession();
-
-    if (!session) {
-      const { error } = await this.supabase.auth.signInAnonymously();
-      if (error) {
-        console.error('Error signing in anonymously:', error);
-      }
-    }
   }
 
   public removeSubscription(channel: RealtimeChannel) {

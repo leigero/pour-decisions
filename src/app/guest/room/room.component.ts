@@ -16,6 +16,7 @@ import { RealtimeChannel } from '@supabase/supabase-js';
 import {
   OrderService,
   RoomService,
+  GuestService,
   StorageService,
   Room,
   Order,
@@ -61,6 +62,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private orderService = inject(OrderService);
   private roomService = inject(RoomService);
+  private guestService = inject(GuestService);
   private storageService = inject(StorageService);
   private route = inject(ActivatedRoute);
 
@@ -217,7 +219,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private async loadGuestData(guestId: string) {
     console.log('loading guest data ', guestId);
-    this.guest.set(await this.roomService.getGuestById(guestId));
+    this.guest.set(await this.guestService.getGuestById(guestId));
     console.log(this.guest());
     if (this.guest()) {
       // Save guest to storage in case they came from welcome page

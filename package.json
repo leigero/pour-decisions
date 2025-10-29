@@ -11,6 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "docs:build": "ng build tonic-docs",
+    "dbschema": "npx supabase gen types typescript --project-id abjwliydsnuolrypqfbi > ./supabase/sql/db_schema.ts",
     "==tonic==": "=================",
     "tonic:generate-svgs": "node ./BUILD_SCRIPTS/tonic/generate-svgs.js"
   },
@@ -53,6 +54,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "3.6.2",
     "sass": "^1.79.5",
+    "supabase": "^2.54.11",
     "typescript": "~5.8.2"
   }
 }

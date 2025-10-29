@@ -4,4 +4,5 @@ export interface Guest {
   room_id: string;
   display_name: string;
   created_at: string;
+  auth_id: string;
 }

@@ -84,6 +84,7 @@ export class MenuEditorComponent implements OnInit {
     } catch (error) {
       // If the API call fails, revert the optimistic update
       drink.isSelected = !drink.isSelected;
+      console.log(this.room());
       console.error('Failed to update menu:', error);
       // Optionally, show an error toast to the user
     }
