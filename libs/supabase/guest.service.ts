@@ -53,13 +53,7 @@ export class GuestService extends SupabaseBaseService {
       updates.profile_picture = newImageUrl;
     }
 
-    // 3. Update the guest record
-    const newImageUrl = await this.storageService.uploadProfileImage(
-      profilePicture,
-      guestId,
-    );
-    updates.profile_picture = newImageUrl;
-
+    // 4. Update the guest record (with or without a profile_picture)
     const { data, error } = await this.supabase
       .from('guests')
       .update(updates)
