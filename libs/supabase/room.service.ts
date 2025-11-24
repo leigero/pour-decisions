@@ -47,6 +47,9 @@ export class RoomService extends SupabaseBaseService {
   }
 
   async createRoom(roomName: string, description: string): Promise<Room> {
+    // Sign out any existing anonymous user to ensure a fresh session.
+    await this.supabase.auth.signOut();
+
     // 1. Sign in anonymously to get a 'host' identity
     const {
       data: { user },
