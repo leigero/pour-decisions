@@ -8,6 +8,7 @@
     "app": "npm run tonic:generate-svgs && npm run start",
     "tonic": "ng serve tonic-docs",
     "build": "ng build",
+    "prebuild": "npm run tonic:generate-svgs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "docs:build": "ng build tonic-docs",
