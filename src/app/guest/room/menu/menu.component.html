@@ -1,8 +1,4 @@
 <div class="page-container">
-  <header class="header-section">
-    <h2 class="title">Drink Menu</h2>
-    <p class="description">Select the drink you would like to order</p>
-  </header>
   @if (isLoading()) {
     <div class="loading-state">
       <span class="loading-text">Loading drinks...</span>
@@ -12,11 +8,58 @@
       An error occurred while fetching the drinks.
     </div>
   } @else {
-    <div id="menu-grid" class="menu-grid">
-      <!-- Drink cards will be rendered here -->
-      @for (drink of drinks(); track drink.id) {
-        <div class="menu-item" (click)="onViewDetailsClick(drink)">
-          <pd-drink-summary [drink]="drink"> </pd-drink-summary>
+    <div class="search-bar">
+      <label class="sr-only" for="drink-search">Search drinks</label>
+      <input
+        id="drink-search"
+        type="search"
+        class="search-input"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+        placeholder="Search by name, type, or ingredient..."
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="menu-groups">
+      @for (group of groupedDrinks(); track group.type) {
+        <section class="menu-group">
+          <div class="group-header">
+            <h3 class="group-title">{{ formatType(group.type) }}</h3>
+            <button
+              type="button"
+              class="group-count"
+              (click)="toggleGroup(group.type)"
+            >
+              <span class="group-count-label">
+                {{ group.drinks.length }}
+                {{ group.drinks.length === 1 ? "option" : "options" }}
+              </span>
+              <span
+                class="chevron"
+                [class.expanded]="!isCollapsed(group.type)"
+              ></span>
+            </button>
+          </div>
+
+          @if (!isCollapsed(group.type)) {
+            <div class="menu-grid">
+              <!-- Drink cards will be rendered here -->
+              @for (drink of group.drinks; track drink.id) {
+                <div class="menu-item" (click)="onViewDetailsClick(drink)">
+                  <pd-drink-summary [drink]="drink"> </pd-drink-summary>
+                </div>
+              }
+            </div>
+          }
+        </section>
+      } @empty {
+        <div class="empty-state">
+          {{
+            searchTerm().trim()
+              ? "No drinks match your search."
+              : "No drinks available right now."
+          }}
         </div>
       }
     </div>

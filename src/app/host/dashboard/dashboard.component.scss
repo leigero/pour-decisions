@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "colors";
 
 :host {
@@ -381,9 +382,9 @@
 /* Custom button colors for workflow actions */
 .pd-button.in-progress {
   background-color: colors.$pd-status-inprogress-bg; /* Yellow */
-  box-shadow: 0 4px darken(colors.$pd-status-inprogress-bg, 10%);
+  box-shadow: 0 4px color.adjust(colors.$pd-status-inprogress-bg, $lightness: -10%);
   &:active {
-    box-shadow: 0 2px darken(colors.$pd-status-inprogress-bg, 10%);
+    box-shadow: 0 2px color.adjust(colors.$pd-status-inprogress-bg, $lightness: -10%);
   }
 }
 
@@ -407,8 +408,8 @@
 .pd-button.danger {
   background-color: colors.$pd-status-cancelled-bg;
   color: colors.$pd-status-cancelled-text;
-  box-shadow: 0 4px darken(colors.$pd-status-cancelled-bg, 10%);
+  box-shadow: 0 4px color.adjust(colors.$pd-status-cancelled-bg, $lightness: -10%);
   &:active {
-    box-shadow: 0 2px darken(colors.$pd-status-cancelled-bg, 10%);
+    box-shadow: 0 2px color.adjust(colors.$pd-status-cancelled-bg, $lightness: -10%);
   }
 }
