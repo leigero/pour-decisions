@@ -1,12 +1,12 @@
 import { CommonModule } from "@angular/common";
 import {
   Component,
-  ElementRef,
   inject,
   input,
   output,
   signal,
-  viewChild,
+  OnInit,
+  OnDestroy,
 } from "@angular/core";
 
 import { Drink, Order, OrderService, OrderWithDetails } from "@pour-decisions/supabase";
@@ -19,8 +19,9 @@ import { TonicModal } from "@pour-decisions/tonic/fundamentals";
   styleUrls: ['./order-dialog.scss'],
 
 })
-export class OrderDialog {
+export class OrderDialog implements OnInit, OnDestroy {
   private readonly orderService = inject(OrderService);
+  private resizeListener?: () => void;
 
   public readonly drink = input.required<Drink>();
   public readonly roomId = input.required<string>();
@@ -29,8 +30,35 @@ export class OrderDialog {
   
   protected readonly showNotes = signal(false);
   protected readonly notes = signal<string | null>(null);  
+  protected readonly isMobile = signal(false);
 
   public readonly close = output<boolean>();
+
+  ngOnInit(): void {
+    this.syncIsMobile();
+
+    if (typeof window !== 'undefined') {
+      const handler = () => this.syncIsMobile();
+      window.addEventListener('resize', handler);
+      this.resizeListener = () => window.removeEventListener('resize', handler);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.resizeListener) {
+      this.resizeListener();
+    }
+  }
+
+  private syncIsMobile(): void {
+    if (typeof window === 'undefined') {
+      this.isMobile.set(false);
+      return;
+    }
+
+    const mobile = window.innerWidth <= 640 || window.matchMedia?.('(max-width: 640px)').matches;
+    this.isMobile.set(mobile);
+  }
 
   public showNotesField(): void {
     this.showNotes.set(true);

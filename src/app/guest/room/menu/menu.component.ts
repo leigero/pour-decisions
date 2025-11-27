@@ -112,9 +112,13 @@ export class MenuComponent implements OnInit {
   private matchesSearch(drink: Drink, term: string): boolean {
     const nameMatch = drink.name?.toLowerCase().includes(term);
     const typeMatch = this.normalizeType(drink.type).toLowerCase().includes(term);
+    const descriptionMatch = drink.description
+      ?.toString()
+      .toLowerCase()
+      .includes(term);
     const ingredientsMatch = (drink.ingredients ?? [])
       .some((ingredient) => ingredient.toLowerCase().includes(term));
 
-    return Boolean(nameMatch || typeMatch || ingredientsMatch);
+    return Boolean(nameMatch || typeMatch || descriptionMatch || ingredientsMatch);
   }
 }

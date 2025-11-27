@@ -7,25 +7,24 @@ import {
   Renderer2,
   signal,
   HostListener,
+  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RealtimeChannel } from '@supabase/supabase-js';
 
 import {
-  OrderService,
   RoomService,
   GuestService,
   StorageService,
   Room,
-  Order,
   Guest,
   Drink,
   OrderWithDetails,
 } from '@pour-decisions/supabase';
 import {  
   JoinRoomModalComponent,
+  OrderFacade
 } from '@pour-decisions/shared';
 
 import  { OrderDialog } from './order-dialog/order-dialog';
@@ -52,15 +51,23 @@ type GuestDashboardView = 'menu' | 'orders';
 })
 export class RoomComponent implements OnInit, OnDestroy {
   public readonly room = signal<Room | null>(null);
-  public readonly guest = signal<Guest | undefined>(undefined);
-  public readonly orders = signal<OrderWithDetails[]>([]);
+  public readonly guest = signal<Guest | undefined>(undefined);  
 
   private router = inject(Router);
-  private orderService = inject(OrderService);
+  private orderFacade = inject(OrderFacade);
   private roomService = inject(RoomService);
   private guestService = inject(GuestService);
   private storageService = inject(StorageService);
   private route = inject(ActivatedRoute);
+
+  protected readonly orders = computed(() => {
+    const guest = this.guest();
+    if (!guest) return [];
+    
+    const guestOrders = this.orderFacade.getOrdersForGuest(guest.id);
+
+    return guestOrders.filter(o => o.status !== 'cancelled');
+  });
 
   public readonly view = signal<GuestDashboardView>('menu');
   private roomCode: string;
@@ -72,8 +79,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   // Signal for order detail view modal
   public readonly selectedOrder = signal<OrderWithDetails | null>(null);
   public readonly selectedDrink = signal<Drink | null>(null);
-
-  private orderSubscription: RealtimeChannel;
 
   constructor(private renderer: Renderer2) {
     this.roomCode = this.route.snapshot.paramMap.get('roomCode')!;
@@ -111,8 +116,8 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.orderSubscription) {
-      this.orderService.removeSubscription(this.orderSubscription);
+    if (this.guestId) {
+      this.orderFacade.teardownGuestSubscription(this.guestId);
     }
   }
 
@@ -135,30 +140,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       // Reuse your existing, correct method to refresh everything
       await this.loadGuestData(this.guestId);
     }
-  }
-
-  //TODO: this seems like should live in the order service. The only thing this component uses is a handle on the subscription
-  private setupSubscription(guestId: string): void {
-    // If a subscription already exists, remove it to prevent duplicates
-    if (this.orderSubscription) {
-      this.orderService.removeSubscription(this.orderSubscription);
-    }
-
-    // Create the new subscription
-    this.orderSubscription = this.orderService.onGuestOrderChanges(
-      guestId,
-      (payload) => {
-        console.log('Guest order update received!', payload);
-        const updatedOrder = payload.new as Order;
-        this.orders.update((currentOrders) =>
-          currentOrders.map((order) =>
-            order.id === updatedOrder.id
-              ? { ...order, status: updatedOrder.status }
-              : order,
-          ),
-        );
-      },
-    );
   }
 
   public viewDrinkDetails(drink: Drink): void {
@@ -219,7 +200,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       }
       await this.fetchOrders();
       // After fetching initial orders, set up the real-time subscription
-      this.setupSubscription(guestId);
+      this.orderFacade.ensureGuestSubscription(guestId);
     } else {
       // If guest is not found (e.g., deleted), clear storage and show modal
       this.clearGuestIdFromStorage();
@@ -233,12 +214,9 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private async fetchOrders() {
     if (!this.guest()) return;
-    const orders = await this.orderService.getOrdersForGuest(
-      this.roomCode,
+    await this.orderFacade.loadOrdersForGuest(
       this.guest()!.id,
     );
-    this.orders.set(orders);
-    console.log('just set: ', this.orders());
   }
 
   // Helper methods for localStorage

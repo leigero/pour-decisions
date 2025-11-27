@@ -90,15 +90,11 @@ export class OrderService extends SupabaseBaseService {
   }
 
   async getOrdersForGuest(
-    roomCode: string,
     guestId: string,
-  ): Promise<OrderWithDetails[]> {
-    const room = await this.roomService.getRoomByCode(roomCode);
-    if (!room) return [];
+  ): Promise<OrderWithDetails[]> {    
     const { data, error } = await this.supabase
       .from('orders')
       .select(this.baseOrdersSelect())
-      .eq('room_id', room.id)
       .eq('guest_id', guestId)
       .order('created_at', { ascending: false });
 
