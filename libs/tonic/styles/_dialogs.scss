@@ -61,6 +61,7 @@ dialog[data-fallback-open] {
   align-items: center;
   justify-content: space-between;
   gap: tokens.space("100");
+  padding: tokens.space('150') tokens.space('150') 0;
   margin-bottom: tokens.space("050");
 }
 
@@ -78,10 +79,11 @@ dialog[data-fallback-open] {
 .dialog-body {
   display: grid;
   gap: tokens.space("100");
+  padding: tokens.space('150');
   color: tokens.color(neutral, 100);
-  flex: 1;
+  flex: 1 1 auto;
   overflow: auto;
-  min-height: 0;
+  min-height: auto;
 
   &:focus-visible {
     outline: none;
