@@ -78,7 +78,7 @@
       >
         Cancel Order
       </button>
-    } @else {
+    } @else if (!order()) {
       <button class="tonic-button tonic-button--primary" (click)="placeOrder()">
         Order Drink
       </button>
