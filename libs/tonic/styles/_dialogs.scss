@@ -35,6 +35,27 @@ tonic-modal.bottom-sheet dialog {
   overflow: hidden;
 }
 
+.dialog-fallback,
+dialog[data-fallback-open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  transform: translateY(0);
+  z-index: 1000;
+  max-height: 90vh;
+  min-width: min(32rem, 90vw);
+  max-width: 44rem;
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: tokens.color(neutral, 900, 0.7);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+  }
+}
+
 .dialog-header {
   display: flex;
   align-items: center;

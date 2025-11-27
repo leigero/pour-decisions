@@ -1,5 +1,6 @@
 <!-- "Guest Gate" Modal (no changes) -->
 @if (showJoinModal()) {
+  Show Join Room
   <pd-join-room-modal
     [roomName]="room()!.name"
     (joinRoom)="handleJoinRoom($event)"
