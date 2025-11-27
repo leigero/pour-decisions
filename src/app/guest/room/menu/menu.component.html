@@ -23,14 +23,18 @@
 
     <div class="menu-groups">
       @for (group of groupedDrinks(); track group.type) {
-        <section class="menu-group">
-          <div class="group-header">
+        <section
+          class="menu-group"
+          [class.is-collapsed]="isCollapsed(group.type)"
+        >
+          <button
+            type="button"
+            class="group-header"
+            (click)="toggleGroup(group.type)"
+            [attr.aria-expanded]="!isCollapsed(group.type)"
+          >
             <h3 class="group-title">{{ formatType(group.type) }}</h3>
-            <button
-              type="button"
-              class="group-count"
-              (click)="toggleGroup(group.type)"
-            >
+            <div class="group-meta">
               <span class="group-count-label">
                 {{ group.drinks.length }}
                 {{ group.drinks.length === 1 ? "option" : "options" }}
@@ -39,19 +43,21 @@
                 class="chevron"
                 [class.expanded]="!isCollapsed(group.type)"
               ></span>
-            </button>
-          </div>
-
-          @if (!isCollapsed(group.type)) {
-            <div class="menu-grid">
-              <!-- Drink cards will be rendered here -->
-              @for (drink of group.drinks; track drink.id) {
-                <div class="menu-item" (click)="onViewDetailsClick(drink)">
-                  <pd-drink-summary [drink]="drink"> </pd-drink-summary>
-                </div>
-              }
             </div>
-          }
+          </button>
+
+          <div
+            class="menu-grid"
+            [class.is-collapsed]="isCollapsed(group.type)"
+            [attr.aria-hidden]="isCollapsed(group.type)"
+          >
+            <!-- Drink cards will be rendered here -->
+            @for (drink of group.drinks; track drink.id) {
+              <div class="menu-item" (click)="onViewDetailsClick(drink)">
+                <pd-drink-summary [drink]="drink"> </pd-drink-summary>
+              </div>
+            }
+          </div>
         </section>
       } @empty {
         <div class="empty-state">
