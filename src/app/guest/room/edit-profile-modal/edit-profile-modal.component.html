@@ -1,5 +1,5 @@
 <tonic-modal (close)="close.emit()">
-  <h2 class="tonic-dialog__title">Edit Profile</h2>
+  <h2 class="dialog-title">Edit Profile</h2>
 
   <div class="profile-picture-section">
     <img
@@ -7,7 +7,7 @@
       alt="Profile picture"
       class="profile-picture"
     />
-    <div class="tonic-dialog__actions">
+    <div class="dialog-actions">
       <button
         class="tonic-button--secondary"
         (click)="triggerFileInput('photo')"
@@ -40,7 +40,7 @@
         required
       />
     </div>
-    <div class="tonic-dialog__actions">
+    <div class="dialog-actions">
       <button
         type="button"
         class="tonic-button--secondary"

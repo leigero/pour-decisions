@@ -9,25 +9,8 @@ import {
 
 @Component({
   selector: 'tonic-modal',
-  standalone: true,
-  template: `
-    <dialog
-      #dialog      
-      (click)="onDialogClick($event)"
-      (close)="onDialogClosed()"
-    >
-      
-        <ng-content></ng-content>
-      
-    </dialog>
-  `,
-  styles: [
-    `
-      :host {
-        display: contents; /* let dialog control layout */
-      }
-    `,
-  ],
+  templateUrl: './modal.html',
+  styleUrls: ['./modal.scss'],
 })
 export class TonicModal implements OnDestroy {
   public readonly close = output<void>();

@@ -47,7 +47,6 @@
           @case ("menu") {
             <pd-menu
               [room]="room()!"
-              (orderDrink)="orderDrink($event.drinkId, $event.notes)"
               (viewDrink)="viewDrinkDetails($event)"
             ></pd-menu>
           }
@@ -63,34 +62,20 @@
 </div>
 
 @if (selectedOrder(); as order) {
-  <pd-order-details-modal
+  <pd-order-dialog
     [order]="order"
-    (close)="closeOrderModal()"
-    (cancelOrder)="cancelOrder($event)"
-  />
+    [drink]="order.drink"
+    [roomId]="room().id"
+    [guestId]="guest().id"
+    (close)="closeOrderModal($event)"
+  ></pd-order-dialog>
 }
 
 @if (selectedDrink(); as drink) {
-  <tonic-modal class="modal-contents" (close)="closeDrinkModal()">
-    <pd-drink-details [drink]="drink"></pd-drink-details>
-    <label for="orderNotes">Special Requests</label>
-    <textarea
-      id="orderNotes"
-      #orderNotes
-      class="pd-textarea"
-      placeholder="Optional"
-    ></textarea>
-
-    <div class="modal-actions">
-      <button class="pd-button secondary" (click)="closeDrinkModal()">
-        Close
-      </button>
-      <button
-        class="pd-button"
-        (click)="orderDrink(drink.id, orderNotes.value); closeDrinkModal()"
-      >
-        Order Drink
-      </button>
-    </div>
-  </tonic-modal>
+  <pd-order-dialog
+    [drink]="selectedDrink()"
+    [roomId]="room().id"
+    [guestId]="guest().id"
+    (close)="closeOrderModal($event)"
+  ></pd-order-dialog>
 }

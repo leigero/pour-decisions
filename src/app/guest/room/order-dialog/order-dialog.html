@@ -1,0 +1,87 @@
+<tonic-modal class="modal-contents bottom-sheet" (close)="close.emit(false)">
+  <div modal-body class="order-dialog">
+    <div class="hero-card">
+      <div class="hero-image">
+        <img
+          [src]="
+            drink().image_url ||
+            'https://placehold.co/600x400/111827/9ca3af?text=No+Image'
+          "
+          alt="{{ drink().name }}"
+          loading="lazy"
+          onerror="this.src='https://placehold.co/600x400/111827/9ca3af?text=No+Image';"
+        />
+        <span class="type-pill">{{ drink().type || "Drink" }}</span>
+      </div>
+      <div class="hero-content">
+        <p class="eyebrow">Featured Drink</p>
+        <h2 class="drink-name">{{ drink().name }}</h2>
+        <p class="drink-description">
+          {{ drink().description || "No description provided yet." }}
+        </p>
+
+        @if (drink().ingredients?.length) {
+          <div class="ingredients">
+            <span class="ingredients-label">Ingredients</span>
+            <div class="ingredient-chips">
+              @for (ingredient of drink().ingredients; track ingredient) {
+                <span class="chip">{{ ingredient }}</span>
+              }
+            </div>
+          </div>
+        }
+
+        @if (!order()) {
+          <button
+            type="button"
+            class="customize-link"
+            (click)="showNotesField()"
+            [hidden]="showNotes()"
+            [attr.aria-expanded]="showNotes()"
+          >
+            Customize
+          </button>
+
+          @if (showNotes()) {
+            <div class="special-requests">
+              <textarea
+                id="orderNotes"
+                class="pd-textarea"
+                placeholder="Add a note (optional)"
+                rows="2"
+                [value]="notes() || ''"
+                (input)="onNotesChange($any($event.target).value)"
+              ></textarea>
+            </div>
+          }
+        } @else {
+          <div>
+            <div class="ingredients-label">Notes</div>
+            <div class="drink-description">
+              {{ order().notes }}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <ng-container modal-footer>
+    <button class="tonic-button secondary" (click)="close.emit(false)">
+      Close
+    </button>
+
+    @if (order()?.status === "queued") {
+      <button
+        class="tonic-button tonic-button--primary"
+        (click)="cancelOrder()"
+      >
+        Cancel Order
+      </button>
+    } @else {
+      <button class="tonic-button tonic-button--primary" (click)="placeOrder()">
+        Order Drink
+      </button>
+    }
+  </ng-container>
+</tonic-modal>

@@ -59,9 +59,6 @@ export class MenuComponent implements OnInit {
       .sort((a, b) => a.type.localeCompare(b.type));
   });
 
-  public toLobby = output();
-  public orderDrink = output<{ drinkId: string; notes: string }>();
-
   public viewDrink = output<Drink>();
 
   async ngOnInit() {

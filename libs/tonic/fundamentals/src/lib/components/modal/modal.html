@@ -1,0 +1,13 @@
+<dialog #dialog (click)="onDialogClick($event)" (close)="onDialogClosed()">
+  <header class="dialog-header">
+    <ng-content select="[modal-header]"></ng-content>
+  </header>
+
+  <div class="dialog-body">
+    <ng-content></ng-content>
+  </div>
+
+  <footer class="dialog-footer">
+    <ng-content select="[modal-footer]"></ng-content>
+  </footer>
+</dialog>

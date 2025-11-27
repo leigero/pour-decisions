@@ -24,13 +24,11 @@ import {
   Drink,
   OrderWithDetails,
 } from '@pour-decisions/supabase';
-import {
-  DrinkDetailsComponent,
+import {  
   JoinRoomModalComponent,
-  OrderDetailsModalComponent,
 } from '@pour-decisions/shared';
-import { TonicModal } from '@pour-decisions/tonic/fundamentals';
 
+import  { OrderDialog } from './order-dialog/order-dialog';
 import { OrderView } from './order-view/order.view';
 import { MenuComponent } from './menu/menu.component';
 import { RoomHeader } from './room-header/room-header';
@@ -42,15 +40,13 @@ type GuestDashboardView = 'menu' | 'orders';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    RoomHeader,
     OrderView,
     MenuComponent,
-    FormsModule,
-    OrderDetailsModalComponent,
-    JoinRoomModalComponent,
-    TonicModal,
-    DrinkDetailsComponent,
-    RoomHeader,
-  ], // Add FormsModule here
+    JoinRoomModalComponent,  
+    OrderDialog,  
+  ], 
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
@@ -169,30 +165,18 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.selectedDrink.set(drink);
   }
 
-  public closeDrinkModal(): void {
-    this.selectedDrink.set(null);
-  }
-
+  
   public viewOrderDetails(order: OrderWithDetails): void {
     this.selectedOrder.set(order);
   }
-
-  public closeOrderModal(): void {
+  
+  public async closeOrderModal(refreshOrders: boolean): Promise<void> {
+    this.selectedDrink.set(null);
     this.selectedOrder.set(null);
-  }
-
-  public async cancelOrder(orderId: string): Promise<void> {
-    try {
-      await this.orderService.updateOrderStatus(orderId, 'cancelled');
-      // Update the local state instantly for a great UX
-      this.orders.update((currentOrders) =>
-        currentOrders.map((o) =>
-          o.id === orderId ? { ...o, status: 'cancelled' } : o,
-        ),
-      );
-      this.closeOrderModal();
-    } catch (error) {
-      console.error('Failed to cancel order:', error);
+    
+    if(refreshOrders) {
+      await this.fetchOrders();
+      this.navigate('orders');
     }
   }
 
@@ -245,24 +229,6 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public navigate(view: GuestDashboardView) {
     this.view.set(view);
-  }
-
-  public async orderDrink(drinkId: string, notes: string) {
-    if (!this.room() || !this.guest()) return;
-
-    const order: Partial<Order> = {};
-    order.drink_id = drinkId;
-    order.notes = notes;
-    order.room_id = this.room()!.id;
-    order.guest_id = this.guest()!.id;
-    try {
-      await this.orderService.placeOrder(order);
-      await this.fetchOrders();
-      this.closeDrinkModal();
-      this.navigate('orders');
-    } catch (error) {
-      console.error('Failed to place order:', error);
-    }
   }
 
   private async fetchOrders() {

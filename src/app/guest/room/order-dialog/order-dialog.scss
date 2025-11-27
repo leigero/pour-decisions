@@ -1,0 +1,160 @@
+@use "colors";
+
+:host {
+  display: block;
+}
+
+.order-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.hero-image {
+  position: relative;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  min-height: 12rem;
+  background: colors.$pd-element-background-color;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.type-pill {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: rgba(colors.$pd-primary-amber, 0.9);
+  color: colors.$pd-text-color-dark;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-self: center;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: colors.$pd-subtle-text-color;
+}
+
+.drink-name {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: colors.$pd-text-color;
+}
+
+.drink-description {
+  margin: 0;
+  color: colors.$pd-subtle-text-color;
+  line-height: 1.6;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ingredients-label {
+  font-weight: 700;
+  color: colors.$pd-text-color;
+  font-size: 0.95rem;
+}
+
+.ingredient-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  background: colors.$pd-element-background-color;
+  color: colors.$pd-text-color;
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  border: 1px solid colors.$pd-card-background-color;
+  font-size: 0.9rem;
+}
+
+.customize-link {
+  align-self: flex-start;
+  padding: 0.5rem 0;
+  border: none;
+  background: none;
+  color: colors.$pd-primary-amber;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: colors.$pd-primary-amber;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    color: rgba(colors.$pd-primary-amber, 0.75)
+  }
+}
+
+.pd-textarea {
+  width: 100%;  
+  border-radius: 0.75rem;
+  border: 1px solid colors.$pd-element-background-color;
+  background: colors.$pd-card-background-color;
+  color: colors.$pd-text-color;
+  padding: 0.75rem 1rem;
+  resize: none;
+}
+
+.pd-textarea::placeholder {
+  color: colors.$pd-subtle-text-color;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.special-requests {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  textarea {
+    margin-top: 0.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-card {
+    grid-template-columns: 1fr;
+  }
+}
