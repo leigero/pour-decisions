@@ -35,11 +35,33 @@ tonic-modal.bottom-sheet dialog {
   overflow: hidden;
 }
 
+.dialog-fallback,
+dialog[data-fallback-open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  transform: translateY(0);
+  z-index: 1000;
+  max-height: 90vh;
+  min-width: min(32rem, 90vw);
+  max-width: 44rem;
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: tokens.color(neutral, 900, 0.7);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+  }
+}
+
 .dialog-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: tokens.space("100");
+  padding: tokens.space('150') tokens.space('150') 0;
   margin-bottom: tokens.space("050");
 }
 
@@ -57,10 +79,11 @@ tonic-modal.bottom-sheet dialog {
 .dialog-body {
   display: grid;
   gap: tokens.space("100");
+  padding: tokens.space('150');
   color: tokens.color(neutral, 100);
-  flex: 1;
+  flex: 1 1 auto;
   overflow: auto;
-  min-height: 0;
+  min-height: auto;
 
   &:focus-visible {
     outline: none;

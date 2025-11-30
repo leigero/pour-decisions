@@ -18,6 +18,7 @@ export class TonicModal implements OnDestroy {
   private readonly dialogRef = viewChild<ElementRef<HTMLDialogElement>>(
     'dialog',
   );
+  private fallbackMode = false;
 
   constructor() {
     // Open the dialog after it's in the DOM
@@ -25,11 +26,16 @@ export class TonicModal implements OnDestroy {
       const dialog = this.dialogRef()?.nativeElement;
       if (!dialog) return;
       try {
-        if (!dialog.open) dialog.showModal();
-        document.body.classList.add('modal-open');
+        if (typeof dialog.showModal === 'function') {
+          if (!dialog.open) dialog.showModal();
+        } else {
+          this.enableFallback(dialog);
+        }
       } catch (e) {
-        // In non-browser environments, just no-op
+        this.enableFallback(dialog);
       }
+
+      document.body.classList.add('modal-open');
     });
   }
 
@@ -38,7 +44,12 @@ export class TonicModal implements OnDestroy {
     const dialogEl = this.dialogRef()?.nativeElement;
     if (!dialogEl) return;
     if (event.target === dialogEl) {
-      dialogEl.close();
+      if (typeof dialogEl.close === 'function' && !this.fallbackMode) {
+        dialogEl.close();
+      } else {
+        this.teardownFallback(dialogEl);
+        this.onDialogClosed();
+      }
     }
   }
 
@@ -51,9 +62,27 @@ export class TonicModal implements OnDestroy {
   ngOnDestroy(): void {
     const dialog = this.dialogRef()?.nativeElement;
     try {
-      if (dialog?.open) dialog.close();
+      if (dialog?.open && typeof dialog.close === 'function') {
+        dialog.close();
+      } else if (dialog && this.fallbackMode) {
+        this.teardownFallback(dialog);
+        this.onDialogClosed();
+      }
     } catch {}
     document.body.classList.remove('modal-open');
+  }
+
+  // Fallback for browsers without showModal (iOS < 15.4, some WebViews)
+  private enableFallback(dialog: HTMLDialogElement): void {
+    this.fallbackMode = true;
+    dialog.setAttribute('open', 'true');
+    dialog.setAttribute('data-fallback-open', 'true');
+  }
+
+  private teardownFallback(dialog: HTMLDialogElement): void {
+    dialog.removeAttribute('data-fallback-open');
+    dialog.removeAttribute('open');
+    this.fallbackMode = false;
   }
 }
 
